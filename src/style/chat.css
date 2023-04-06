@@ -1,0 +1,39 @@
+.chat-container {
+  width: 500px;
+  height: 400px;
+
+  margin: 0 auto;
+  margin-top: 30px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.chat-body {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.chat-body .users {
+  width: 200px;
+  border: 1px solid silver;
+  height: 100%;
+}
+
+.chat-body .messages {
+  width: 280px;
+  border: 1px solid silver;
+  height: 100%;
+
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.chat-form {
+  margin-top: 20px;
+}
