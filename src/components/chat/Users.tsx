@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { socket } from '../../socket';
 
+import '../../style/user.css';
+
 export const Users = () => {
   const [users, setUsers] = useState([]);
 
@@ -26,7 +28,14 @@ export const Users = () => {
   return (
     <div className="users">
       {users.map((user: any, index) => {
-        return <div key={index}>{user.login}</div>;
+        return (
+          <div className="user" key={index}>
+            <span
+              className={user.online === true ? 'user-online' : 'user-offline'}
+            ></span>
+            {user.login}
+          </div>
+        );
       })}
     </div>
   );

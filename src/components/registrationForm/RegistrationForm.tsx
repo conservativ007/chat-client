@@ -1,6 +1,6 @@
 import React from 'react';
-import { UserRegistration } from '../userRegistration/userRegistration';
 import { useState } from 'react';
+import { UserRegistrationForm } from '../userRegistration/userRegistrationForm';
 
 export interface IRegistrationForm {}
 
@@ -27,7 +27,7 @@ export function RegistrationForm() {
           login
         </div>
       </div>
-      <UserRegistration buttonText={whatWasChosen} />
+      <UserRegistrationForm buttonText={whatWasChosen} />
     </div>
   );
 }

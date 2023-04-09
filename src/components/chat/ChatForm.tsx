@@ -9,9 +9,20 @@ export const ChatForm = () => {
   const { name } = useAppSelector((state) => state.userReducer);
 
   const sendMessage = () => {
+    const arrText = text.split('');
+
+    let textCorrected = arrText
+      .map((letter, index) => {
+        if (index > 1 && index % 10 === 0) {
+          return `${letter}\n`;
+        }
+        return letter;
+      })
+      .join('');
+
     let message = {
       login: name,
-      text: text,
+      text: textCorrected,
     };
 
     socket.emit('createMessage', message, () => {});
@@ -20,7 +31,7 @@ export const ChatForm = () => {
 
   return (
     <div className="chat-form">
-      <InputGroup className="mb-3">
+      <InputGroup>
         <Form.Control
           placeholder="Your message..."
           aria-label="Recipient's username"

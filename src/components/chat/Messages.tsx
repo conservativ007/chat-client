@@ -1,8 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { socket } from '../../socket';
+import { useAppSelector } from '../../hooks/redux';
+
+import '../../style/messages.scss';
 
 export const Messages = () => {
   const [messagesTwo, setMessagesTwo] = useState<any>([]);
+  const { name } = useAppSelector((state) => state.userReducer);
+
+  let listRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const messageTwo = (message: any) => {
@@ -15,13 +21,21 @@ export const Messages = () => {
     };
   }, []);
 
+  useEffect(() => {
+    listRef.current?.lastElementChild?.scrollIntoView();
+  }, [messagesTwo]);
+
   return (
-    <div className="messages">
+    <div className="chat-messages" ref={listRef}>
       {messagesTwo?.map((message: any, index: number) => {
         return (
-          <div key={index}>
-            {message.login} - {message.text}
-          </div>
+          <span
+            key={index}
+            className={`message ${message.login === name ? 'right' : 'left'}`}
+          >
+            <span className="message-user">{message.login}</span>
+            <span className="message-text">{message.text}</span>
+          </span>
         );
       })}
     </div>
