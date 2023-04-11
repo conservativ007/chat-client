@@ -5,6 +5,18 @@
   height: 100%;
 }
 
+.group {
+  margin-top: 10px;
+  background-color: #f39c12;
+  padding: 5px 10px;
+  border-radius: 10px;
+  color: white;
+  font-size: 20px;
+
+  cursor: pointer;
+  font-variant: small-caps;
+}
+
 .user {
   position: relative;
   height: 40px;

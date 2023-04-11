@@ -1,43 +1,70 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { socket } from '../../socket';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
 import '../../style/messages.scss';
+import { privateMessageSlice } from '../../store/reducers/PrivateMessageSlice';
+import { ViewMessages } from './ViewMessages';
 
 export const Messages = () => {
-  const [messagesTwo, setMessagesTwo] = useState<any>([]);
-  const { name } = useAppSelector((state) => state.userReducer);
+  const { setPrivateMessages, setPrivateMessage } = privateMessageSlice.actions;
+  const dispatch = useAppDispatch();
+
+  const { privateMessages } = useAppSelector(
+    (state) => state.privateMessageReducer
+  );
+
+  const { userNameForPrivateMessage } = useAppSelector(
+    (state) => state.userReducer
+  );
 
   let listRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const messageTwo = (message: any) => {
-      setMessagesTwo((prev: any) => [...prev, message]);
+    const messageHandler = (message: any) => {
+      dispatch(setPrivateMessage(message));
     };
-    socket.on('messageTwo', messageTwo);
+
+    const handlePrivateMessagesForClient = (data: any) => {
+      // console.log('handlePrivateMessagesForClient');
+      // console.log(data);
+      dispatch(setPrivateMessages(data));
+    };
+
+    const handlePrivateMessageForClient = (data: any) => {
+      // console.log('handlePrivateMessageForClient');
+      // console.log(data);
+      dispatch(setPrivateMessage(data));
+    };
+
+    socket.on('message', messageHandler);
+    socket.on('privateMessagesForClient', handlePrivateMessagesForClient);
+    socket.on('privateMessageForClient', handlePrivateMessageForClient);
 
     return () => {
-      socket.off('messageTwo', messageTwo);
+      socket.off('message', messageHandler);
+      socket.off('privateMessagesForClient', handlePrivateMessagesForClient);
+      socket.off('privateMessageForClient', handlePrivateMessageForClient);
     };
   }, []);
 
   useEffect(() => {
+    if (userNameForPrivateMessage === 'all') {
+      socket.emit('getAllMessages', userNameForPrivateMessage, (val: any) => {
+        // console.log('val');
+        // console.log(val);
+        dispatch(setPrivateMessages(val));
+      });
+    }
+  }, [userNameForPrivateMessage]);
+
+  useEffect(() => {
     listRef.current?.lastElementChild?.scrollIntoView();
-  }, [messagesTwo]);
+  }, [privateMessages]);
 
   return (
     <div className="chat-messages" ref={listRef}>
-      {messagesTwo?.map((message: any, index: number) => {
-        return (
-          <span
-            key={index}
-            className={`message ${message.login === name ? 'right' : 'left'}`}
-          >
-            <span className="message-user">{message.login}</span>
-            <span className="message-text">{message.text}</span>
-          </span>
-        );
-      })}
+      <ViewMessages />
     </div>
   );
 };

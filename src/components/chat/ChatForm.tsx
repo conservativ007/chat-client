@@ -5,8 +5,10 @@ import { useAppSelector } from '../../hooks/redux';
 
 export const ChatForm = () => {
   const [text, setText] = useState('');
-
   const { name } = useAppSelector((state) => state.userReducer);
+  const { userNameForPrivateMessage } = useAppSelector(
+    (state) => state.userReducer
+  );
 
   const sendMessage = () => {
     const arrText = text.split('');
@@ -21,11 +23,23 @@ export const ChatForm = () => {
       .join('');
 
     let message = {
-      login: name,
-      text: textCorrected,
+      senderName: name,
+      receiverName: 'all',
+      message: textCorrected,
     };
 
     socket.emit('createMessage', message, () => {});
+    setText('');
+  };
+
+  const sendPrivateMessage = () => {
+    const privateMessage = {
+      message: text,
+      senderName: name,
+      receiverName: userNameForPrivateMessage,
+    };
+
+    socket.emit('createPrivateMessage', privateMessage, () => {});
     setText('');
   };
 
@@ -45,6 +59,13 @@ export const ChatForm = () => {
           id="button-addon2"
         >
           Send
+        </Button>
+        <Button
+          onClick={sendPrivateMessage}
+          variant="outline-secondary"
+          id="button-addon3"
+        >
+          Private
         </Button>
       </InputGroup>
     </div>

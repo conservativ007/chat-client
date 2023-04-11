@@ -4,10 +4,15 @@ import { useAppSelector } from '../../hooks/redux';
 
 export const Header = () => {
   const { name } = useAppSelector((state) => state.userReducer);
+  const { userNameForPrivateMessage } = useAppSelector(
+    (state) => state.userReducer
+  );
 
   return (
     <header>
       <h2>{name}</h2>
+      <span> ---- </span>
+      <h3>{userNameForPrivateMessage ? userNameForPrivateMessage : 'not'}</h3>
     </header>
   );
 };
