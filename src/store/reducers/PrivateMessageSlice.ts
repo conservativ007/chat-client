@@ -1,13 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-
-interface IMessage {
-  id: number;
-  senderName: string;
-  receiverName: string;
-  message: string;
-  messageStatus: boolean;
-  createdAt: string;
-}
+import { IMessage } from '../../models/IMessage';
 
 interface PrivateMessageState {
   privateMessages: IMessage[];

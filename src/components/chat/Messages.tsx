@@ -14,49 +14,57 @@ export const Messages = () => {
     (state) => state.privateMessageReducer
   );
 
-  const { userNameForPrivateMessage } = useAppSelector(
+  const { userForPrivateMessage } = useAppSelector(
     (state) => state.userReducer
   );
 
   let listRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const messageHandler = (message: any) => {
+    const handleMessageForAllChat = (message: any) => {
       dispatch(setPrivateMessage(message));
     };
 
     const handlePrivateMessagesForClient = (data: any) => {
-      // console.log('handlePrivateMessagesForClient');
-      // console.log(data);
       dispatch(setPrivateMessages(data));
     };
 
     const handlePrivateMessageForClient = (data: any) => {
-      // console.log('handlePrivateMessageForClient');
-      // console.log(data);
       dispatch(setPrivateMessage(data));
     };
 
-    socket.on('message', messageHandler);
+    const handlePrivateMessageForResiever = (data: any) => {
+      dispatch(setPrivateMessage(data));
+    };
+
+    // get one message for all chat and save it
+    socket.on('messageForAllChat', handleMessageForAllChat);
+
+    // get all private messages for sender and resiever and save it
     socket.on('privateMessagesForClient', handlePrivateMessagesForClient);
+
+    // get one private message for sender
     socket.on('privateMessageForClient', handlePrivateMessageForClient);
 
+    // get one private message for resiever
+    socket.on('privateMessageForResiever', handlePrivateMessageForResiever);
+
     return () => {
-      socket.off('message', messageHandler);
+      socket.off('messageForAllChat', handleMessageForAllChat);
       socket.off('privateMessagesForClient', handlePrivateMessagesForClient);
       socket.off('privateMessageForClient', handlePrivateMessageForClient);
+      socket.off('privateMessageForResiever', handlePrivateMessageForResiever);
     };
   }, []);
 
+  // here we are getting all the messages when we enter the free chat
   useEffect(() => {
-    if (userNameForPrivateMessage === 'all') {
-      socket.emit('getAllMessages', userNameForPrivateMessage, (val: any) => {
-        // console.log('val');
-        // console.log(val);
+    if (userForPrivateMessage.login === 'all') {
+      socket.emit('getAllMessages', userForPrivateMessage, (val: any) => {
         dispatch(setPrivateMessages(val));
       });
     }
-  }, [userNameForPrivateMessage]);
+  }, [userForPrivateMessage]);
 
   useEffect(() => {
     listRef.current?.lastElementChild?.scrollIntoView();

@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { defaultUser, IUser } from '../../models/IUser';
 
 interface UserState {
   name: string;
-  userNameForPrivateMessage: string;
+  userForPrivateMessage: IUser;
 }
 
 const initialState: UserState = {
   name: '',
-  userNameForPrivateMessage: '',
+  userForPrivateMessage: defaultUser,
 };
 
 export const userSlice = createSlice({
@@ -15,12 +16,12 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<string>) {
-      console.log('from userSlice user: ', action.payload);
+      // console.log('from userSlice user: ', action.payload);
       state.name = action.payload;
     },
-    setPrivateUser(state, action: PayloadAction<string>) {
-      console.log('from userSlice privateUSer: ', action.payload);
-      state.userNameForPrivateMessage = action.payload;
+    setPrivateUser(state, action: PayloadAction<IUser>) {
+      // console.log('from userSlice privateUSer: ', action.payload);
+      state.userForPrivateMessage = action.payload;
     },
   },
 });

@@ -5,57 +5,54 @@ import '../../style/user.css';
 import { userSlice } from '../../store/reducers/UserSlice';
 import { privateMessageSlice } from '../../store/reducers/PrivateMessageSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { IUser, defaultUser } from '../../models/IUser';
 
 export const Users = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<IUser[]>([]);
 
   const { setPrivateUser } = userSlice.actions;
   const { setPrivateMessages } = privateMessageSlice.actions;
   const dispatch = useAppDispatch();
 
   const { name } = useAppSelector((state) => state.userReducer);
-  const { userNameForPrivateMessage } = useAppSelector(
+  const { userForPrivateMessage } = useAppSelector(
     (state) => state.userReducer
   );
 
-  const handleClickUser = (login: string) => {
-    if (login.length === 0) return;
-    console.log(login);
-
-    dispatch(setPrivateUser(login));
+  const handleClickUser = (user: IUser) => {
+    if (user.login.length === 0) return;
+    dispatch(setPrivateUser(user));
   };
 
   // write start values to target messages
   useEffect(() => {
-    dispatch(setPrivateUser('all'));
+    dispatch(setPrivateUser(defaultUser));
   }, []);
 
   // get messages from selected user
   useEffect(() => {
     if (
-      userNameForPrivateMessage === 'all' ||
-      userNameForPrivateMessage.length === 0
+      userForPrivateMessage.login === 'all' ||
+      userForPrivateMessage.login.length === 0
     )
       return;
-    console.log(userNameForPrivateMessage);
+    console.log(userForPrivateMessage);
     socket.emit(
       'getAllPrivateMessages',
-      { senderName: name, receiverName: userNameForPrivateMessage },
+      { senderName: name, receiverName: userForPrivateMessage.login },
       (val: any) => {
-        console.log('val from getAllPrivateMessages');
-        console.log(val);
         dispatch(setPrivateMessages(val));
       }
     );
-  }, [userNameForPrivateMessage]);
+  }, [userForPrivateMessage]);
 
   useEffect(() => {
     // first emit all users
     socket.emit('getAllUsers');
 
     // four resieved all users in the function
-    const getAllUsers = (users: any) => {
-      console.log(users);
+    const getAllUsers = (users: IUser[]) => {
+      // console.log(users);
       setUsers(users);
     };
 
@@ -70,14 +67,20 @@ export const Users = () => {
 
   return (
     <div className="users">
-      <div onClick={() => handleClickUser('all')} className="group">
+      <div onClick={() => handleClickUser(defaultUser)} className="group">
         all
       </div>
-      {users.map((user: any) => {
+      {users.map((user: IUser) => {
         if (user.login === name) return;
         return (
           <div
-            onClick={() => handleClickUser(user.login)}
+            onClick={() =>
+              handleClickUser({
+                ...defaultUser,
+                login: user.login,
+                socketID: user.socketID,
+              })
+            }
             className="user"
             key={user.id}
           >

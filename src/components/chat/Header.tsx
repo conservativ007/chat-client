@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks/redux';
 
 export const Header = () => {
   const { name } = useAppSelector((state) => state.userReducer);
-  const { userNameForPrivateMessage } = useAppSelector(
+  const { userForPrivateMessage } = useAppSelector(
     (state) => state.userReducer
   );
 
@@ -12,7 +12,9 @@ export const Header = () => {
     <header>
       <h2>{name}</h2>
       <span> ---- </span>
-      <h3>{userNameForPrivateMessage ? userNameForPrivateMessage : 'not'}</h3>
+      <h3>
+        {userForPrivateMessage.login ? userForPrivateMessage.login : 'not'}
+      </h3>
     </header>
   );
 };
