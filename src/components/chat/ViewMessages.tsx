@@ -6,9 +6,24 @@ export const ViewMessages = () => {
     (state) => state.privateMessageReducer
   );
 
+  const { userForPrivateMessage } = useAppSelector(
+    (state) => state.userReducer
+  );
+
   return (
     <>
       {privateMessages.map((message: any, index: number) => {
+        console.log(message);
+
+        if (
+          (message.receiverName === 'all' &&
+            userForPrivateMessage.login !== 'all') ||
+          (message.receiverName !== 'all' &&
+            userForPrivateMessage.login === 'all')
+        ) {
+          return;
+        }
+
         return (
           <span
             key={index}
