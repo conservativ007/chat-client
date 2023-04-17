@@ -4,14 +4,14 @@ import { useState } from 'react';
 import { useAppSelector } from '../../hooks/redux';
 
 export const ChatForm = () => {
-  const [text, setText] = useState('');
+  const [message, setMessage] = useState('');
   const { name } = useAppSelector((state) => state.userReducer);
   const { userForPrivateMessage } = useAppSelector(
     (state) => state.userReducer
   );
 
   const setCorrectMessage = () => {
-    const arrText = text.split('');
+    const arrText = message.split('');
     return arrText
       .map((letter, index) => {
         if (index > 1 && index % 10 === 0) {
@@ -36,7 +36,7 @@ export const ChatForm = () => {
     } else {
       socket.emit('createPrivateMessage', message);
     }
-    setText('');
+    setMessage('');
   };
 
   return (
@@ -46,8 +46,8 @@ export const ChatForm = () => {
           placeholder="Your message..."
           aria-label="Recipient's username"
           aria-describedby="basic-addon2"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
         <Button
           onClick={sendMessage}

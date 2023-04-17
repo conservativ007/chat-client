@@ -37,24 +37,32 @@
   cursor: pointer;
 }
 
-.user .user-online {
+.user .user-online::after {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: #16a085;
-
+  content: 'on';
   right: 7px;
-  top: 7px;
-  border-radius: 50px;
+  top: 0;
+  font-size: 12px;
+  color: greenyellow;
+  font-style: italic;
 }
 
-.user .user-offline {
+.user .user-offline::after {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: #e74c3c;
+  content: 'off';
+  right: 7px;
+  top: 0;
+  font-size: 12px;
+  color: red;
+  font-style: italic;
+}
 
-  right: 5px;
-  top: 5px;
-  border-radius: 50px;
+.user .new-message {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background-color: #f39c12;
+  right: 7px;
+  bottom: 7px;
+  border-radius: 50%;
 }

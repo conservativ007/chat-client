@@ -4,11 +4,13 @@ import { defaultUser, IUser } from '../../models/IUser';
 interface UserState {
   name: string;
   userForPrivateMessage: IUser;
+  allUsers: IUser[];
 }
 
 const initialState: UserState = {
   name: '',
   userForPrivateMessage: defaultUser,
+  allUsers: [],
 };
 
 export const userSlice = createSlice({
@@ -22,6 +24,9 @@ export const userSlice = createSlice({
     setPrivateUser(state, action: PayloadAction<IUser>) {
       // console.log('from userSlice privateUSer: ', action.payload);
       state.userForPrivateMessage = action.payload;
+    },
+    setAllUsers(state, action: PayloadAction<IUser[]>) {
+      state.allUsers = action.payload;
     },
   },
 });

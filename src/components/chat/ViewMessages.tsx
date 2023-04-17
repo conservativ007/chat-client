@@ -1,4 +1,5 @@
 import { useAppSelector } from '../../hooks/redux';
+import { IMessage } from '../../models/IMessage';
 
 export const ViewMessages = () => {
   const { name } = useAppSelector((state) => state.userReducer);
@@ -12,9 +13,7 @@ export const ViewMessages = () => {
 
   return (
     <>
-      {privateMessages.map((message: any, index: number) => {
-        console.log(message);
-
+      {privateMessages.map((message: IMessage) => {
         if (
           (message.receiverName === 'all' &&
             userForPrivateMessage.login !== 'all') ||
@@ -26,7 +25,7 @@ export const ViewMessages = () => {
 
         return (
           <span
-            key={index}
+            key={message.id}
             className={`message ${
               message.senderName === name ? 'right' : 'left'
             }`}
