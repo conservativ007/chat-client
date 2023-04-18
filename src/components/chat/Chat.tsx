@@ -3,7 +3,7 @@ import { ChatForm } from './ChatForm';
 import { Users } from './Users';
 import { Header } from './Header';
 
-export const Chat = () => {
+export const Chat = (): JSX.Element => {
   return (
     <div className="chat-container">
       <Header />

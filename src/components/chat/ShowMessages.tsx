@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../hooks/redux';
 import { IMessage } from '../../models/IMessage';
 
-export const ViewMessages = () => {
+export const ShowMessages = (): JSX.Element => {
   const { name } = useAppSelector((state) => state.userReducer);
   const { privateMessages } = useAppSelector(
     (state) => state.privateMessageReducer

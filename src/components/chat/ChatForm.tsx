@@ -2,8 +2,9 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 import { socket } from '../../socket';
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks/redux';
+import { IMessage } from '../../models/IMessage';
 
-export const ChatForm = () => {
+export const ChatForm = (): JSX.Element => {
   const [message, setMessage] = useState('');
   const { name } = useAppSelector((state) => state.userReducer);
   const { userForPrivateMessage } = useAppSelector(
@@ -11,7 +12,7 @@ export const ChatForm = () => {
   );
 
   const setCorrectMessage = () => {
-    const arrText = message.split('');
+    const arrText = message.split(' ');
     return arrText
       .map((letter, index) => {
         if (index > 1 && index % 10 === 0) {
@@ -19,13 +20,13 @@ export const ChatForm = () => {
         }
         return letter;
       })
-      .join('');
+      .join(' ');
   };
 
   const sendMessage = () => {
     let textCorrected = setCorrectMessage();
 
-    let message = {
+    let message: IMessage = {
       message: textCorrected,
       senderName: name,
       receiverName: userForPrivateMessage.login,
@@ -44,16 +45,10 @@ export const ChatForm = () => {
       <InputGroup>
         <Form.Control
           placeholder="Your message..."
-          aria-label="Recipient's username"
-          aria-describedby="basic-addon2"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
-        <Button
-          onClick={sendMessage}
-          variant="outline-secondary"
-          id="button-addon2"
-        >
+        <Button onClick={sendMessage} variant="outline-secondary">
           {userForPrivateMessage.login === 'all' ? 'send all' : 'private'}
         </Button>
       </InputGroup>

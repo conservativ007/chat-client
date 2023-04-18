@@ -1,8 +1,7 @@
-import { useSelector } from 'react-redux';
 import '../../style/header.css';
 import { useAppSelector } from '../../hooks/redux';
 
-export const Header = () => {
+export const Header = (): JSX.Element => {
   const { name } = useAppSelector((state) => state.userReducer);
   const { userForPrivateMessage } = useAppSelector(
     (state) => state.userReducer

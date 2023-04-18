@@ -1,8 +1,7 @@
 export interface IMessage {
-  id: number;
+  id?: string;
+  createdAt?: string;
   senderName: string;
   receiverName: string;
   message: string;
-  messageStatus: boolean;
-  createdAt: string;
 }

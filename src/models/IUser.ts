@@ -5,8 +5,6 @@ export interface IUser {
   online: boolean;
   hashedRt: string | null;
   password: null;
-  // hasUnreadMessage: boolean;
-  // messageFromWho: string[];
   messageForWho: string[];
   targetForMessage: string;
   createdAt: string;
@@ -23,7 +21,6 @@ export const defaultUser: IUser = {
   hashedRt: '',
   password: null,
   targetForMessage: 'all',
-  // hasUnreadMessage: false,
   updatedAt: '',
   version: 0,
   messageForWho: [],

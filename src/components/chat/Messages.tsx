@@ -2,17 +2,17 @@ import { useEffect, useRef } from 'react';
 import { useAppSelector } from '../../hooks/redux';
 
 import '../../style/messages.scss';
-import { ViewMessages } from './ViewMessages';
-import { useSocket } from '../../hooks/useSocket';
+import { ShowMessages } from './ShowMessages';
+import { useMessage } from '../../hooks/useMessage';
 
-export const Messages = () => {
+export const Messages = (): JSX.Element => {
   const { privateMessages } = useAppSelector(
     (state) => state.privateMessageReducer
   );
 
   let listRef = useRef<HTMLDivElement | null>(null);
 
-  useSocket();
+  useMessage();
 
   useEffect(() => {
     listRef.current?.lastElementChild?.scrollIntoView();
@@ -20,7 +20,7 @@ export const Messages = () => {
 
   return (
     <div className="chat-messages" ref={listRef}>
-      <ViewMessages />
+      <ShowMessages />
     </div>
   );
 };
