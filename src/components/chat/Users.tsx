@@ -3,11 +3,17 @@ import { userSlice } from '../../store/reducers/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { IUser, defaultUser } from '../../models/IUser';
 import { useUser } from '../../hooks/useUser';
+import { Group } from './Group';
+import { useRef } from 'react';
+
+export let refOfUsers: any;
 
 export const Users = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { setPrivateUser } = userSlice.actions;
   const { name, allUsers } = useAppSelector((state) => state.userReducer);
+
+  refOfUsers = useRef<HTMLDivElement | null>(null);
 
   const handleClickUser = (user: IUser) => {
     if (user.login.length === 0) return;
@@ -21,14 +27,12 @@ export const Users = (): JSX.Element => {
     if (isIncludesMyself === true) {
       return <span className="new-message"></span>;
     }
-    return <span></span>;
+    return;
   };
 
   return (
-    <div className="users">
-      <div onClick={() => handleClickUser(defaultUser)} className="group">
-        all
-      </div>
+    <div className="users" ref={refOfUsers}>
+      <Group />
       {allUsers.map((user: IUser) => {
         if (user.login === name) return;
         return (
@@ -43,12 +47,14 @@ export const Users = (): JSX.Element => {
             className="user"
             key={user.id}
           >
+            <div className="user-avatar">{user.login.slice(0, 1)}</div>
             <span
               className={user.online === true ? 'user-online' : 'user-offline'}
             ></span>
-            {user.login}
+            <span className="user-name">{user.login}</span>
 
             {addNotification(user.messageForWho)}
+            <div className="user-divider"></div>
           </div>
         );
       })}

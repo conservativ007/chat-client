@@ -8,6 +8,7 @@ export const Chat = (): JSX.Element => {
     <div className="chat-container">
       <Header />
       <div className="chat-body">
+        <div className="divider"></div>
         <Users />
         <Messages />
       </div>

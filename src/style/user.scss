@@ -1,40 +1,77 @@
+@import './colors.scss';
+
 .chat-body .users {
-  width: 200px;
-  padding: 0 5px;
-  border-right: 1px solid silver;
+  min-width: 200px;
   height: 100%;
+  margin: 0 5px;
 }
 
 .group {
+  position: relative;
+  height: 50px;
+  display: flex;
   margin-top: 10px;
-  background-color: #f39c12;
-  padding: 5px 10px;
-  border-radius: 10px;
-  color: white;
   font-size: 20px;
+  background-color: $user-background-color;
+  padding: 5px 5px;
 
   cursor: pointer;
   font-variant: small-caps;
+
+  .group-avatar {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 37px;
+    height: 37px;
+    background-color: $user-avatar-background-color;
+    border-radius: 50%;
+
+    color: white;
+  }
 }
 
 .user {
   position: relative;
-  height: 40px;
-  /* border: 1px solid silver; */
+  height: 50px;
   color: balck;
-  padding-left: 10px;
-  border-radius: 10px;
+  border-radius: 3px;
 
   display: flex;
   justify-content: start;
   align-items: center;
   margin-top: 5px;
 
-  background-color: #2c3e50;
-  color: wheat;
+  background-color: $user-background-color;
+  color: white;
   font-size: 17px;
 
   cursor: pointer;
+
+  .user-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-variant: small-caps;
+    color: white;
+    font-size: 20px;
+
+    width: 37px;
+    height: 37px;
+    background-color: $user-avatar-background-color;
+    border-radius: 50%;
+    margin-left: 5px;
+  }
+
+  .user-name {
+    margin-left: 10px;
+  }
+}
+
+.user.user-active {
+  background-color: $user-active-background-color;
 }
 
 .user .user-online::after {
@@ -42,8 +79,8 @@
   content: 'on';
   right: 7px;
   top: 0;
-  font-size: 12px;
-  color: greenyellow;
+  font-size: 14px;
+  color: #badc58;
   font-style: italic;
 }
 
@@ -52,8 +89,8 @@
   content: 'off';
   right: 7px;
   top: 0;
-  font-size: 12px;
-  color: red;
+  font-size: 14px;
+  color: #eb4d4b;
   font-style: italic;
 }
 

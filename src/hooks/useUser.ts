@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from './redux';
 import { userSlice } from '../store/reducers/UserSlice';
 import { IUser, defaultUser } from '../models/IUser';
 import { socket } from '../socket';
+import { refOfUsers } from '../components/chat/Users';
 
 export const useUser = () => {
   const dispatch = useAppDispatch();
@@ -65,4 +66,17 @@ export const useUser = () => {
       receiverName: userForPrivateMessage.login,
     });
   }, [name, userForPrivateMessage]);
+
+  useEffect(() => {
+    const users = refOfUsers.current?.querySelectorAll('.user');
+    if (users === undefined) return;
+    users.forEach((elemOfUser: HTMLDivElement) => {
+      elemOfUser.classList.remove('user-active');
+
+      const userName = elemOfUser.querySelector('.user-name')?.innerHTML;
+      if (userName === userForPrivateMessage.login) {
+        elemOfUser.classList.add('user-active');
+      }
+    });
+  }, [userForPrivateMessage]);
 };
