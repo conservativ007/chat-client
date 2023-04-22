@@ -1,6 +1,7 @@
 @import './colors.scss';
 
 .chat-messages {
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -64,6 +65,16 @@
 // }
 
 .messages-container::-webkit-scrollbar-thumb {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.7);
   border-radius: 10px;
+}
+
+.bg {
+  position: absolute;
+  background-image: url('../assets/background-mage-1.jpg');
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

@@ -1,5 +1,4 @@
 import { Messages } from './Messages';
-import { ChatForm } from './ChatForm';
 import { Users } from './Users';
 import { Header } from './Header';
 
@@ -12,7 +11,6 @@ export const Chat = (): JSX.Element => {
         <Users />
         <Messages />
       </div>
-      <ChatForm />
     </div>
   );
 };

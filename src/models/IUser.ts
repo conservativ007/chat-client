@@ -10,6 +10,7 @@ export interface IUser {
   createdAt: string;
   updatedAt: string;
   version: number;
+  lastMessage: string;
 }
 
 export const defaultUser: IUser = {
@@ -24,4 +25,5 @@ export const defaultUser: IUser = {
   updatedAt: '',
   version: 0,
   messageForWho: [],
+  lastMessage: '',
 };

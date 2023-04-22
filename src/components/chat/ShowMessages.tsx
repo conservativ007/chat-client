@@ -1,5 +1,6 @@
 import { useAppSelector } from '../../hooks/redux';
 import { IMessage } from '../../models/IMessage';
+import { ChatForm } from './ChatForm';
 
 export const ShowMessages = (): JSX.Element => {
   const { name } = useAppSelector((state) => state.userReducer);
@@ -14,6 +15,10 @@ export const ShowMessages = (): JSX.Element => {
   return (
     <>
       {privateMessages.map((message: IMessage) => {
+        // needs to return messages whgen the user
+        // send message to general chat
+        // and other users won't see these messages when they
+        // current target not to general chat
         if (
           (message.receiverName === 'all' &&
             userForPrivateMessage.login !== 'all') ||
@@ -35,6 +40,8 @@ export const ShowMessages = (): JSX.Element => {
           </span>
         );
       })}
+
+      <ChatForm />
     </>
   );
 };

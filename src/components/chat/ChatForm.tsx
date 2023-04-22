@@ -5,7 +5,7 @@ import { IMessage } from '../../models/IMessage';
 
 import '../../style/chat.scss';
 
-import sendImage from '../../assets/paper-plane.png';
+import { SendButton } from './SendButton';
 
 export const ChatForm = (): JSX.Element => {
   const [message, setMessage] = useState<string | null>('');
@@ -90,7 +90,7 @@ export const ChatForm = (): JSX.Element => {
         onInput={(e) => setMessage(e.currentTarget.textContent)}
       ></div>
       <div className="send-message-button" onClick={sendMessage}>
-        <img src={sendImage} alt="plane" />
+        <SendButton />
       </div>
     </div>
   );

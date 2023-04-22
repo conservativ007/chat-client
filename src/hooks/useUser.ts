@@ -30,7 +30,7 @@ export const useUser = () => {
 
   useEffect(() => {
     // first emit all users
-    socket.emit('getAllUsers');
+    socket.emit('getAllUsers', name);
 
     // four resieved all users in the function
     const getAllUsers = (users: IUser[]) => {
@@ -44,7 +44,7 @@ export const useUser = () => {
     return () => {
       socket.off('getAllUsers', getAllUsers);
     };
-  }, []);
+  }, [name]);
 
   // get messages from selected user
   useEffect(() => {

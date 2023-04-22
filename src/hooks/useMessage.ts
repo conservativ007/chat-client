@@ -3,6 +3,8 @@ import { privateMessageSlice } from '../store/reducers/PrivateMessageSlice';
 import { useAppDispatch, useAppSelector } from './redux';
 import { socket } from '../socket';
 import { IMessage } from '../models/IMessage';
+import { containerRef } from '../components/chat/Messages';
+import { sizeOfElementsSlice } from '../store/reducers/SizeOfElements';
 
 export const useMessage = () => {
   const { setPrivateMessages, setPrivateMessage } = privateMessageSlice.actions;
@@ -11,6 +13,13 @@ export const useMessage = () => {
   const { userForPrivateMessage } = useAppSelector(
     (state) => state.userReducer
   );
+
+  const { privateMessages } = useAppSelector(
+    (state) => state.privateMessageReducer
+  );
+
+  const { setSizeInputText, setMarginOfMessageContainer } =
+    sizeOfElementsSlice.actions;
 
   useEffect(() => {
     const handleMessageForAllChat = (message: IMessage) => {
@@ -60,4 +69,46 @@ export const useMessage = () => {
       });
     }
   }, [userForPrivateMessage]);
+
+  useEffect(() => {
+    let messageContainer = containerRef.current;
+    // console.log(messageContainer?.getBoundingClientRect());
+
+    const handleResize = () => {
+      const widthOfInputText = String(
+        messageContainer?.getBoundingClientRect().width
+      );
+
+      let marginOfMessageContainer =
+        messageContainer?.getBoundingClientRect().x;
+      marginOfMessageContainer += 10;
+      // console.log(test);
+
+      // const marginOfMessageContainer = String(
+      //   messageContainer?.getBoundingClientRect().x
+      // );
+
+      let x = Number(widthOfInputText) - 5;
+
+      dispatch(setSizeInputText(String(x)));
+
+      dispatch(setMarginOfMessageContainer(marginOfMessageContainer));
+      // if (Number(marginOfMessageContainer) > 560) {
+      //   dispatch(setMarginOfMessageContainer('560'));
+      // }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    // containerRef.current?.lastElementChild?.scrollIntoView();
+
+    const childNodes = containerRef.current.childNodes;
+    let lengthOfChildNodes = childNodes.length;
+    let currentChildNode = childNodes[lengthOfChildNodes - 2];
+
+    currentChildNode?.scrollIntoView();
+  }, [privateMessages]);
 };

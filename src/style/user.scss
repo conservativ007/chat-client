@@ -3,7 +3,10 @@
 .chat-body .users {
   min-width: 200px;
   height: 100%;
-  margin: 0 5px;
+  // margin: 0 5px;
+
+  background-color: #212121;
+  border-top: 1px solid black;
 }
 
 .group {
@@ -35,8 +38,11 @@
 
 .user {
   position: relative;
+  width: 190px;
+  margin-left: 5px;
   height: 50px;
   color: balck;
+  // background-color: #212121;
   border-radius: 3px;
 
   display: flex;
@@ -67,6 +73,10 @@
 
   .user-name {
     margin-left: 10px;
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
   }
 }
 
