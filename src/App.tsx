@@ -6,6 +6,7 @@ import { Chat } from './components/chat/Chat';
 import './style/chat.scss';
 import { RegistrationForm } from './components/registrationForm/RegistrationForm';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Settings } from './components/chat/settings/Settings';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<RegistrationForm />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </BrowserRouter>
     </div>

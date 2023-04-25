@@ -12,7 +12,7 @@ export let refOfUsers: any;
 export const Users = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { setPrivateUser } = userSlice.actions;
-  const { name, allUsers } = useAppSelector((state) => state.userReducer);
+  const { myself, allUsers } = useAppSelector((state) => state.userReducer);
 
   refOfUsers = useRef<HTMLDivElement | null>(null);
 
@@ -25,7 +25,7 @@ export const Users = (): JSX.Element => {
   useLastMessagesFromUsers();
 
   const addNotification = (arr: string[]) => {
-    const isIncludesMyself = arr.includes(name);
+    const isIncludesMyself = arr.includes(myself.login);
     if (isIncludesMyself === true) {
       return <span className="new-message"></span>;
     }
@@ -36,7 +36,7 @@ export const Users = (): JSX.Element => {
     <div className="users" ref={refOfUsers}>
       <Group />
       {allUsers.map((user: IUser) => {
-        if (user.login === name) return;
+        if (user.login === myself.login) return;
         return (
           <div
             onClick={() =>

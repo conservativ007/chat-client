@@ -11,6 +11,7 @@ export interface IUser {
   updatedAt: string;
   version: number;
   lastMessage: string;
+  avatar: string;
 }
 
 export const defaultUser: IUser = {
@@ -26,4 +27,5 @@ export const defaultUser: IUser = {
   version: 0,
   messageForWho: [],
   lastMessage: '',
+  avatar: 'cat',
 };

@@ -1,0 +1,93 @@
+@import '../../../style/mixin.scss';
+
+.settings {
+  width: 100%;
+
+  header {
+    @include flexJustifySB;
+
+    height: 50px;
+    width: 100%;
+    color: white;
+
+    h2 {
+      cursor: pointer;
+    }
+  }
+
+  .user-details {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .user-username {
+    margin-bottom: 20px;
+  }
+
+  .user-password {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .user-avatar .show-avatars {
+    @include flexJustifyCenter;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    width: 200px;
+    height: 40px;
+    background-color: #535c68;
+    border-radius: 20px;
+
+    cursor: pointer;
+    transition: all 0.1s;
+  }
+
+  .avatars {
+    display: none;
+  }
+
+  .user-avatar__avatar {
+    @include flexJustifyCenter;
+    cursor: pointer;
+
+    img {
+      width: 70px;
+      height: 70px;
+    }
+  }
+
+  .user-avatar__avatars {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+
+    border: 2px solid #535c68;
+    border-radius: 10px;
+
+    padding: 5px;
+
+    p {
+      font-size: 18px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    img {
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+    }
+  }
+
+  .user-avatar__avatars img:nth-child(1n + 1) {
+    margin-left: 10px;
+  }
+
+  .user-avatar__avatars img:first-child {
+    margin-left: 0;
+  }
+}

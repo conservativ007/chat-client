@@ -1,6 +1,6 @@
 import { Messages } from './Messages';
 import { Users } from './Users';
-import { Header } from './Header';
+import { Header } from './header/Header';
 
 export const Chat = (): JSX.Element => {
   return (

@@ -41,11 +41,13 @@ export const UserRegistrationForm = ({ buttonText }: AppProps) => {
         .post(URL, { login, password, socketID })
         .then((response) => {
           const { status } = response;
-          const { login } = response.data;
+          // const { login } = response.data;
+
+          console.log(response.data);
 
           if (status === 201) {
             navigate('/chat');
-            dispatch(setUser(login));
+            dispatch(setUser(response.data));
           }
         })
         .catch((err) => {

@@ -2,16 +2,14 @@ import { socket } from '../../socket';
 import { useEffect, useRef, useState } from 'react';
 import { useAppSelector } from '../../hooks/redux';
 import { IMessage } from '../../models/IMessage';
-
 import '../../style/chat.scss';
-
 import { SendButton } from './SendButton';
 
 export const ChatForm = (): JSX.Element => {
   const [message, setMessage] = useState<string | null>('');
   const [inputWidth, setInputWidth] = useState<number>(500);
 
-  const { name } = useAppSelector((state) => state.userReducer);
+  const { myself } = useAppSelector((state) => state.userReducer);
   const { userForPrivateMessage } = useAppSelector(
     (state) => state.userReducer
   );
@@ -44,7 +42,7 @@ export const ChatForm = (): JSX.Element => {
 
     let message: IMessage = {
       message: textCorrected,
-      senderName: name,
+      senderName: myself.login,
       receiverName: userForPrivateMessage.login,
     };
 

@@ -3,7 +3,7 @@ import { IMessage } from '../../models/IMessage';
 import { ChatForm } from './ChatForm';
 
 export const ShowMessages = (): JSX.Element => {
-  const { name } = useAppSelector((state) => state.userReducer);
+  const { myself } = useAppSelector((state) => state.userReducer);
   const { privateMessages } = useAppSelector(
     (state) => state.privateMessageReducer
   );
@@ -32,7 +32,7 @@ export const ShowMessages = (): JSX.Element => {
           <span
             key={message.id}
             className={`message ${
-              message.senderName === name ? 'right' : 'left'
+              message.senderName === myself.login ? 'right' : 'left'
             }`}
           >
             <span className="message-user">{message.senderName}</span>
