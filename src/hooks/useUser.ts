@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 export const useUser = () => {
   const dispatch = useAppDispatch();
 
-  const { setPrivateUser, setAllUsers } = userSlice.actions;
+  const { setPrivateUser, setAllUsers, setUser } = userSlice.actions;
 
   const { myself } = useAppSelector((state) => state.userReducer);
   const { userForPrivateMessage } = useAppSelector(
@@ -20,7 +20,7 @@ export const useUser = () => {
 
   // when the user not found
   useEffect(() => {
-    console.log(myself);
+    // console.log(myself);
     if (myself.login?.length === 0) navigate('/');
   }, [myself]);
 
@@ -29,13 +29,25 @@ export const useUser = () => {
     dispatch(setPrivateUser(defaultUser));
   }, []);
 
+  // select user for message
   useEffect(() => {
-    // select user for message
-    socket.emit('selectUserForMessage', {
-      senderName: myself.login,
-      receiverName: userForPrivateMessage.login,
-    });
+    console.log('myself, userForPrivateMessage');
+    socket.emit(
+      'selectUserForMessage',
+      {
+        senderName: myself.login,
+        receiverName: userForPrivateMessage.login,
+      }
+      // (response: IUser) => {
+      //   dispatch(setUser(response));
+      // }
+    );
   }, [myself, userForPrivateMessage]);
+
+  // useEffect(() => {
+  //   console.log('myself, userForPrivateMessage');
+  //   console.log(myself.login);
+  // }, [myself, userForPrivateMessage]);
 
   useEffect(() => {
     // first emit all users

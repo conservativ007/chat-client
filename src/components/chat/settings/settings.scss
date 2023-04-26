@@ -23,13 +23,35 @@
   }
 
   .user-username {
-    margin-bottom: 20px;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+
+    div {
+      font-size: 18px;
+    }
+
+    .user-username__change {
+      width: 150px;
+      text-align: center;
+      margin-top: 10px;
+      border-radius: 20px;
+      background-color: #6ab04c;
+      color: wheat;
+      padding: 5px;
+
+      cursor: pointer;
+    }
   }
 
   .user-password {
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
+
+    div {
+      font-size: 18px;
+    }
   }
 
   .user-avatar .show-avatars {
@@ -53,6 +75,7 @@
   .user-avatar__avatar {
     @include flexJustifyCenter;
     cursor: pointer;
+    width: 300px;
 
     img {
       width: 70px;
@@ -81,13 +104,24 @@
       height: 50px;
       cursor: pointer;
     }
+
+    div {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 
-  .user-avatar__avatars img:nth-child(1n + 1) {
-    margin-left: 10px;
+  input {
+    width: 300px;
+    height: 50px;
+    border-radius: 5px;
+    outline: none;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: 500;
   }
 
-  .user-avatar__avatars img:first-child {
-    margin-left: 0;
+  input + input {
+    margin-top: 10px;
   }
 }

@@ -6,6 +6,7 @@ import { useUser } from '../../hooks/useUser';
 import { Group } from './Group';
 import { useRef } from 'react';
 import { useLastMessagesFromUsers } from '../../hooks/useLastMessagesFromUsers';
+import { UserAvatar } from './userAvatar/UserAvatar';
 
 export let refOfUsers: any;
 
@@ -49,7 +50,7 @@ export const Users = (): JSX.Element => {
             className="user"
             key={user.id}
           >
-            <div className="user-avatar">{user.login.slice(0, 1)}</div>
+            <UserAvatar name={user.login} avatar={user.avatar} />
             <span
               className={user.online === true ? 'user-online' : 'user-offline'}
             ></span>

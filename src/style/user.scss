@@ -1,7 +1,7 @@
 @import './colors.scss';
 
 .chat-body .users {
-  min-width: 200px;
+  min-width: 220px;
   height: 100%;
   // margin: 0 5px;
 
@@ -38,9 +38,9 @@
 
 .user {
   position: relative;
-  width: 190px;
+  width: 210px;
   margin-left: 5px;
-  height: 50px;
+  height: 70px;
   color: balck;
   // background-color: #212121;
   border-radius: 3px;
@@ -49,27 +49,13 @@
   justify-content: start;
   align-items: center;
   margin-top: 5px;
+  padding: 5px;
 
   background-color: $user-background-color;
   color: white;
   font-size: 17px;
 
   cursor: pointer;
-
-  .user-avatar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-variant: small-caps;
-    color: white;
-    font-size: 20px;
-
-    width: 37px;
-    height: 37px;
-    background-color: $user-avatar-background-color;
-    border-radius: 50%;
-    margin-left: 5px;
-  }
 
   .user-name {
     margin-left: 10px;
