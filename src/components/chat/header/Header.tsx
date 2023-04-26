@@ -32,13 +32,10 @@ export const Header = (): JSX.Element => {
     <header>
       <div className="user-info">
         <div className="user-avatar">
-          {/* <img src={srcAvatar} alt="user-avatar" /> */}
+          <img src={srcAvatar} alt="user-avatar" />
           <h3>{myself.login}</h3>
         </div>
-        <span> ---- </span>
-        <h3>
-          {userForPrivateMessage.login ? userForPrivateMessage.login : 'not'}
-        </h3>
+        <h3>{userForPrivateMessage.login && userForPrivateMessage.login}</h3>
       </div>
       <nav>
         <p onClick={socketDisconnect}>exit</p>
