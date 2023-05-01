@@ -75,16 +75,18 @@
 
   .user-avatar__avatar {
     @include flexJustifyCenter;
-    cursor: pointer;
-    width: 300px;
+
+    // width: 300px;
 
     img {
+      cursor: pointer;
       width: 70px;
       height: 70px;
     }
   }
 
   .user-avatar__avatars {
+    width: 300px;
     display: flex;
     flex-direction: column;
     margin-top: 10px;

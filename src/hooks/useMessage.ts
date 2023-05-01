@@ -72,7 +72,6 @@ export const useMessage = () => {
 
   useEffect(() => {
     let messageContainer = containerRef.current;
-    // console.log(messageContainer?.getBoundingClientRect());
 
     const handleResize = () => {
       const widthOfInputText = String(
@@ -82,20 +81,12 @@ export const useMessage = () => {
       let marginOfMessageContainer =
         messageContainer?.getBoundingClientRect().x;
       marginOfMessageContainer += 10;
-      // console.log(test);
-
-      // const marginOfMessageContainer = String(
-      //   messageContainer?.getBoundingClientRect().x
-      // );
 
       let x = Number(widthOfInputText) - 5;
 
       dispatch(setSizeInputText(String(x)));
 
       dispatch(setMarginOfMessageContainer(marginOfMessageContainer));
-      // if (Number(marginOfMessageContainer) > 560) {
-      //   dispatch(setMarginOfMessageContainer('560'));
-      // }
     };
 
     window.addEventListener('resize', handleResize);

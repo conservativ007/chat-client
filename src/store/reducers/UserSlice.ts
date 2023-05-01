@@ -18,17 +18,28 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<IUser>) {
-      // console.log('from userSlice user: ', action.payload);
       state.myself = action.payload;
     },
     setPrivateUser(state, action: PayloadAction<IUser>) {
-      // console.log('from userSlice privateUSer: ', action.payload);
       state.userForPrivateMessage = action.payload;
     },
     setAllUsers(state, action: PayloadAction<IUser[]>) {
+      action.payload.sort(customSortUser);
       state.allUsers = action.payload;
     },
   },
 });
+
+const customSortUser = (a: IUser, b: IUser) => {
+  if (a.login > b.login) {
+    return 1;
+  }
+
+  if (a.login < b.login) {
+    return -1;
+  }
+
+  return 0;
+};
 
 export default userSlice.reducer;

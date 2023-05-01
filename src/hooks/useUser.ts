@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from './redux';
 import { userSlice } from '../store/reducers/UserSlice';
 import { IUser, defaultUser } from '../models/IUser';
 import { socket } from '../socket';
-import { refOfUsers } from '../components/chat/Users';
+import { refOfUsers } from '../components/chat/users/Users';
 import { useNavigate } from 'react-router-dom';
 
 export const useUser = () => {
@@ -20,8 +20,8 @@ export const useUser = () => {
 
   // when the user not found
   useEffect(() => {
-    // console.log(myself);
-    if (myself.login?.length === 0) navigate('/');
+    const name = myself.login;
+    if (name.length === 0 || name === 'all') navigate('/');
   }, [myself]);
 
   // write start values to target messages
@@ -31,23 +31,11 @@ export const useUser = () => {
 
   // select user for message
   useEffect(() => {
-    console.log('myself, userForPrivateMessage');
-    socket.emit(
-      'selectUserForMessage',
-      {
-        senderName: myself.login,
-        receiverName: userForPrivateMessage.login,
-      }
-      // (response: IUser) => {
-      //   dispatch(setUser(response));
-      // }
-    );
+    socket.emit('selectUserForMessage', {
+      senderName: myself.login,
+      receiverName: userForPrivateMessage.login,
+    });
   }, [myself, userForPrivateMessage]);
-
-  // useEffect(() => {
-  //   console.log('myself, userForPrivateMessage');
-  //   console.log(myself.login);
-  // }, [myself, userForPrivateMessage]);
 
   useEffect(() => {
     // first emit all users
