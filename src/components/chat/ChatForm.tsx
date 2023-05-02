@@ -5,9 +5,15 @@ import { IMessage } from '../../models/IMessage';
 import '../../style/chat.scss';
 import { SendButton } from './SendButton';
 
+import { ShowEmoji } from './emoji/ShowEmoji';
+import { Emoji } from './emoji/Emoji';
+
+export let divInputRef: any;
+
 export const ChatForm = (): JSX.Element => {
   const [message, setMessage] = useState<string | null>('');
   const [inputWidth, setInputWidth] = useState<number>(500);
+  const [isPickerVisible, setPickerVisible] = useState<boolean>(false);
 
   const { myself } = useAppSelector((state) => state.userReducer);
   const { userForPrivateMessage } = useAppSelector(
@@ -18,7 +24,7 @@ export const ChatForm = (): JSX.Element => {
     (state) => state.changeSizeOfElementsReducer
   );
 
-  const divRef = useRef<HTMLDivElement | null>(null);
+  divInputRef = useRef<HTMLDivElement | null>(null);
 
   const setCorrectMessage = () => {
     if (message === null) return;
@@ -35,7 +41,7 @@ export const ChatForm = (): JSX.Element => {
 
   const sendMessage = () => {
     let textCorrected = setCorrectMessage();
-    let inputMessage = divRef.current;
+    let inputMessage = divInputRef.current;
 
     if (textCorrected === undefined) return;
     if (inputMessage === null) return;
@@ -55,18 +61,6 @@ export const ChatForm = (): JSX.Element => {
     inputMessage.innerHTML = '';
   };
 
-  useEffect(() => {
-    if (message === null) return;
-    let lengthOfMessage = message.length;
-    let x = lengthOfMessage / 10;
-
-    let elem = divRef.current;
-
-    if (x > 5 && elem !== null) {
-      elem.style.overflow = 'auto';
-    }
-  }, [message]);
-
   // change resize of inputText
   useEffect(() => {
     const num = Number(sizeOfInputText) - 5;
@@ -81,8 +75,9 @@ export const ChatForm = (): JSX.Element => {
         width: `${inputWidth}px`,
       }}
     >
+      <ShowEmoji setPickerVisible={setPickerVisible} />
       <div
-        ref={divRef}
+        ref={divInputRef}
         className="send-message-button-two"
         contentEditable={true}
         onInput={(e) => setMessage(e.currentTarget.textContent)}
@@ -90,6 +85,7 @@ export const ChatForm = (): JSX.Element => {
       <div className="send-message-button" onClick={sendMessage}>
         <SendButton />
       </div>
+      {isPickerVisible && <Emoji setMessage={setMessage} />}
     </div>
   );
 };

@@ -43,8 +43,6 @@ export const UserRegistrationForm = ({ buttonText }: AppProps) => {
           const { status } = response;
           // const { login } = response.data;
 
-          console.log(response.data);
-
           if (status === 201) {
             navigate('/chat');
             dispatch(setUser(response.data));
