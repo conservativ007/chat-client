@@ -5,12 +5,14 @@ interface UserState {
   myself: IUser;
   userForPrivateMessage: IUser;
   allUsers: IUser[];
+  token: string;
 }
 
 const initialState: UserState = {
   myself: defaultUser,
   userForPrivateMessage: defaultUser,
   allUsers: [],
+  token: '',
 };
 
 export const userSlice = createSlice({
@@ -26,6 +28,12 @@ export const userSlice = createSlice({
     setAllUsers(state, action: PayloadAction<IUser[]>) {
       action.payload.sort(customSortUser);
       state.allUsers = action.payload;
+    },
+    setToken(state, action: PayloadAction<string>) {
+      state.token = action.payload;
+    },
+    setSocketIdToUserStore(state, action: PayloadAction<string>) {
+      state.myself.socketID = action.payload;
     },
   },
 });

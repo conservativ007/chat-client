@@ -1,10 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
-import { UserRegistrationForm } from '../userRegistration/userRegistrationForm';
+import { SignupOrLogin } from '../userRegistration/SignupOrLogin';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { signupSlice } from '../../store/reducers/SignupSlice';
 
-export function RegistrationForm() {
+export function RegistrationSelect() {
   // const [action, setAction] = useState<'signup' | 'login'>('signup');
   const dispatch = useAppDispatch();
   const { setAction } = signupSlice.actions;
@@ -26,7 +26,7 @@ export function RegistrationForm() {
           login
         </div>
       </div>
-      <UserRegistrationForm />
+      <SignupOrLogin />
     </div>
   );
 }

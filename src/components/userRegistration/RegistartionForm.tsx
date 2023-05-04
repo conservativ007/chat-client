@@ -1,26 +1,18 @@
 import { Button, Form, InputGroup } from 'react-bootstrap';
-import '../../style/registartion.css';
-import { socket } from '../../socket';
+import { ToastContainer } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { signupSlice } from '../../store/reducers/SignupSlice';
 
-import 'react-toastify/dist/ReactToastify.css';
+type AppProps = {
+  signup: () => void;
+};
 
-import { ToastContainer } from 'react-toastify';
-import { useUserRegistration } from '../../hooks/useUserRegistration';
-
-export const UserRegistrationForm = () => {
-  const { setLogin, setPassword } = signupSlice.actions;
+export const RegistartionForm = ({ signup }: AppProps) => {
   const { action, login, password } = useAppSelector(
     (state) => state.signupReducer
   );
   const dispatch = useAppDispatch();
-
-  useUserRegistration();
-
-  const handleClick = () => {
-    socket.connect();
-  };
+  const { setLogin, setPassword } = signupSlice.actions;
 
   return (
     <div className="registration-form">
@@ -39,11 +31,7 @@ export const UserRegistrationForm = () => {
           value={password}
           onChange={(e) => dispatch(setPassword(e.target.value))}
         />
-        <Button
-          onClick={handleClick}
-          variant="outline-secondary"
-          id="button-addon2"
-        >
+        <Button onClick={signup} variant="outline-secondary" id="button-addon2">
           {action}
         </Button>
       </InputGroup>

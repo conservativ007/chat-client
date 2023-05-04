@@ -16,7 +16,7 @@ export interface IUser {
 
 export const defaultUser: IUser = {
   id: '',
-  login: 'all',
+  login: '',
   online: false,
   socketID: '',
   createdAt: '',

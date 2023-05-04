@@ -2,11 +2,13 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import userReducer from './reducers/UserSlice';
 import privateMessageReducer from './reducers/PrivateMessageSlice';
 import changeSizeOfElementsReducer from './reducers/SizeOfElements';
+import signupReducer from './reducers/SignupSlice';
 
 const rootReducer = combineReducers({
   userReducer,
   privateMessageReducer,
   changeSizeOfElementsReducer,
+  signupReducer,
 });
 
 export const setupStore = () => {

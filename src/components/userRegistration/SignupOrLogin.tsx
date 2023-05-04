@@ -1,19 +1,19 @@
-import { useAppDispatch, useAppSelector } from './redux';
-import { useNavigate } from 'react-router-dom';
-import { socket } from '../socket';
+import '../../style/registartion.css';
+import { socket } from '../../socket';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { userSlice } from '../../store/reducers/UserSlice';
 import { useEffect } from 'react';
-import { userSlice } from '../store/reducers/UserSlice';
-import { signupSlice } from '../store/reducers/SignupSlice';
+import { useNavigate } from 'react-router-dom';
 
-const SIGNUP = 'http://localhost:3001/auth/signup';
-const LOGIN = 'http://localhost:3001/auth/login';
-const ATTACH_SOCKETID = 'http://localhost:3001/auth/attachsocket';
+import { CONSTANTS } from '../../constants/constants';
+import { RegistartionForm } from './RegistartionForm';
 
-export const useUserRegistration = () => {
+export const SignupOrLogin = () => {
   const { setUser, setToken, setSocketIdToUserStore } = userSlice.actions;
-  const { setLogin, setPassword } = signupSlice.actions;
   const { action, login, password } = useAppSelector(
     (state) => state.signupReducer
   );
@@ -35,12 +35,10 @@ export const useUserRegistration = () => {
 
   const attachToSocketIdToUser = (socketId: string) => {
     axios
-      .post(ATTACH_SOCKETID, { socketId, userId: myself.id })
+      .post(CONSTANTS.attach_socketid, { socketId, userId: myself.id })
       .then((response) => {
-        // console.log(response);
-        const { status, data } = response;
+        const { data } = response;
 
-        // if (status !== 200) return;
         dispatch(setSocketIdToUserStore(data));
         navigate('/chat');
       })
@@ -60,17 +58,16 @@ export const useUserRegistration = () => {
   };
 
   const signup = () => {
-    const URL = action === 'signup' ? SIGNUP : LOGIN;
+    const URL = action === 'signup' ? CONSTANTS.signup : CONSTANTS.login;
 
     axios
       .post(URL, { login, password })
       .then((response) => {
-        const { status, data } = response;
+        const { data } = response;
 
-        // if (status !== 201) return;
         saveUserToLocal(data);
         socketConnect();
-        console.log(response);
+        // console.log(response);
       })
       .catch((err) => {
         console.log(err);
@@ -78,5 +75,5 @@ export const useUserRegistration = () => {
       });
   };
 
-  return { signup };
+  return <RegistartionForm signup={signup} />;
 };
