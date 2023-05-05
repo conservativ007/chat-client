@@ -1,6 +1,9 @@
+import { CONSTANTS } from '../../../constants/constants';
 import { useAppSelector } from '../../../hooks/redux';
 import { useInput } from '../../../hooks/useInput';
 import { useSettings } from '../../../hooks/useSettings';
+import { IChangeUserName } from '../../../models/IChangeUserName';
+import { IChangeUserPassword } from '../../../models/IChangeUserPassword';
 import { ChangeUserAvatar } from './ChangeUserAvatar';
 import { UserAvatar } from './UserAvatar';
 import { UserAvatars } from './UserAvatars';
@@ -19,20 +22,24 @@ export const UserDetails = () => {
       return;
     }
 
-    const conf = {
+    const conf: IChangeUserName = {
+      type: 'name',
+      url: CONSTANTS.URL_CHANGE_USERNAME,
       userId: myself.id,
       newLogin: userLogin.value,
     };
-    getUseSettings('name', conf);
+    getUseSettings(conf);
   };
 
   const changePassword = () => {
-    const conf = {
+    const conf: IChangeUserPassword = {
+      type: 'password',
+      url: CONSTANTS.URL_CHANGE_USERPASSWORD,
       userId: myself.id,
       oldPassword: oldPassword.value,
       newPassword: newPassword.value,
     };
-    getUseSettings('password', conf);
+    getUseSettings(conf);
   };
 
   return (

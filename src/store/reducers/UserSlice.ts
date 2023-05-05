@@ -6,6 +6,7 @@ interface UserState {
   userForPrivateMessage: IUser;
   allUsers: IUser[];
   token: string;
+  rtToken: string;
 }
 
 const initialState: UserState = {
@@ -13,6 +14,7 @@ const initialState: UserState = {
   userForPrivateMessage: defaultUser,
   allUsers: [],
   token: '',
+  rtToken: '',
 };
 
 export const userSlice = createSlice({
@@ -31,6 +33,9 @@ export const userSlice = createSlice({
     },
     setToken(state, action: PayloadAction<string>) {
       state.token = action.payload;
+    },
+    setRtToken(state, action: PayloadAction<string>) {
+      state.rtToken = action.payload;
     },
     setSocketIdToUserStore(state, action: PayloadAction<string>) {
       state.myself.socketID = action.payload;

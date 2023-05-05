@@ -13,7 +13,8 @@ import { CONSTANTS } from '../../constants/constants';
 import { RegistartionForm } from './RegistartionForm';
 
 export const SignupOrLogin = () => {
-  const { setUser, setToken, setSocketIdToUserStore } = userSlice.actions;
+  const { setUser, setToken, setRtToken, setSocketIdToUserStore } =
+    userSlice.actions;
   const { action, login, password } = useAppSelector(
     (state) => state.signupReducer
   );
@@ -35,7 +36,7 @@ export const SignupOrLogin = () => {
 
   const attachToSocketIdToUser = (socketId: string) => {
     axios
-      .post(CONSTANTS.attach_socketid, { socketId, userId: myself.id })
+      .post(CONSTANTS.ATTACH_SOKETID, { socketId, userId: myself.id })
       .then((response) => {
         const { data } = response;
 
@@ -51,6 +52,7 @@ export const SignupOrLogin = () => {
   const saveUserToLocal = (data: any) => {
     dispatch(setUser(data[0]));
     dispatch(setToken(data[1].accessToken));
+    dispatch(setRtToken(data[1].refreshToken));
   };
 
   const socketConnect = () => {
@@ -58,8 +60,7 @@ export const SignupOrLogin = () => {
   };
 
   const signup = () => {
-    const URL = action === 'signup' ? CONSTANTS.signup : CONSTANTS.login;
-
+    const URL = action === 'signup' ? CONSTANTS.SIGNUP : CONSTANTS.LOGIN;
     axios
       .post(URL, { login, password })
       .then((response) => {

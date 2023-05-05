@@ -1,45 +1,32 @@
 import axios from 'axios';
-import { useAppDispatch } from './redux';
+import { useAppDispatch, useAppSelector } from './redux';
 import { userSlice } from '../store/reducers/UserSlice';
 import { toast } from 'react-toastify';
-
-const URL_CHANGE_USERNAME = 'http://localhost:3001/users/change-username';
-const URL_CHANGE_USERPASSWORD =
-  'http://localhost:3001/users/change-userpassword';
+import { IChangeUserPassword } from '../models/IChangeUserPassword';
+import { IChangeUserName } from '../models/IChangeUserName';
 
 export const useSettings = () => {
   const dispatch = useAppDispatch();
   const { setUser } = userSlice.actions;
 
-  const changeUser = (action: 'name' | 'password', conf: any) => {
-    let URL = '';
+  const { token } = useAppSelector((state) => state.userReducer);
 
-    if (action === 'name') {
-      URL = URL_CHANGE_USERNAME;
-    }
-
-    if (action === 'password') {
-      URL = URL_CHANGE_USERPASSWORD;
-    }
+  const changeUser = (conf: IChangeUserPassword | IChangeUserName) => {
+    // console.log(conf);
     axios
-      .post(URL, conf)
+      .post(conf.url, conf, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
-        console.log(response);
-
+        // console.log(response);
         dispatch(setUser(response.data));
-
-        // toast('username changed successfuly!', {
-        //   position: 'top-center',
-        //   autoClose: 2000,
-        // });
-        getToast(true, `${action} changed successfuly!`);
+        getToast(true, `${conf.type} was changed successfuly!`);
       })
       .catch((error) => {
-        getToast(false, `failed to change ${action}`);
-        // toast.error('failed to change username', {
-        //   position: 'top-center',
-        //   autoClose: 2000,
-        // });
+        getToast(false, `${conf.type} has not changed`);
+        // console.log(error);
       });
   };
 
