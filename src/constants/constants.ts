@@ -5,6 +5,7 @@ interface IConstants {
   LOGOUT_USER: string;
   URL_CHANGE_USERNAME: string;
   URL_CHANGE_USERPASSWORD: string;
+  DELETE: string;
 }
 
 export const CONSTANTS: IConstants = {
@@ -14,4 +15,5 @@ export const CONSTANTS: IConstants = {
   LOGOUT_USER: 'http://localhost:3001/auth/logout',
   URL_CHANGE_USERNAME: 'http://localhost:3001/users/change-username',
   URL_CHANGE_USERPASSWORD: 'http://localhost:3001/users/change-userpassword',
+  DELETE: 'http://localhost:3001/auth/delete',
 };

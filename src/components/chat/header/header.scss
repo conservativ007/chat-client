@@ -1,4 +1,4 @@
-header {
+.chat-container header {
   display: flex;
   align-items: center;
   background-color: #212121;
@@ -23,6 +23,25 @@ header {
 
     p:hover {
       color: #f9ca24;
+    }
+
+    .settings {
+      width: 25px;
+      height: 25px;
+      background-color: #212121;
+      cursor: pointer;
+      transition: all 1s;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        transition: all 1s;
+
+        &:hover {
+          transform: rotate(45deg);
+        }
+      }
     }
   }
 
@@ -50,24 +69,6 @@ header {
 
     h3 {
       margin-left: 10px;
-    }
-  }
-
-  .settings {
-    width: 25px;
-    height: 25px;
-    background-color: #212121;
-    cursor: pointer;
-    transition: all 1s;
-
-    img {
-      width: 100%;
-      height: 100%;
-      transition: all 1s;
-
-      &:hover {
-        transform: rotate(45deg);
-      }
     }
   }
 }

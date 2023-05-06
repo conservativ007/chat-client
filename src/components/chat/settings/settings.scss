@@ -2,15 +2,28 @@
 
 .settings {
   width: 100%;
+  height: 100%;
+  background-color: white;
+  overflow-y: auto;
 
   header {
     @include flexJustifySB;
+    padding: 0 10px;
 
     height: 50px;
     width: 100%;
     color: white;
+    overflow: hidden;
 
-    h2 {
+    background-color: #535c68;
+
+    p {
+      font-size: 20px;
+      font-variant: small-caps;
+      font-weight: 500;
+    }
+
+    p:last-child {
       cursor: pointer;
     }
   }
@@ -33,16 +46,24 @@
   }
 
   .user-username__change,
-  .user-userpassword__change {
+  .user-userpassword__change,
+  .user-userpassword__delete {
     width: 180px;
     text-align: center;
     margin-top: 10px;
     border-radius: 20px;
     background-color: #6ab04c;
     color: wheat;
-    padding: 7px;
+    padding: 10px 7px;
+    font-size: 18px;
 
     cursor: pointer;
+  }
+
+  .user-userpassword__delete {
+    background-color: #eb4d4b;
+    font-variant: small-caps;
+    font-weight: 600;
   }
 
   .user-password {

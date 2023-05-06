@@ -2,8 +2,10 @@ import { CONSTANTS } from '../../../constants/constants';
 import { useAppSelector } from '../../../hooks/redux';
 import { useInput } from '../../../hooks/useInput';
 import { useSettings } from '../../../hooks/useSettings';
+import { useDeleteUser } from '../../../hooks/useDeleteUser';
 import { IChangeUserName } from '../../../models/IChangeUserName';
 import { IChangeUserPassword } from '../../../models/IChangeUserPassword';
+import { IDeleteCharacter } from '../../../models/IDeleteCharacter';
 import { ChangeUserAvatar } from './ChangeUserAvatar';
 import { UserAvatar } from './UserAvatar';
 import { UserAvatars } from './UserAvatars';
@@ -12,8 +14,11 @@ export const UserDetails = () => {
   const userLogin = useInput('');
   const oldPassword = useInput('');
   const newPassword = useInput('');
+  const deleteCharacter = useInput('');
 
   const getUseSettings = useSettings();
+  const getUseDelete = useDeleteUser();
+
   const { myself } = useAppSelector((state) => state.userReducer);
 
   const changeName = () => {
@@ -40,6 +45,22 @@ export const UserDetails = () => {
       newPassword: newPassword.value,
     };
     getUseSettings(conf);
+  };
+
+  const handleDeleteCharacter = () => {
+    // console.log(deleteCharacter.value);
+    // console.log(myself);
+    if (deleteCharacter.value != 'delete') {
+      return;
+    }
+
+    const conf: IDeleteCharacter = {
+      type: 'delete',
+      url: CONSTANTS.DELETE,
+      userId: myself.id,
+    };
+
+    getUseDelete(conf);
   };
 
   return (
@@ -83,6 +104,21 @@ export const UserDetails = () => {
         />
         <div onClick={changePassword} className="user-userpassword__change">
           change password
+        </div>
+      </div>
+      <div className="user-delete">
+        <div>delete-character</div>
+        <input
+          value={deleteCharacter.value}
+          onChange={(e) => deleteCharacter.onChange(e)}
+          type="text"
+          placeholder="type DELETE"
+        />
+        <div
+          onClick={handleDeleteCharacter}
+          className="user-userpassword__delete"
+        >
+          delete character
         </div>
       </div>
     </div>

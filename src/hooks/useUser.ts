@@ -31,9 +31,12 @@ export const useUser = () => {
 
   // select user for message
   useEffect(() => {
-    console.log('from emit select user for message');
-    console.log(myself);
-    console.log(userForPrivateMessage);
+    if (myself.login === 'all') {
+      console.log('from emit select user for message');
+      console.log(myself);
+      return;
+    }
+    // console.log(userForPrivateMessage);
     socket.emit('selectUserForMessage', {
       senderName: myself.login,
       receiverName: userForPrivateMessage.login,
