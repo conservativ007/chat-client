@@ -28,5 +28,6 @@ code {
   overflow-y: hidden;
   display: flex;
   justify-content: center;
+  background-color: #111;
   /* background-color: #b8e994; */
 }

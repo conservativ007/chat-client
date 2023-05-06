@@ -1,0 +1,124 @@
+@import './mixin.scss';
+
+.signup-container:hover i:first-child {
+  border: 2px solid #ff0057;
+  filter: drop-shadow(0 0 20px #ff0057);
+}
+
+.signup-container:hover i:nth-child(2) {
+  border: 2px solid #00ff0a;
+  filter: drop-shadow(0 0 20px #00ff0a);
+}
+
+.signup-container {
+  position: relative;
+  top: calc(50% - 250px);
+  width: 500px;
+  height: 500px;
+  @include flexCenterCenter;
+
+  i {
+    position: absolute;
+    inset: 0;
+    border: 2px solid #fff;
+    transition: 0.5s;
+  }
+
+  i:nth-child(1) {
+    border-radius: 70% 30% 48% 52% / 38% 54% 46% 62%;
+    animation: animate 30s linear infinite;
+  }
+
+  i:nth-child(2) {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    animation: animate2 36s linear infinite;
+  }
+
+  @keyframes animate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes animate2 {
+    0% {
+      transform: rotate(360deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
+  @keyframes animate3 {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .login {
+    position: absolute;
+    width: 300px;
+    height: 100%;
+    @include flexCenterCenter;
+    flex-direction: column;
+    gap: 20px;
+
+    h2 {
+      font-size: 2em;
+      color: #fff;
+    }
+
+    .input-bx {
+      position: relative;
+      width: 100%;
+    }
+
+    .input-bx input {
+      position: relative;
+      // width: 100%;
+      max-width: 300px;
+      padding: 12px 20px;
+      background: transparent;
+      border: 2px solid #fff;
+      border-radius: 40px;
+      font-size: 1.2em;
+      color: #fff;
+      box-shadow: none;
+      outline: none;
+
+      font-weight: 600;
+    }
+
+    .input-bx input::placeholder {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .input-bx input[type='submit'] {
+      width: 300px;
+      background: linear-gradient(45deg, #ff357a, #fff172);
+      border: none;
+      cursor: pointer;
+    }
+
+    .links {
+      width: 100%;
+      color: wheat;
+
+      display: flex;
+      justify-content: end;
+
+      font-size: 18px;
+      cursor: pointer;
+
+      .signup {
+        margin-right: 10px;
+      }
+    }
+  }
+}

@@ -1,23 +1,24 @@
 import React from 'react';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Chat } from './components/chat/Chat';
 
 import './style/chat.scss';
-import { RegistrationSelect } from './components/registrationForm/RegistrationSelect';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { Settings } from './components/chat/settings/Settings';
+import { SignupOrLogin } from './components/registrationForm/SignupOrLogin';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<RegistrationSelect />} />
+          <Route path="/" element={<SignupOrLogin />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </BrowserRouter>
+      <ToastContainer position="top-center" theme="light" />
     </div>
   );
 }

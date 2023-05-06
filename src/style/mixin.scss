@@ -13,3 +13,9 @@
   align-items: center;
   justify-content: space-between;
 }
+
+@mixin flexCenterCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

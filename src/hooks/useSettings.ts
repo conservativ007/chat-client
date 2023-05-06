@@ -1,15 +1,17 @@
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from './redux';
 import { userSlice } from '../store/reducers/UserSlice';
-import { toast } from 'react-toastify';
 import { IChangeUserPassword } from '../models/IChangeUserPassword';
 import { IChangeUserName } from '../models/IChangeUserName';
+import { useToast } from './useToast';
 
 export const useSettings = () => {
   const dispatch = useAppDispatch();
   const { setUser } = userSlice.actions;
 
   const { token } = useAppSelector((state) => state.userReducer);
+
+  const getToast = useToast;
 
   const changeUser = (conf: IChangeUserPassword | IChangeUserName) => {
     // console.log(conf);
@@ -20,7 +22,6 @@ export const useSettings = () => {
         },
       })
       .then((response) => {
-        // console.log(response);
         dispatch(setUser(response.data));
         getToast(true, `${conf.type} was changed successfuly!`);
       })
@@ -29,21 +30,5 @@ export const useSettings = () => {
         // console.log(error);
       });
   };
-
-  const getToast = (success: boolean, message: string) => {
-    if (success === true) {
-      toast(message, {
-        position: 'top-center',
-        autoClose: 2000,
-      });
-      return;
-    }
-
-    toast.error(message, {
-      position: 'top-center',
-      autoClose: 2000,
-    });
-  };
-
   return changeUser;
 };

@@ -97,6 +97,7 @@
   }
 
   .send-message-button-two {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     outline: none;
@@ -112,6 +113,7 @@
     font-weight: 500;
 
     overflow-y: auto;
+    overflow-x: hidden;
     background-color: #292730;
   }
 

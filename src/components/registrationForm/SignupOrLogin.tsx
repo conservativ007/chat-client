@@ -1,16 +1,15 @@
-import '../../style/registartion.css';
 import { socket } from '../../socket';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
 import 'react-toastify/dist/ReactToastify.css';
-
 import axios from 'axios';
 import { userSlice } from '../../store/reducers/UserSlice';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { CONSTANTS } from '../../constants/constants';
-import { RegistartionForm } from './RegistartionForm';
+import { useToast } from '../../hooks/useToast';
+import { Signup } from './Signup';
 
 export const SignupOrLogin = () => {
   const { setUser, setToken, setRtToken, setSocketIdToUserStore } =
@@ -22,9 +21,11 @@ export const SignupOrLogin = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const getToast = useToast;
+
   useEffect(() => {
     const onConnect = () => {
-      attachToSocketIdToUser(socket.id);
+      attachSocketIdToUser(socket.id);
     };
 
     socket.on('connect', onConnect);
@@ -34,7 +35,7 @@ export const SignupOrLogin = () => {
     };
   }, [myself]);
 
-  const attachToSocketIdToUser = (socketId: string) => {
+  const attachSocketIdToUser = (socketId: string) => {
     axios
       .post(CONSTANTS.ATTACH_SOKETID, { socketId, userId: myself.id })
       .then((response) => {
@@ -68,13 +69,14 @@ export const SignupOrLogin = () => {
 
         saveUserToLocal(data);
         socketConnect();
-        // console.log(response);
       })
       .catch((err) => {
         console.log(err);
         socket.disconnect();
+        const { response } = err;
+        getToast(false, response.data.message);
       });
   };
 
-  return <RegistartionForm signup={signup} />;
+  return <Signup signup={signup} />;
 };
