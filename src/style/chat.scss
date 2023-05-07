@@ -63,7 +63,7 @@
     outline: none;
   }
 
-  .send-message-button {
+  .chat-form__send-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -84,19 +84,19 @@
     }
   }
 
-  .send-message-button-two::-webkit-scrollbar {
+  .chat-form__text-input::-webkit-scrollbar {
     width: 7px;
   }
 
-  .send-message-button-two::-webkit-scrollbar-thumb {
+  .chat-form__text-input::-webkit-scrollbar-thumb {
     background-color: #7775;
     border-radius: 10px;
   }
-  .send-message-button-two::-webkit-scrollbar-thumb:hover {
+  .chat-form__text-input::-webkit-scrollbar-thumb:hover {
     background-color: #777;
   }
 
-  .send-message-button-two {
+  .chat-form__text-input {
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -117,7 +117,7 @@
     background-color: #292730;
   }
 
-  .send-message-button:hover img {
+  .chat-form__send-button:hover img {
     transform: scale(1.2);
   }
 

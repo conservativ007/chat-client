@@ -34,6 +34,15 @@
 
     color: white;
   }
+
+  .group-count {
+    // height: 30px;
+    position: absolute;
+    right: 10px;
+    top: calc(50% - 20px);
+    font-size: 30px;
+    font-weight: 700;
+  }
 }
 
 .user {

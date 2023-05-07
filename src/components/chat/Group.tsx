@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { defaultUser } from '../../models/IUser';
 import { userSlice } from '../../store/reducers/UserSlice';
@@ -14,19 +13,23 @@ export const Group = () => {
       onClick={() => dispatch(setPrivateUser(defaultUser))}
       className="user group"
     >
-      {allUsers.map((user, index) => {
-        return (
-          <div
-            key={user.id}
-            style={{ left: `${index * 25 + 5}px` }}
-            className="group-avatar"
-          >
-            {user.login.slice(0, 1)}
-          </div>
-        );
-      })}
-      <div style={{ display: 'none' }} className="user-name">
-        all
+      {allUsers
+        .filter((user) => user.online === true)
+        .map((user, index) => {
+          if (index > 3) return;
+
+          return (
+            <div
+              key={user.id}
+              style={{ left: `${index * 25 + 5}px` }}
+              className="group-avatar"
+            >
+              {user.login.slice(0, 1)}
+            </div>
+          );
+        })}
+      <div className="group-count">
+        {allUsers.filter((user) => user.online === true).length}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { socket } from '../../socket';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, KeyboardEvent } from 'react';
 import { useAppSelector } from '../../hooks/redux';
 import { IMessage } from '../../models/IMessage';
 import '../../style/chat.scss';
@@ -67,6 +67,13 @@ export const ChatForm = (): JSX.Element => {
     setInputWidth(num);
   }, [sizeOfInputText]);
 
+  const handleOnKeyUp = (event: KeyboardEvent<HTMLDivElement>) => {
+    let key = event.key;
+    if (key === 'Enter') {
+      sendMessage();
+    }
+  };
+
   return (
     <div
       className="chat-form"
@@ -78,11 +85,12 @@ export const ChatForm = (): JSX.Element => {
       <ShowEmoji setPickerVisible={setPickerVisible} />
       <div
         ref={divInputRef}
-        className="send-message-button-two"
+        className="chat-form__text-input"
+        onKeyUp={handleOnKeyUp}
         contentEditable={true}
         onInput={(e) => setMessage(e.currentTarget.textContent)}
       ></div>
-      <div className="send-message-button" onClick={sendMessage}>
+      <div className="chat-form__send-button" onClick={sendMessage}>
         <SendButton />
       </div>
       {isPickerVisible && <Emoji setMessage={setMessage} />}
