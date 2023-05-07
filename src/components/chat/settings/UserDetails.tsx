@@ -48,16 +48,13 @@ export const UserDetails = () => {
   };
 
   const handleDeleteCharacter = () => {
-    // console.log(deleteCharacter.value);
-    // console.log(myself);
     if (deleteCharacter.value != 'delete') {
       return;
     }
 
     const conf: IDeleteCharacter = {
       type: 'delete',
-      url: CONSTANTS.DELETE,
-      userId: myself.id,
+      url: `${CONSTANTS.DELETE}/${myself.id}`,
     };
 
     getUseDelete(conf);

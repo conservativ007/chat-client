@@ -19,7 +19,7 @@ export const useDeleteUser = () => {
   const deleteUser = (conf: IDeleteCharacter) => {
     // console.log(conf);
     axios
-      .post(conf.url, conf, {
+      .delete(conf.url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
