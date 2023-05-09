@@ -28,8 +28,8 @@ export const ShowMessages = (): JSX.Element => {
 
   const getDate = (date: string | undefined) => {
     if (date === undefined) return;
-    let time = date.split('T')[1];
-    time = time.slice(0, -8);
+    let time = date.split('at')[1];
+    time = time.slice(1, time.length);
     return time;
   };
 
@@ -70,13 +70,6 @@ export const ShowMessages = (): JSX.Element => {
           </span>
         );
       })}
-      <svg height="0" width="0">
-        <defs>
-          <clipPath id="svgPath">
-            <path fill="#FFFFFF" d="M20,20H0V0H0A20,20,0,0,0,20,20Z" />
-          </clipPath>
-        </defs>
-      </svg>
       <ChatForm />
     </>
   );

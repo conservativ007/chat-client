@@ -33,8 +33,6 @@ export const useUser = () => {
   // select user for message
   useEffect(() => {
     if (myself.login === 'all') {
-      console.log('from emit select user for message');
-      console.log(myself);
       return;
     }
     // console.log(userForPrivateMessage);
@@ -46,6 +44,8 @@ export const useUser = () => {
 
   useEffect(() => {
     // first emit all users
+    // console.log('from emit getAllUsers');
+    // console.log(myself);
     socket.emit('getAllUsers', myself.login);
 
     // four resieved all users in the function

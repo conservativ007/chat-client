@@ -62,7 +62,6 @@ export const Users = (): JSX.Element => {
             <span
               className={user.online === true ? 'user-online' : 'user-offline'}
             ></span>
-            {/* <span className="user-name">{user.login}</span> */}
             <span className="user-name">{handleUserName(user.login)}</span>
             {addNotification(user.messageForWho)}
           </div>

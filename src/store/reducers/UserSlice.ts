@@ -24,6 +24,9 @@ export const userSlice = createSlice({
     setUser(state, action: PayloadAction<IUser>) {
       state.myself = action.payload;
     },
+    setUserTargetMessage(state, action: PayloadAction<string>) {
+      state.myself.targetForMessage = action.payload;
+    },
     setPrivateUser(state, action: PayloadAction<IUser>) {
       state.userForPrivateMessage = action.payload;
     },

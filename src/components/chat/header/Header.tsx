@@ -4,41 +4,27 @@ import { useNavigate } from 'react-router-dom';
 
 import settings from '../../../assets/images/settings/settings.png';
 import { socket } from '../../../socket';
-import axios from 'axios';
 import { userSlice } from '../../../store/reducers/UserSlice';
-import { CONSTANTS } from '../../../constants/constants';
+import { defaultUser } from '../../../models/IUser';
 
 export const Header = (): JSX.Element => {
   const { myself } = useAppSelector((state) => state.userReducer);
-  const { token } = useAppSelector((state) => state.userReducer);
   const { userForPrivateMessage } = useAppSelector(
     (state) => state.userReducer
   );
 
-  const { setToken } = userSlice.actions;
+  const { setToken, setUser, setAllUsers, setPrivateUser } = userSlice.actions;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const socketDisconnect = () => {
     navigate('/');
     dispatch(setToken(''));
-    axios
-      .post(
-        CONSTANTS.LOGOUT_USER,
-        { userId: myself.id },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        if (response.status !== 200) return;
-        socket.disconnect();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(setUser(defaultUser));
+    dispatch(setPrivateUser(defaultUser));
+    dispatch(setAllUsers([]));
+
+    socket.disconnect();
   };
 
   return (
