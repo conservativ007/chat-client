@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from './redux';
-import { userSlice } from '../store/reducers/UserSlice';
-import { IUser, defaultUser } from '../models/IUser';
-import { socket } from '../socket';
-import { refOfUsers } from '../components/chat/users/Users';
+import { useEffect, useLayoutEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../redux';
+import { userSlice } from '../../store/reducers/UserSlice';
+import { IUser, defaultUser } from '../../models/IUser';
+import { socket } from '../../socket';
+import { refOfUsers } from '../../components/chat/users/Users';
 import { useNavigate } from 'react-router-dom';
+import { groupRef } from '../../components/chat/group/Group';
 
 export const useUser = () => {
   const dispatch = useAppDispatch();
@@ -82,16 +83,28 @@ export const useUser = () => {
     });
   }, [myself, userForPrivateMessage]);
 
+  // add active class when the user or general chat was chousen
   useEffect(() => {
+    // users
     const users = refOfUsers.current?.querySelectorAll('.user');
     if (users === undefined) return;
+
     users.forEach((elemOfUser: HTMLDivElement) => {
       elemOfUser.classList.remove('user-active');
 
-      const userName = elemOfUser.querySelector('.user-name')?.innerHTML;
-      if (userName === userForPrivateMessage.login) {
+      if (elemOfUser.dataset.login === userForPrivateMessage.login) {
         elemOfUser.classList.add('user-active');
       }
     });
+
+    // general chat
+    let elemOfGroup: HTMLDivElement = groupRef.current;
+    if (!elemOfGroup) return;
+
+    if (userForPrivateMessage.login === 'all') {
+      elemOfGroup.classList.add('group-active');
+    } else {
+      elemOfGroup.classList.remove('group-active');
+    }
   }, [userForPrivateMessage]);
 };

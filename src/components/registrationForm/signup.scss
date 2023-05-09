@@ -1,4 +1,4 @@
-@import './mixin.scss';
+@import '../../style/flex.scss';
 
 .signup-container:hover i:first-child {
   border: 2px solid #ff0057;
@@ -16,23 +16,6 @@
   width: 500px;
   height: 500px;
   @include flexCenterCenter;
-
-  i {
-    position: absolute;
-    inset: 0;
-    border: 2px solid #fff;
-    transition: 0.5s;
-  }
-
-  i:nth-child(1) {
-    border-radius: 70% 30% 48% 52% / 38% 54% 46% 62%;
-    animation: animate 30s linear infinite;
-  }
-
-  i:nth-child(2) {
-    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-    animation: animate2 36s linear infinite;
-  }
 
   @keyframes animate {
     0% {
@@ -81,17 +64,14 @@
 
     .input-bx input {
       position: relative;
-      // width: 100%;
-      max-width: 300px;
+      width: 300px;
       padding: 12px 20px;
       background: transparent;
       border: 2px solid #fff;
       border-radius: 40px;
       font-size: 1.2em;
       color: #fff;
-      box-shadow: none;
       outline: none;
-
       font-weight: 600;
     }
 

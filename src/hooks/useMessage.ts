@@ -3,7 +3,7 @@ import { privateMessageSlice } from '../store/reducers/PrivateMessageSlice';
 import { useAppDispatch, useAppSelector } from './redux';
 import { socket } from '../socket';
 import { IMessage } from '../models/IMessage';
-import { containerRef } from '../components/chat/Messages';
+import { containerRef } from '../components/chat/messages/Messages';
 import { sizeOfElementsSlice } from '../store/reducers/SizeOfElements';
 
 export const useMessage = () => {

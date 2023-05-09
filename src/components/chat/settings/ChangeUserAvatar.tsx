@@ -5,13 +5,13 @@ import { IUser } from '../../../models/IUser';
 import { userSlice } from '../../../store/reducers/UserSlice';
 import axios from 'axios';
 
-import '../../../style/ChangeUserAvatar.scss';
-import user from '../../../assets/avatars/user.png';
+import './changeUserAvatar.scss';
+import user from '../../../assets/images/avatars/user.png';
 
 export const ChangeUserAvatar = () => {
   const [file, setFile] = useState<File>();
   const [isFileChousen, setIsFileChousen] = useState<boolean>(false);
-  const { myself } = useAppSelector((state) => state.userReducer);
+  const { myself, token } = useAppSelector((state) => state.userReducer);
 
   const imgRef = useRef<HTMLImageElement>(null);
 
@@ -19,7 +19,7 @@ export const ChangeUserAvatar = () => {
   const { setUser } = userSlice.actions;
 
   useEffect(() => {
-    console.log(isFileChousen);
+    // console.log(isFileChousen);
 
     if (file !== undefined) {
       setIsFileChousen(true);
@@ -55,7 +55,11 @@ export const ChangeUserAvatar = () => {
     formData.append('file', file);
 
     axios
-      .post(`http://localhost:3001/file-upload/${myself.id}`, formData)
+      .post(`http://localhost:3001/file-upload/${myself.id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         changeUserAvatar(response.data);
       })
@@ -90,7 +94,7 @@ export const ChangeUserAvatar = () => {
           onClick={handleUploadClick}
           className="file-animation__button field__file-button"
         >
-          Загрузить
+          upload
         </div>
       </div>
     );
@@ -106,9 +110,9 @@ export const ChangeUserAvatar = () => {
         onChange={handleFileChange}
       />
       <label className="field__file-wrapper" htmlFor="field__file-2">
-        <div className="field__file-fake">Загрузите аватар</div>
+        <div className="field__file-fake">select avatar</div>
 
-        <div className="field__file-button">Выбрать</div>
+        <div className="field__file-button">upload</div>
       </label>
     </div>
   );

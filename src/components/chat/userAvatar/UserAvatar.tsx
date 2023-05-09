@@ -1,5 +1,3 @@
-import './userAvatar.scss';
-
 type AppProps = {
   srcAvatar: string;
 };

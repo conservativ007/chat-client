@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 
-import '../../style/messages.scss';
+import './messages.scss';
 import { ShowMessages } from './ShowMessages';
-import { useMessage } from '../../hooks/useMessage';
-import { useAppDispatch } from '../../hooks/redux';
-import { sizeOfElementsSlice } from '../../store/reducers/SizeOfElements';
+import { useMessage } from '../../../hooks/useMessage';
+import { useAppDispatch } from '../../../hooks/redux';
+import { sizeOfElementsSlice } from '../../../store/reducers/SizeOfElements';
 
 export let containerRef: any;
 

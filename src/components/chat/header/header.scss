@@ -1,4 +1,4 @@
-.chat-container header {
+.chat-container .header {
   display: flex;
   align-items: center;
   background-color: #212121;
@@ -6,13 +6,15 @@
 
   nav {
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    height: 100%;
+    width: 110px;
 
     p {
       color: wheat;
       margin: 0;
       padding: 0;
-      margin-right: 20px;
       font-size: 20px;
       font-variant: small-caps;
       font-weight: 500;
@@ -25,7 +27,7 @@
       color: #f9ca24;
     }
 
-    .settings {
+    .header-settings {
       width: 25px;
       height: 25px;
       background-color: #212121;
@@ -45,7 +47,7 @@
     }
   }
 
-  .user-info {
+  .header__user-info {
     display: flex;
     justify-content: start;
     align-items: center;
@@ -54,7 +56,7 @@
     color: white;
   }
 
-  .user-avatar {
+  .header__user-avatar {
     width: 210px;
     padding: 0 5px;
 
@@ -73,10 +75,12 @@
   }
 }
 
-header span {
-  margin: 0 10px;
-}
+@media (max-width: 600px) {
+  .header .header__user-info .header__user-avatar {
+    width: 100px;
 
-header span::after {
-  content: '>';
+    h3 {
+      display: none;
+    }
+  }
 }

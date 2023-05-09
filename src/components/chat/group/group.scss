@@ -1,0 +1,66 @@
+@import '../../../style/colors.scss';
+
+.group {
+  position: relative;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 20px;
+  background-color: $user-background-color;
+  padding: 5px 5px;
+  color: wheat;
+  border-radius: 3px;
+
+  cursor: pointer;
+  font-variant: small-caps;
+
+  .group-description {
+    position: absolute;
+    top: 0;
+    right: 5px;
+
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .group-avatar {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 37px;
+    height: 37px;
+    background-color: $user-avatar-background-color;
+    border-radius: 50%;
+
+    color: white;
+  }
+
+  .group-count {
+    position: absolute;
+    right: 10px;
+    top: calc(50% - 20px);
+    font-size: 30px;
+    font-weight: 700;
+  }
+}
+
+.group:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.group.group-active {
+  background-color: rgba(106, 176, 76, 0.2);
+}
+
+@media (max-width: 600px) {
+  .group {
+    justify-content: center;
+
+    .group-count {
+      position: static;
+    }
+  }
+}

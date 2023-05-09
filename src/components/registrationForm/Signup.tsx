@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { useToast } from '../../hooks/useToast';
 import { signupSlice } from '../../store/reducers/SignupSlice';
-import '../../style/signup.scss';
+import './signup.scss';
 
 type AppProps = {
   signup: () => void;
@@ -30,8 +30,6 @@ export const Signup = ({ signup }: AppProps) => {
 
   return (
     <div className="signup-container">
-      <i></i>
-      <i></i>
       <div className="login">
         <h2>{action}</h2>
         <div className="input-bx">

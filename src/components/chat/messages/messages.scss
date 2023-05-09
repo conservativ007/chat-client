@@ -1,0 +1,110 @@
+@import '../../../style/colors.scss';
+@import './time.scss';
+
+.chat-messages {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .messages-container {
+    position: relative;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 700px;
+    height: calc(100% - 60px);
+    padding: 0 10px;
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .messages-container .message {
+    position: relative;
+    display: flex;
+    margin: 10px 0;
+    padding: 10px;
+    padding-right: 40px;
+    border-radius: 10px;
+
+    max-width: 300px;
+    font-size: 17px;
+    color: white;
+
+    .message-user {
+      font-weight: 500;
+    }
+
+    .message-time {
+      position: absolute;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      bottom: 5px;
+      right: 5px;
+      color: #dff9fb;
+      font-weight: 500;
+    }
+  }
+
+  .message.theme {
+    background-image: linear-gradient(to bottom, #d4a241, #ef4b42, #8b599e);
+    background-size: 100vw 100vh;
+    background-position-y: 100vh;
+    background-attachment: fixed;
+  }
+
+  .messages-container .message.sender {
+    border-bottom-right-radius: 0;
+  }
+
+  .messages-container .message.receiver {
+    border-bottom-left-radius: 0;
+  }
+
+  .messages-container .message.sender::before {
+    @include showTime;
+    @include timeForSender;
+  }
+
+  .messages-container .message.receiver::before {
+    @include showTime;
+    @include timeForReceiver;
+  }
+
+  .messages-container .message:hover::before {
+    opacity: 0.7;
+  }
+
+  .message.sender {
+    justify-content: flex-end;
+    margin-left: auto;
+    background-color: $message-from-another-user;
+  }
+
+  .message.receiver {
+    justify-content: flex-start;
+    margin-right: auto;
+    background-color: $message-from-myself;
+  }
+}
+
+.messages-container::-webkit-scrollbar {
+  width: 7px;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+}
+
+.bg {
+  position: absolute;
+  background-image: url('../../../assets/images/backgrounds/background-mage-1.jpg');
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

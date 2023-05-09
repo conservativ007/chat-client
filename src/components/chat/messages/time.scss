@@ -1,0 +1,37 @@
+@mixin showTime {
+  content: attr(data-time);
+  display: flex;
+
+  align-items: flex-end;
+  position: absolute;
+
+  top: 0;
+  box-sizing: border-box;
+  padding: 0 8px 8px 0;
+  bottom: 0;
+  height: 100%;
+
+  text-align: right;
+  vertical-align: center;
+  color: white;
+  // color: #818181;
+  font-size: 12px;
+  line-height: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  /*  background: #424242; */
+}
+
+@mixin timeForSender {
+  @include showTime;
+  justify-content: flex-end;
+  width: 70px;
+  right: 100%;
+}
+
+@mixin timeForReceiver {
+  @include showTime;
+  justify-content: center;
+  width: 60px;
+  left: 100%;
+}

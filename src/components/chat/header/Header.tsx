@@ -2,7 +2,7 @@ import './header.scss';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { useNavigate } from 'react-router-dom';
 
-import settings from '../../../assets/settings/settings.png';
+import settings from '../../../assets/images/settings/settings.png';
 import { socket } from '../../../socket';
 import axios from 'axios';
 import { userSlice } from '../../../store/reducers/UserSlice';
@@ -33,8 +33,6 @@ export const Header = (): JSX.Element => {
         }
       )
       .then((response) => {
-        console.log(response);
-
         if (response.status !== 200) return;
         socket.disconnect();
       })
@@ -44,9 +42,9 @@ export const Header = (): JSX.Element => {
   };
 
   return (
-    <header>
-      <div className="user-info">
-        <div className="user-avatar">
+    <header className="header">
+      <div className="header__user-info">
+        <div className="header__user-avatar">
           <img src={myself.avatar} alt="user-avatar" />
           <h3>{myself.login}</h3>
         </div>
@@ -54,7 +52,7 @@ export const Header = (): JSX.Element => {
       </div>
       <nav>
         <p onClick={socketDisconnect}>exit</p>
-        <div className="settings" onClick={() => navigate('/settings')}>
+        <div className="header-settings" onClick={() => navigate('/settings')}>
           <img src={settings} alt="" />
         </div>
       </nav>

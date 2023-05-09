@@ -1,12 +1,14 @@
-import { socket } from '../../socket';
+import { socket } from '../../../socket';
 import { useEffect, useRef, useState, KeyboardEvent } from 'react';
-import { useAppSelector } from '../../hooks/redux';
-import { IMessage } from '../../models/IMessage';
-import '../../style/chat.scss';
+import { useAppSelector } from '../../../hooks/redux';
+import { IMessage } from '../../../models/IMessage';
+
 import { SendButton } from './SendButton';
 
-import { ShowEmoji } from './emoji/ShowEmoji';
-import { Emoji } from './emoji/Emoji';
+import { ShowEmoji } from '../emoji/ShowEmoji';
+import { Emoji } from '../emoji/Emoji';
+
+import './chat.scss';
 
 export let divInputRef: any;
 
