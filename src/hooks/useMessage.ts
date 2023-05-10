@@ -64,9 +64,13 @@ export const useMessage = () => {
   // here we are getting all the messages when we enter the general chat
   useEffect(() => {
     if (userForPrivateMessage.login === 'all') {
-      socket.emit('getAllMessages', userForPrivateMessage, (val: any) => {
-        dispatch(setPrivateMessages(val));
-      });
+      socket.emit(
+        'getAllMessages',
+        userForPrivateMessage,
+        (response: IMessage[]) => {
+          dispatch(setPrivateMessages(response));
+        }
+      );
     }
   }, [userForPrivateMessage]);
 

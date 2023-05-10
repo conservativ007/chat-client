@@ -6,6 +6,7 @@ interface IConstants {
   URL_CHANGE_USERNAME: string;
   URL_CHANGE_USERPASSWORD: string;
   DELETE: string;
+  LIKE_MESSAGE: string;
 }
 
 export const CONSTANTS: IConstants = {
@@ -16,4 +17,5 @@ export const CONSTANTS: IConstants = {
   URL_CHANGE_USERNAME: 'http://localhost:3001/users/change-username',
   URL_CHANGE_USERPASSWORD: 'http://localhost:3001/users/change-userpassword',
   DELETE: 'http://localhost:3001/auth/delete',
+  LIKE_MESSAGE: 'http://localhost:3001/message/message-like',
 };

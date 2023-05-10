@@ -49,9 +49,8 @@ export const Users = (): JSX.Element => {
           <div
             onClick={() =>
               handleClickUser({
-                ...defaultUser,
-                login: user.login,
-                socketID: user.socketID,
+                ...user,
+                password: null,
               })
             }
             className="user"

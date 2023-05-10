@@ -5,6 +5,13 @@
   src: local('../assets/fonts/B612/B612-Regular.ttf');
 }
 
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: normal;
+  src: local('../assets/fonts/cairo/Cairo-VariableFont_slnt,wght.ttf');
+}
+
 * {
   padding: 0;
   margin: 0;

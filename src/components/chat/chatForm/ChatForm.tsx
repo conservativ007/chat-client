@@ -48,7 +48,7 @@ export const ChatForm = (): JSX.Element => {
     if (textCorrected === undefined) return;
     if (inputMessage === null) return;
 
-    let message: IMessage = {
+    let message: Omit<IMessage, 'id' | 'likeCount' | 'whoLiked'> = {
       message: textCorrected,
       senderName: myself.login,
       receiverName: userForPrivateMessage.login,

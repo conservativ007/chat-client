@@ -32,11 +32,14 @@
     font-size: 17px;
     color: white;
 
+    cursor: pointer;
+
     .message-user {
       font-weight: 500;
     }
 
     .message-time {
+      // font-family: 'Cairo', sans-serif;
       position: absolute;
       font-size: 12px;
       display: flex;
@@ -45,6 +48,48 @@
       right: 5px;
       color: #dff9fb;
       font-weight: 500;
+    }
+
+    .message-like__button {
+      visibility: hidden;
+      position: absolute;
+      bottom: -20px;
+      left: 40px;
+      width: 20px;
+      height: 20px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .message-like__view {
+      position: absolute;
+      top: 0;
+      width: 20px;
+      height: 20px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .message-like__count {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 10px;
+    }
+  }
+
+  .messages-container .message:hover {
+    .message-like__button {
+      visibility: visible;
     }
   }
 

@@ -4,8 +4,12 @@ import { useSizeOfUsersContainer } from '../../../hooks/user/useSizeOfUsersConta
 import { IMessage } from '../../../models/IMessage';
 import { ChatForm } from '../chatForm/ChatForm';
 
+import { Like } from './Like';
+
+import './messages.scss';
+
 export const ShowMessages = (): JSX.Element => {
-  const { myself, userForPrivateMessage } = useAppSelector(
+  const { myself, userForPrivateMessage, token } = useAppSelector(
     (state) => state.userReducer
   );
   const { privateMessages } = useAppSelector(
@@ -39,7 +43,7 @@ export const ShowMessages = (): JSX.Element => {
 
   return (
     <>
-      {privateMessages.map((message: IMessage) => {
+      {privateMessages.map((message: IMessage, index: number) => {
         // needs to return messages whgen the user
         // send message to general chat
         // and other users won't see these messages when they
@@ -64,9 +68,10 @@ export const ShowMessages = (): JSX.Element => {
           >
             {getUserName(message.senderName)}
             <span className="message-text">{message.message}</span>
-            <span className="message-time">
+            <span key={index} className="message-time">
               {val <= 180 ? getDate(message.createdAt) : ''}
             </span>
+            <Like message={message} />
           </span>
         );
       })}
