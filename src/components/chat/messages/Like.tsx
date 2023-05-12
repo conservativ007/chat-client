@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { privateMessageSlice } from '../../../store/reducers/PrivateMessageSlice';
+import { useAppSelector } from '../../../hooks/redux';
 import { CONSTANTS } from '../../../constants/constants';
 import { socket } from '../../../socket';
 import { IMessage } from '../../../models/IMessage';
@@ -24,7 +23,7 @@ export const Like = ({ message }: AppProps) => {
 
     const messageDto = {
       messageId,
-      userName: myself.login,
+      senderName: myself.login,
       action,
     };
 
@@ -36,46 +35,31 @@ export const Like = ({ message }: AppProps) => {
       })
       .then((response) => {
         // here we are update the messages for general chat
-        if (userForPrivateMessage.login === 'all') {
-          let { data } = response;
+        // and private messages
+        let { data } = response;
 
-          // for others
-          socket.emit('lastMessageForUsers', data);
-        } else {
-        }
+        socket.emit('updateMessageForUsers', data);
       })
       .catch((err) => console.error(err));
   };
 
-  const likeViewStyleForMySelf = {
-    top: '-5px',
-    left: '-5px',
-  };
-
-  const likeViewStyleForOthers = {
-    top: '-5px',
-    right: '-5px',
-  };
-
-  const styles =
-    myself.login === message.senderName
-      ? likeViewStyleForMySelf
-      : likeViewStyleForOthers;
+  const classNameForLikeButton =
+    myself.login === message.senderName ? 'sender' : 'reciever';
 
   return (
     <>
       <span
         onClick={() => setLike(message.id)}
-        className="message-like__button"
+        className={`message-like__button ${classNameForLikeButton}`}
       >
         <img src={likeSvg} alt="heart" />
       </span>
       {message.likeCount > 0 && (
         <>
-          <span className="message-like__view" style={styles}>
+          <span className={`message-like__view ${classNameForLikeButton}`}>
             <img src={likeSvg} alt="heart" />
           </span>
-          <span style={styles} className="message-like__count">
+          <span className={`message-like__count ${classNameForLikeButton}`}>
             {message.likeCount}
           </span>
         </>
