@@ -54,12 +54,10 @@ export const useEditMessage = () => {
         },
       })
       .then((response) => {
-        // change message for reciever
-        console.log(userForPrivateMessage);
-
+        // update message for reciever
         socket.emit(EMITS.UPDATE_MESSAGE_FOR_ONE_USER, {
           message: response.data,
-          recieverSocketId: userForPrivateMessage.socketID,
+          recieverId: userForPrivateMessage.id,
         });
 
         // update message for myself

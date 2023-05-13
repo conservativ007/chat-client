@@ -42,7 +42,7 @@ export const SignupOrLogin = () => {
         const { data } = response;
         // console.log('');
 
-        console.log(data);
+        // console.log(data);
         dispatch(setSocketIdToUserStore(data));
         navigate('/chat');
       })
@@ -53,7 +53,7 @@ export const SignupOrLogin = () => {
   };
 
   const saveUserToLocal = (data: any) => {
-    console.log(data[0]);
+    // console.log(data[0]);
 
     dispatch(setUser(data[0]));
     dispatch(setToken(data[1].accessToken));
