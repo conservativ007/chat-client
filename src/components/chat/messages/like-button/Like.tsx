@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { useAppSelector } from '../../../hooks/redux';
-import { CONSTANTS } from '../../../constants/constants';
-import { socket } from '../../../socket';
-import { IMessage } from '../../../models/IMessage';
+import { useAppSelector } from '../../../../hooks/redux';
+import { CONSTANTS } from '../../../../constants/constants';
+import { socket } from '../../../../socket';
+import { IMessage } from '../../../../models/IMessage';
 
 import likeSvg from './like.svg';
-import { useLike } from '../../../hooks/useLike';
+import { useLike } from '../../../../hooks/useLike';
 
 type AppProps = {
   message: IMessage;

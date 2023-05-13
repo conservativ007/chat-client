@@ -1,12 +1,16 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { IMessage } from '../../models/IMessage';
+import { IMessage, defaultMessage } from '../../models/IMessage';
 
 interface PrivateMessageState {
   privateMessages: IMessage[];
+  editMessage: IMessage;
+  isMessageEdit: boolean;
 }
 
 const initialState: PrivateMessageState = {
   privateMessages: [],
+  isMessageEdit: false,
+  editMessage: defaultMessage,
 };
 
 export const privateMessageSlice = createSlice({
@@ -14,6 +18,11 @@ export const privateMessageSlice = createSlice({
   initialState,
   reducers: {
     setPrivateMessages(state, action: PayloadAction<IMessage[]>) {
+      action.payload.sort((a: IMessage, b: IMessage): number => {
+        if (a.createdDateForSort > b.createdDateForSort) return 1;
+        if (a.createdDateForSort < b.createdDateForSort) return -1;
+        return 0;
+      });
       state.privateMessages = action.payload;
     },
     setPrivateMessage(state, action: PayloadAction<IMessage>) {
@@ -32,6 +41,12 @@ export const privateMessageSlice = createSlice({
       }
 
       state.privateMessages.splice(foundIndexMessage, 1, recievedMessage);
+    },
+    setMessageActionEdit(state, action: PayloadAction<boolean>) {
+      state.isMessageEdit = action.payload;
+    },
+    setMessageWichEdit(state, action: PayloadAction<IMessage>) {
+      state.editMessage = action.payload;
     },
   },
 });

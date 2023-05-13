@@ -3,7 +3,7 @@ import { userSlice } from '../../../store/reducers/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { IUser, defaultUser } from '../../../models/IUser';
 import { useUser } from '../../../hooks/user/useUser';
-import { Group } from '../group/Group';
+import { Group } from '../general-chat/Group';
 import { useEffect, useRef } from 'react';
 import { UserAvatar } from '../userAvatar/UserAvatar';
 import { useSizeOfUsersContainer } from '../../../hooks/user/useSizeOfUsersContainer';

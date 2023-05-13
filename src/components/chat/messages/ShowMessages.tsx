@@ -2,14 +2,16 @@ import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../../hooks/redux';
 import { useSizeOfUsersContainer } from '../../../hooks/user/useSizeOfUsersContainer';
 import { IMessage } from '../../../models/IMessage';
-import { ChatForm } from '../chatForm/ChatForm';
+import { ChatForm } from '../chat-form/ChatForm';
 
-import { Like } from './Like';
+import { Like } from './like-button/Like';
+import { Time } from './show-time-in-message/Time';
+import { MessageEditor } from './message-editor/MessageEditor';
 
 import './messages.scss';
 
 export const ShowMessages = (): JSX.Element => {
-  const { myself, userForPrivateMessage, token } = useAppSelector(
+  const { myself, userForPrivateMessage } = useAppSelector(
     (state) => state.userReducer
   );
   const { privateMessages } = useAppSelector(
@@ -32,8 +34,7 @@ export const ShowMessages = (): JSX.Element => {
 
   const getDate = (date: string | undefined) => {
     if (date === undefined) return;
-    let time = date.split('at')[1];
-    time = time.slice(1, time.length);
+    let time = date.slice(-5);
     return time;
   };
 
@@ -58,21 +59,26 @@ export const ShowMessages = (): JSX.Element => {
         }
 
         return (
-          <span
+          <div
             key={message.id}
             data-time={val > 180 ? getDate(message.createdAt) : ''}
             className={`message theme ${
               message.senderName === myself.login ? 'sender' : 'receiver'
             }`}
-            style={{ paddingRight: `${val > 180 ? 10 : 40}px` }}
+            style={{ paddingRight: `${val > 180 ? 10 : 50}px` }}
           >
             {getUserName(message.senderName)}
             <span className="message-text">{message.message}</span>
-            <span key={index} className="message-time">
-              {val <= 180 ? getDate(message.createdAt) : ''}
-            </span>
+            <Time
+              getDate={getDate}
+              index={index}
+              message={message}
+              val={val}
+              key={index}
+            />
             <Like message={message} />
-          </span>
+            <MessageEditor message={message} />
+          </div>
         );
       })}
       <ChatForm />

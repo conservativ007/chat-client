@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Chat } from './components/chat/chatForm/Chat';
+import { Chat } from './components/chat/chat-form/Chat';
 
 import './assets/fonts/B612/B612-Regular.ttf';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';

@@ -3,12 +3,13 @@ import { useEffect, useRef, useState, KeyboardEvent } from 'react';
 import { useAppSelector } from '../../../hooks/redux';
 import { IMessage } from '../../../models/IMessage';
 
-import { SendButton } from './SendButton';
-
+import { SendButton } from './send-button/SendButton';
 import { ShowEmoji } from '../emoji/ShowEmoji';
 import { Emoji } from '../emoji/Emoji';
 
 import './chat.scss';
+import { Edit } from './edit-button/Edit';
+import { useEditMessage } from '../../../hooks/useEditMessage';
 
 export let divInputRef: any;
 
@@ -17,14 +18,19 @@ export const ChatForm = (): JSX.Element => {
   const [inputWidth, setInputWidth] = useState<number>(500);
   const [isPickerVisible, setPickerVisible] = useState<boolean>(false);
 
-  const { myself } = useAppSelector((state) => state.userReducer);
-  const { userForPrivateMessage } = useAppSelector(
+  const { myself, userForPrivateMessage } = useAppSelector(
     (state) => state.userReducer
+  );
+
+  const { isMessageEdit } = useAppSelector(
+    (state) => state.privateMessageReducer
   );
 
   const { sizeOfInputText, marginOfMessageContainer } = useAppSelector(
     (state) => state.changeSizeOfElementsReducer
   );
+
+  const getUseEditMess = useEditMessage();
 
   divInputRef = useRef<HTMLDivElement | null>(null);
 
@@ -42,13 +48,20 @@ export const ChatForm = (): JSX.Element => {
   };
 
   const sendMessage = () => {
+    if (isMessageEdit === true) {
+      getUseEditMess();
+      return;
+    }
     let textCorrected = setCorrectMessage();
     let inputMessage = divInputRef.current;
 
     if (textCorrected === undefined) return;
     if (inputMessage === null) return;
 
-    let message: Omit<IMessage, 'id' | 'likeCount' | 'whoLiked'> = {
+    let message: Omit<
+      IMessage,
+      'id' | 'likeCount' | 'whoLiked' | 'createdAt' | 'createdDateForSort'
+    > = {
       message: textCorrected,
       senderName: myself.login,
       receiverName: userForPrivateMessage.login,
@@ -85,6 +98,7 @@ export const ChatForm = (): JSX.Element => {
       }}
     >
       <ShowEmoji setPickerVisible={setPickerVisible} />
+      <Edit inputWidth={inputWidth} />
       <div
         ref={divInputRef}
         className="chat-form__text-input"
@@ -92,9 +106,7 @@ export const ChatForm = (): JSX.Element => {
         contentEditable={true}
         onInput={(e) => setMessage(e.currentTarget.textContent)}
       ></div>
-      <div className="chat-form__send-button" onClick={sendMessage}>
-        <SendButton />
-      </div>
+      <SendButton sendMessage={sendMessage} />
       {isPickerVisible && <Emoji setMessage={setMessage} />}
     </div>
   );

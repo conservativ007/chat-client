@@ -1,8 +1,17 @@
 .chat-container .header {
+  position: relative;
   display: flex;
   align-items: center;
   background-color: #212121;
   padding: 0 5px;
+
+  .user-socketId {
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    color: white;
+    font-size: 14px;
+  }
 
   nav {
     display: flex;

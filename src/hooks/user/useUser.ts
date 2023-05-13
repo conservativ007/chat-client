@@ -5,7 +5,7 @@ import { IUser, defaultUser } from '../../models/IUser';
 import { socket } from '../../socket';
 import { refOfUsers } from '../../components/chat/users/Users';
 import { useNavigate } from 'react-router-dom';
-import { groupRef } from '../../components/chat/group/Group';
+import { groupRef } from '../../components/chat/general-chat/Group';
 
 export const useUser = () => {
   const dispatch = useAppDispatch();

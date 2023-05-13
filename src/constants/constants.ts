@@ -7,6 +7,8 @@ interface IConstants {
   URL_CHANGE_USERPASSWORD: string;
   DELETE: string;
   LIKE_MESSAGE: string;
+  PRIVATE_MESSAGE_EDIT: string;
+  GENERAL_CHAT_MESSAGE_EDIT: string;
 }
 
 export const CONSTANTS: IConstants = {
@@ -18,4 +20,7 @@ export const CONSTANTS: IConstants = {
   URL_CHANGE_USERPASSWORD: 'http://localhost:3001/users/change-userpassword',
   DELETE: 'http://localhost:3001/auth/delete',
   LIKE_MESSAGE: 'http://localhost:3001/message/message-like',
+  PRIVATE_MESSAGE_EDIT: 'http://localhost:3001/message/private-message-edit',
+  GENERAL_CHAT_MESSAGE_EDIT:
+    'http://localhost:3001/message/general-chat-message-edit',
 };

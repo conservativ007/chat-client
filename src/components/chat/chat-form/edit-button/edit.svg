@@ -1,0 +1,31 @@
+<svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  viewBox="0 0 512 512" 
+  xml:space="preserve">
+    <path 
+      fill="#EDEFF1" 
+      d="M436 502H76V10h266l94 94z"
+    />
+    <path 
+      fill="#D3D3D3" 
+      d="M101 192h200v30H101zM101 132h240v30H101zM101 252h160v30H101z"
+    />
+    <path 
+      fill="#466089" 
+      d="M101 452h100v30H101z"
+    />
+    <path 
+      fill="#D3D3D3" 
+      d="m342 10 94 94h-94z"
+    />
+      <g>
+        <path 
+          fill="#6E83B7" 
+          d="m486 220-58-58-240 240v43.857l-19.071 19.072 14.142 14.142L202.143 460H246z"
+        />
+        <path 
+          fill="#FFE352" 
+          d="m357.496 232.501 27-27 58 58-27 27z"
+        />
+      </g>
+  </svg>

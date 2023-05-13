@@ -25,14 +25,11 @@
     display: flex;
     margin: 10px 0;
     padding: 10px;
-    padding-right: 40px;
     border-radius: 10px;
 
     max-width: 300px;
     font-size: 17px;
     color: white;
-
-    cursor: pointer;
 
     .message-user {
       font-weight: 500;
@@ -55,6 +52,8 @@
       bottom: -20px;
       width: 25px;
       height: 25px;
+
+      cursor: pointer;
 
       img {
         width: 100%;
@@ -115,6 +114,10 @@
 
   .messages-container .message:hover {
     .message-like__button {
+      visibility: visible;
+    }
+
+    .message-settings__container {
       visibility: visible;
     }
   }

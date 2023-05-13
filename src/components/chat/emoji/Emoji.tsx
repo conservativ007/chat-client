@@ -1,5 +1,5 @@
 import EmojiPicker, { EmojiStyle, Theme } from 'emoji-picker-react';
-import { divInputRef } from '../chatForm/ChatForm';
+import { divInputRef } from '../chat-form/ChatForm';
 
 type AppProps = {
   setMessage: React.Dispatch<React.SetStateAction<string | null>>;
