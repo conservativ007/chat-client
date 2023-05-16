@@ -1,12 +1,16 @@
 import { IMessage } from '../../../../models/IMessage';
 import './edit.scss';
-import editSvgTwo from './editTwo.svg';
+import editSvg from './edit.svg';
 
 import { divInputRef } from '../../chat-form/ChatForm';
 import { divEditRef } from '../../chat-form/edit-button/Edit';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { privateMessageSlice } from '../../../../store/reducers/PrivateMessageSlice';
-import { useEffect } from 'react';
+import { useEdit } from './useEdit';
+import { useDelete } from './useDelete';
+import deleteImage from './delete.png';
+import axios from 'axios';
+import { CONSTANTS } from '../../../../constants/constants';
 import { socket } from '../../../../socket';
 import { EMITS } from '../../../../constants/emits';
 
@@ -16,10 +20,12 @@ type AppProps = {
 
 export const MessageEditor = ({ message }: AppProps) => {
   const dispatch = useAppDispatch();
-  const { setMessageActionEdit, setMessageWichEdit, updateMessage } =
+  const { setMessageActionEdit, setMessageWichEdit, deleteMessage } =
     privateMessageSlice.actions;
 
-  const { myself } = useAppSelector((state) => state.userReducer);
+  const { myself, userForPrivateMessage, token } = useAppSelector(
+    (state) => state.userReducer
+  );
 
   const openEditorOfMessage = () => {
     let elemOfInputRef: HTMLDivElement = divInputRef.current;
@@ -42,34 +48,55 @@ export const MessageEditor = ({ message }: AppProps) => {
     dispatch(setMessageWichEdit(message));
   };
 
-  useEffect(() => {
-    const handleUpdatedMessageForUsers = (response: any) => {
-      console.log(response);
+  const handlerDeleteMessage = () => {
+    if (userForPrivateMessage.login !== 'all') {
+      deleteMessageForOneUser();
+    } else {
+      deleteMessageForGeneralChat();
+    }
+  };
 
-      dispatch(updateMessage(response));
-    };
+  const deleteMessageForGeneralChat = () => {
+    axios
+      .delete(`${CONSTANTS.GENERAL_CHAT_MESSAGE_DELETE}/${message.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.status !== 204) return;
 
-    const handleUpdatedMessageForGeneralChat = (response: any) => {
-      dispatch(updateMessage(response));
-    };
+        const data = {
+          messageId: message.id,
+        };
+        socket.emit(EMITS.DELETE_MESSAGE_FOR_GENERAL_CHAT, data);
+      });
+  };
 
-    socket.on(EMITS.UPDATE_MESSAGE_FOR_ONE_USER, handleUpdatedMessageForUsers);
-    socket.on(
-      EMITS.UPDATE_MESSAGE_FOR_GENERAL_CHAT,
-      handleUpdatedMessageForGeneralChat
-    );
+  const deleteMessageForOneUser = () => {
+    axios
+      .delete(`${CONSTANTS.PRIVATE_MESSAGE_DELETE}/${message.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.status !== 204) return;
 
-    return () => {
-      socket.off(
-        EMITS.UPDATE_MESSAGE_FOR_ONE_USER,
-        handleUpdatedMessageForUsers
-      );
-      socket.off(
-        EMITS.UPDATE_MESSAGE_FOR_GENERAL_CHAT,
-        handleUpdatedMessageForGeneralChat
-      );
-    };
-  }, []);
+        // delete for myself
+        dispatch(deleteMessage(message.id));
+
+        // delete for reciever user
+        const data = {
+          recieverId: userForPrivateMessage.id,
+          messageId: message.id,
+        };
+        socket.emit(EMITS.DELETE_MESSAGE_FOR_ONE_USER, data);
+      });
+  };
+
+  useEdit();
+  useDelete();
 
   if (message.senderName !== myself.login) {
     return <></>;
@@ -78,7 +105,10 @@ export const MessageEditor = ({ message }: AppProps) => {
   return (
     <div className="message-settings__container">
       <div onClick={openEditorOfMessage} className="edit">
-        <img src={editSvgTwo} alt="" />
+        <img src={editSvg} alt="" />
+      </div>
+      <div onClick={handlerDeleteMessage} className="delete">
+        <img src={deleteImage} alt="" />
       </div>
     </div>
   );

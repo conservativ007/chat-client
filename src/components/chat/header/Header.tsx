@@ -42,7 +42,6 @@ export const Header = (): JSX.Element => {
           <img src={settings} alt="" />
         </div>
       </nav>
-      <div className="user-socketId">{myself.socketID}</div>
     </header>
   );
 };

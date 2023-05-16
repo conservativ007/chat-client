@@ -48,6 +48,18 @@ export const privateMessageSlice = createSlice({
     setMessageWichEdit(state, action: PayloadAction<IMessage>) {
       state.editMessage = action.payload;
     },
+    deleteMessage(state, action: PayloadAction<string>) {
+      const foundIndex = state.privateMessages.findIndex(
+        (message) => message.id === action.payload
+      );
+
+      if (foundIndex === -1) {
+        console.log('foundIndex === -1');
+        return;
+      }
+
+      state.privateMessages.splice(foundIndex, 1);
+    },
   },
 });
 

@@ -9,6 +9,8 @@ interface IConstants {
   LIKE_MESSAGE: string;
   PRIVATE_MESSAGE_EDIT: string;
   GENERAL_CHAT_MESSAGE_EDIT: string;
+  PRIVATE_MESSAGE_DELETE: string;
+  GENERAL_CHAT_MESSAGE_DELETE: string;
 }
 
 export const CONSTANTS: IConstants = {
@@ -23,4 +25,8 @@ export const CONSTANTS: IConstants = {
   PRIVATE_MESSAGE_EDIT: 'http://localhost:3001/message/private-message-edit',
   GENERAL_CHAT_MESSAGE_EDIT:
     'http://localhost:3001/message/general-chat-message-edit',
+  PRIVATE_MESSAGE_DELETE:
+    'http://localhost:3001/message/private-message-delete',
+  GENERAL_CHAT_MESSAGE_DELETE:
+    'http://localhost:3001/message/general-chat-message-delete',
 };
