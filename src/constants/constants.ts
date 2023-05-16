@@ -11,6 +11,8 @@ interface IConstants {
   GENERAL_CHAT_MESSAGE_EDIT: string;
   PRIVATE_MESSAGE_DELETE: string;
   GENERAL_CHAT_MESSAGE_DELETE: string;
+  CREATE_MESSAGE_FOR_GENERAL_CHAT: string;
+  CREATE_PRIVATE_MESSAGE: string;
 }
 
 export const CONSTANTS: IConstants = {
@@ -29,4 +31,8 @@ export const CONSTANTS: IConstants = {
     'http://localhost:3001/message/private-message-delete',
   GENERAL_CHAT_MESSAGE_DELETE:
     'http://localhost:3001/message/general-chat-message-delete',
+  CREATE_MESSAGE_FOR_GENERAL_CHAT:
+    'http://localhost:3001/message/create-message-for-general-chat',
+  CREATE_PRIVATE_MESSAGE:
+    'http://localhost:3001/message/create-private-message',
 };

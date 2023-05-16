@@ -3,6 +3,7 @@ import { socket } from '../socket';
 import { useAppDispatch } from './redux';
 import { privateMessageSlice } from '../store/reducers/PrivateMessageSlice';
 import { IMessage } from '../models/IMessage';
+import { EMITS } from '../constants/emits';
 
 export const useLike = () => {
   const dispatch = useAppDispatch();
@@ -13,10 +14,10 @@ export const useLike = () => {
       dispatch(updateMessage(response));
     };
 
-    socket.on('setUpdatedMessageForUsers', handleUpdatedMessageForUsers);
+    socket.on(EMITS.SET_LIKE_TO_MESSAGE, handleUpdatedMessageForUsers);
 
     return () => {
-      socket.off('setUpdatedMessageForUsers', handleUpdatedMessageForUsers);
+      socket.off(EMITS.SET_LIKE_TO_MESSAGE, handleUpdatedMessageForUsers);
     };
   }, []);
 };

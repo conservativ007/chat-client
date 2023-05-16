@@ -5,6 +5,7 @@ import { socket } from '../socket';
 import { IMessage } from '../models/IMessage';
 import { containerRef } from '../components/chat/messages/Messages';
 import { sizeOfElementsSlice } from '../store/reducers/SizeOfElements';
+import { EMITS } from '../constants/emits';
 
 export const useMessage = () => {
   const { setPrivateMessages, setPrivateMessage } = privateMessageSlice.actions;
@@ -22,42 +23,39 @@ export const useMessage = () => {
     sizeOfElementsSlice.actions;
 
   useEffect(() => {
-    const handleMessageForAllChat = (message: IMessage) => {
-      dispatch(setPrivateMessage(message));
-    };
-
     const handlePrivateMessagesForClients = (data: IMessage[]) => {
       dispatch(setPrivateMessages(data));
     };
 
-    const handlePrivateMessageForSender = (data: IMessage) => {
-      dispatch(setPrivateMessage(data));
+    const handleMessageForAllChat = (message: IMessage) => {
+      dispatch(setPrivateMessage(message));
     };
 
-    const handlePrivateMessageForResiever = (data: IMessage) => {
-      // this event will only work when the resiever has selected
-      // the same user that sent him a message
-      if (userForPrivateMessage.login !== data.senderName) return;
-      dispatch(setPrivateMessage(data));
+    const handlePrivateMessageForResiever = (message: IMessage) => {
+      dispatch(setPrivateMessage(message));
     };
 
     // get one message for all chat and save it
-    socket.on('messageForAllChat', handleMessageForAllChat);
+    socket.on(EMITS.CREATE_MESSAGE_FOR_GENERAL_CHAT, handleMessageForAllChat);
 
     // get all private messages for sender and resiever and save it
-    socket.on('privateMessagesForClients', handlePrivateMessagesForClients);
+    socket.on(
+      EMITS.GET_MESSAGES_FOR_PRIVATE_CHAT,
+      handlePrivateMessagesForClients
+    );
 
-    // get one private message for sender
-    socket.on('privateMessageForSender', handlePrivateMessageForSender);
-
-    // get one private message for resiever
-    socket.on('privateMessageForResiever', handlePrivateMessageForResiever);
+    socket.on(EMITS.CREATE_PRIVATE_MESSAGE, handlePrivateMessageForResiever);
 
     return () => {
-      socket.off('messageForAllChat', handleMessageForAllChat);
-      socket.off('privateMessagesForClients', handlePrivateMessagesForClients);
-      socket.off('privateMessageForSender', handlePrivateMessageForSender);
-      socket.off('privateMessageForResiever', handlePrivateMessageForResiever);
+      socket.off(
+        EMITS.GET_MESSAGES_FOR_PRIVATE_CHAT,
+        handlePrivateMessagesForClients
+      );
+      socket.off(EMITS.CREATE_PRIVATE_MESSAGE, handlePrivateMessageForResiever);
+      socket.off(
+        EMITS.CREATE_MESSAGE_FOR_GENERAL_CHAT,
+        handleMessageForAllChat
+      );
     };
   }, [userForPrivateMessage]);
 
@@ -65,7 +63,7 @@ export const useMessage = () => {
   useEffect(() => {
     if (userForPrivateMessage.login === 'all') {
       socket.emit(
-        'getAllMessages',
+        EMITS.GET_MESSAGES_FOR_GENERAL_CHAT,
         userForPrivateMessage,
         (response: IMessage[]) => {
           dispatch(setPrivateMessages(response));

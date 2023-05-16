@@ -6,6 +6,7 @@ import { useToast } from 'react-toastify';
 import { defaultUser } from '../models/IUser';
 import { useNavigate } from 'react-router-dom';
 import { socket } from '../socket';
+import { EMITS } from '../constants/emits';
 
 export const useDeleteUser = () => {
   const dispatch = useAppDispatch();
@@ -29,7 +30,7 @@ export const useDeleteUser = () => {
         if (response.status !== 204) return;
         dispatch(setUser(defaultUser));
         navigate('/');
-        socket.emit('getAllUsers');
+        socket.emit(EMITS.GET_ALL_USERS);
         socket.disconnect();
         // dispatch(setUser(response.data));
         // getToast(true, `${conf.type} was changed successfuly!`);

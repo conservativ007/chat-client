@@ -6,6 +6,7 @@ import { IMessage } from '../../../../models/IMessage';
 
 import likeSvg from './like.svg';
 import { useLike } from '../../../../hooks/useLike';
+import { EMITS } from '../../../../constants/emits';
 
 type AppProps = {
   message: IMessage;
@@ -38,7 +39,7 @@ export const Like = ({ message }: AppProps) => {
         // and private messages
         let { data } = response;
 
-        socket.emit('updateMessageForUsers', data);
+        socket.emit(EMITS.SET_LIKE_TO_MESSAGE, data);
       })
       .catch((err) => console.error(err));
   };

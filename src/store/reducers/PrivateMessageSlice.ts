@@ -1,9 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { IMessage, defaultMessage } from '../../models/IMessage';
+import { IPreMessage, defaultPreMessage } from '../../models/IPreMessage';
 
 interface PrivateMessageState {
   privateMessages: IMessage[];
   editMessage: IMessage;
+  preMessage: IPreMessage;
   isMessageEdit: boolean;
 }
 
@@ -11,6 +13,7 @@ const initialState: PrivateMessageState = {
   privateMessages: [],
   isMessageEdit: false,
   editMessage: defaultMessage,
+  preMessage: defaultPreMessage,
 };
 
 export const privateMessageSlice = createSlice({
@@ -47,6 +50,9 @@ export const privateMessageSlice = createSlice({
     },
     setMessageWichEdit(state, action: PayloadAction<IMessage>) {
       state.editMessage = action.payload;
+    },
+    setPreMessage(state, action: PayloadAction<IPreMessage>) {
+      state.preMessage = action.payload;
     },
     deleteMessage(state, action: PayloadAction<string>) {
       const foundIndex = state.privateMessages.findIndex(

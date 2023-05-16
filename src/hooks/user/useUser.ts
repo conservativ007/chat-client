@@ -6,6 +6,7 @@ import { socket } from '../../socket';
 import { refOfUsers } from '../../components/chat/users/Users';
 import { useNavigate } from 'react-router-dom';
 import { groupRef } from '../../components/chat/general-chat/Group';
+import { EMITS } from '../../constants/emits';
 
 export const useUser = () => {
   const dispatch = useAppDispatch();
@@ -46,7 +47,7 @@ export const useUser = () => {
     // first emit all users
     // console.log('from emit getAllUsers');
     // console.log(myself);
-    socket.emit('getAllUsers', myself.login);
+    socket.emit(EMITS.GET_ALL_USERS, myself.login);
 
     // four resieved all users in the function
     const getAllUsers = (users: IUser[]) => {
@@ -55,10 +56,10 @@ export const useUser = () => {
 
     // second see on the server side
     // third resieved all users
-    socket.on('getAllUsers', getAllUsers);
+    socket.on(EMITS.GET_ALL_USERS, getAllUsers);
 
     return () => {
-      socket.off('getAllUsers', getAllUsers);
+      socket.off(EMITS.GET_ALL_USERS, getAllUsers);
     };
   }, [myself]);
 
@@ -71,13 +72,13 @@ export const useUser = () => {
       return;
     }
 
-    socket.emit('getAllPrivateMessages', {
+    socket.emit(EMITS.GET_MESSAGES_FOR_PRIVATE_CHAT, {
       senderName: myself.login,
       receiverName: userForPrivateMessage.login,
     });
 
     // remove notification (marker) when the user was selected
-    socket.emit('removeNameForMessageTo', {
+    socket.emit(EMITS.REMOVE_NAME_FOR_MESSAGE_TO, {
       senderName: myself.login,
       receiverName: userForPrivateMessage.login,
     });

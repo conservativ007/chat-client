@@ -1,7 +1,6 @@
 import { socket } from '../../../socket';
 import { useEffect, useRef, useState, KeyboardEvent } from 'react';
-import { useAppSelector } from '../../../hooks/redux';
-import { IMessage } from '../../../models/IMessage';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 
 import { SendButton } from './send-button/SendButton';
 import { ShowEmoji } from '../emoji/ShowEmoji';
@@ -10,6 +9,12 @@ import { Emoji } from '../emoji/Emoji';
 import './chat.scss';
 import { Edit } from './edit-button/Edit';
 import { useEditMessage } from '../../../hooks/useEditMessage';
+import { EMITS } from '../../../constants/emits';
+import axios from 'axios';
+import { CONSTANTS } from '../../../constants/constants';
+import { privateMessageSlice } from '../../../store/reducers/PrivateMessageSlice';
+
+import { IPreMessage } from '../../../models/IPreMessage';
 
 export let divInputRef: any;
 
@@ -18,7 +23,7 @@ export const ChatForm = (): JSX.Element => {
   const [inputWidth, setInputWidth] = useState<number>(500);
   const [isPickerVisible, setPickerVisible] = useState<boolean>(false);
 
-  const { myself, userForPrivateMessage } = useAppSelector(
+  const { myself, userForPrivateMessage, token } = useAppSelector(
     (state) => state.userReducer
   );
 
@@ -30,7 +35,11 @@ export const ChatForm = (): JSX.Element => {
     (state) => state.changeSizeOfElementsReducer
   );
 
+  const { setPrivateMessage, setPreMessage } = privateMessageSlice.actions;
+
   const getUseEditMess = useEditMessage();
+
+  const dispatch = useAppDispatch();
 
   divInputRef = useRef<HTMLDivElement | null>(null);
 
@@ -58,19 +67,43 @@ export const ChatForm = (): JSX.Element => {
     if (textCorrected === undefined) return;
     if (inputMessage === null) return;
 
-    let message: Omit<
-      IMessage,
-      'id' | 'likeCount' | 'whoLiked' | 'createdAt' | 'createdDateForSort'
-    > = {
+    let message: IPreMessage = {
       message: textCorrected,
       senderName: myself.login,
       receiverName: userForPrivateMessage.login,
     };
 
     if (userForPrivateMessage.login === 'all') {
-      socket.emit('createMessageForAllChat', message);
+      // console.log('create message for general chat');
+      axios
+        .post(CONSTANTS.CREATE_MESSAGE_FOR_GENERAL_CHAT, message, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          if (response.status !== 201) return;
+          socket.emit(EMITS.CREATE_MESSAGE_FOR_GENERAL_CHAT, response.data);
+        });
+
+      // socket.emit('createMessageForAllChat', message);
     } else {
-      socket.emit('createPrivateMessage', message);
+      axios
+        .post(CONSTANTS.CREATE_PRIVATE_MESSAGE, message, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          if (response.status !== 201) return;
+          dispatch(setPrivateMessage(response.data));
+
+          const message = {
+            message: response.data,
+            recieverId: userForPrivateMessage.id,
+          };
+          socket.emit(EMITS.CREATE_PRIVATE_MESSAGE, message);
+        });
     }
     setMessage('');
     inputMessage.innerHTML = '';
