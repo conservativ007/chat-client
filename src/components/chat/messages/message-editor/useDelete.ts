@@ -17,17 +17,14 @@ export const useDelete = () => {
       dispatch(deleteMessage(response));
     };
 
-    socket.on(EMITS.DELETE_MESSAGE_FOR_ONE_USER, handleDeleteMessageForOneUser);
+    socket.on(EMITS.DELETE_PRIVATE_MESSAGE, handleDeleteMessageForOneUser);
     socket.on(
       EMITS.DELETE_MESSAGE_FOR_GENERAL_CHAT,
       handleDeleteMessageForGeneralChat
     );
 
     return () => {
-      socket.off(
-        EMITS.DELETE_MESSAGE_FOR_ONE_USER,
-        handleDeleteMessageForOneUser
-      );
+      socket.off(EMITS.DELETE_PRIVATE_MESSAGE, handleDeleteMessageForOneUser);
       socket.off(
         EMITS.DELETE_MESSAGE_FOR_GENERAL_CHAT,
         handleDeleteMessageForGeneralChat

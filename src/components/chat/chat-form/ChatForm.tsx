@@ -35,7 +35,7 @@ export const ChatForm = (): JSX.Element => {
     (state) => state.changeSizeOfElementsReducer
   );
 
-  const { setPrivateMessage, setPreMessage } = privateMessageSlice.actions;
+  const { setPrivateMessage } = privateMessageSlice.actions;
 
   const getUseEditMess = useEditMessage();
 
@@ -72,39 +72,33 @@ export const ChatForm = (): JSX.Element => {
       senderName: myself.login,
       receiverName: userForPrivateMessage.login,
     };
+    let url: string;
+    let emit: string;
 
     if (userForPrivateMessage.login === 'all') {
-      // console.log('create message for general chat');
-      axios
-        .post(CONSTANTS.CREATE_MESSAGE_FOR_GENERAL_CHAT, message, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          if (response.status !== 201) return;
-          socket.emit(EMITS.CREATE_MESSAGE_FOR_GENERAL_CHAT, response.data);
-        });
-
-      // socket.emit('createMessageForAllChat', message);
+      url = CONSTANTS.CREATE_MESSAGE_FOR_GENERAL_CHAT;
+      emit = EMITS.CREATE_MESSAGE_FOR_GENERAL_CHAT;
     } else {
-      axios
-        .post(CONSTANTS.CREATE_PRIVATE_MESSAGE, message, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          if (response.status !== 201) return;
-          dispatch(setPrivateMessage(response.data));
-
-          const message = {
-            message: response.data,
-            recieverId: userForPrivateMessage.id,
-          };
-          socket.emit(EMITS.CREATE_PRIVATE_MESSAGE, message);
-        });
+      url = CONSTANTS.CREATE_PRIVATE_MESSAGE;
+      emit = EMITS.CREATE_PRIVATE_MESSAGE;
     }
+
+    axios
+      .post(url, message, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.status !== 201) return;
+        socket.emit(emit, response.data);
+
+        if (userForPrivateMessage.login !== 'all') {
+          // save message for myself
+          dispatch(setPrivateMessage(response.data));
+        }
+      });
+
     setMessage('');
     inputMessage.innerHTML = '';
   };

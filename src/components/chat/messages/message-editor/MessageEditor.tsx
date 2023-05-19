@@ -65,11 +65,7 @@ export const MessageEditor = ({ message }: AppProps) => {
       })
       .then((response) => {
         if (response.status !== 204) return;
-
-        const data = {
-          messageId: message.id,
-        };
-        socket.emit(EMITS.DELETE_MESSAGE_FOR_GENERAL_CHAT, data);
+        socket.emit(EMITS.DELETE_MESSAGE_FOR_GENERAL_CHAT, message.id);
       });
   };
 
@@ -91,7 +87,7 @@ export const MessageEditor = ({ message }: AppProps) => {
           recieverId: userForPrivateMessage.id,
           messageId: message.id,
         };
-        socket.emit(EMITS.DELETE_MESSAGE_FOR_ONE_USER, data);
+        socket.emit(EMITS.DELETE_PRIVATE_MESSAGE, data);
       });
   };
 

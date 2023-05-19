@@ -16,9 +16,7 @@ export const useEditMessage = () => {
     (state) => state.privateMessageReducer
   );
 
-  const { userForPrivateMessage, token } = useAppSelector(
-    (state) => state.userReducer
-  );
+  const { token } = useAppSelector((state) => state.userReducer);
 
   const updateMessageForMyself = () => {
     let messageInputRef: HTMLDivElement = divInputRef.current;
@@ -55,10 +53,8 @@ export const useEditMessage = () => {
       })
       .then((response) => {
         // update message for reciever
-        socket.emit(EMITS.UPDATE_MESSAGE_FOR_ONE_USER, {
-          message: response.data,
-          recieverId: userForPrivateMessage.id,
-        });
+        const data = response.data;
+        socket.emit(EMITS.UPDATE_PRIVATE_MESSAGE, data);
 
         // update message for myself
         dispatch(updateMessage(response.data));
@@ -83,9 +79,8 @@ export const useEditMessage = () => {
       })
       .then((response) => {
         // change message for reciever
-        socket.emit(EMITS.UPDATE_MESSAGE_FOR_GENERAL_CHAT, {
-          message: response.data,
-        });
+        const data = response.data;
+        socket.emit(EMITS.UPDATE_MESSAGE_FOR_GENERAL_CHAT, data);
 
         dispatch(setMessageActionEdit(false));
 
