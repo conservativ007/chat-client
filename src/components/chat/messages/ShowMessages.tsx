@@ -1,16 +1,18 @@
-import { useEffect, useState } from 'react';
-import { useAppSelector } from '../../../hooks/redux';
-import { useSizeOfUsersContainer } from '../../../hooks/user/useSizeOfUsersContainer';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { IMessage } from '../../../models/IMessage';
 import { ChatForm } from '../chat-form/ChatForm';
 
 import { Like } from './like-button/Like';
 import { Time } from './show-time-in-message/Time';
-import { MessageEditor } from './message-editor/MessageEditor';
 
 import './messages.scss';
+import { messageMenuSlice } from '../../../store/reducers/MessaggeMenu';
+import { privateMessageSlice } from '../../../store/reducers/PrivateMessageSlice';
 
 export const ShowMessages = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+
   const { myself, userForPrivateMessage } = useAppSelector(
     (state) => state.userReducer
   );
@@ -18,8 +20,13 @@ export const ShowMessages = (): JSX.Element => {
     (state) => state.privateMessageReducer
   );
 
-  const getSizeOfUsersContainer = useSizeOfUsersContainer();
-  const [val, setVal] = useState(0);
+  const { sizeOfMessageContainer, sizeOfUsersContainer } = useAppSelector(
+    (state) => state.changeSizeOfElementsReducer
+  );
+
+  const { setShowMessageMenu, setLeft, setTop } = messageMenuSlice.actions;
+
+  const { setMessageWichEdit } = privateMessageSlice.actions;
 
   const getUserName = (username: string) => {
     if (userForPrivateMessage.login === 'all') {
@@ -38,9 +45,45 @@ export const ShowMessages = (): JSX.Element => {
     return time;
   };
 
+  // new feature!
+  const handleContextMenu = (
+    e: React.MouseEvent<HTMLDivElement>,
+    message: IMessage
+  ) => {
+    e.preventDefault();
+
+    const sizeOfMessageEditor = 120;
+
+    let sizeOne = sizeOfMessageEditor + e.clientX - sizeOfUsersContainer;
+    let sizeTwo = sizeOfMessageContainer - sizeOne;
+
+    let result = 0;
+
+    if (sizeTwo < 0) {
+      result = e.clientX + sizeTwo;
+      dispatch(setLeft(result));
+    } else {
+      dispatch(setLeft(e.clientX));
+    }
+
+    if (message.senderId !== myself.id) return;
+
+    // set message clicked
+    dispatch(setMessageWichEdit(message));
+
+    // show menu in message
+    dispatch(setShowMessageMenu(true));
+    dispatch(setTop(e.clientY));
+  };
+
   useEffect(() => {
-    setVal(getSizeOfUsersContainer);
-  }, [getSizeOfUsersContainer]);
+    const handleClickWindow = () => {
+      dispatch(setShowMessageMenu(false));
+    };
+
+    window.addEventListener('click', handleClickWindow);
+    return () => window.removeEventListener('click', handleClickWindow);
+  }, []);
 
   return (
     <>
@@ -61,11 +104,13 @@ export const ShowMessages = (): JSX.Element => {
         return (
           <div
             key={message.id}
-            data-time={val > 180 ? getDate(message.createdAt) : ''}
+            onContextMenu={(e) => handleContextMenu(e, message)}
+            // data-time={val > 180 ? getDate(message.createdAt) : ''}
             className={`message theme ${
-              message.senderName === myself.login ? 'sender' : 'receiver'
+              message.senderId === myself.id ? 'sender' : 'receiver'
             }`}
-            style={{ paddingRight: `${val > 180 ? 10 : 50}px` }}
+            style={{ paddingRight: `${50}px` }}
+            // style={{ paddingRight: `${val > 180 ? 10 : 50}px` }}
           >
             {getUserName(message.senderName)}
             <span className="message-text">{message.message}</span>
@@ -73,11 +118,9 @@ export const ShowMessages = (): JSX.Element => {
               getDate={getDate}
               index={index}
               message={message}
-              val={val}
               key={index}
             />
             <Like message={message} />
-            <MessageEditor message={message} />
           </div>
         );
       })}

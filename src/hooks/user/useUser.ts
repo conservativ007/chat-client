@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../redux';
 import { userSlice } from '../../store/reducers/UserSlice';
+import { sizeOfElementsSlice } from '../../store/reducers/SizeOfElements';
 import { IUser, defaultUser } from '../../models/IUser';
 import { socket } from '../../socket';
 import { refOfUsers } from '../../components/chat/users/Users';
@@ -12,6 +13,7 @@ export const useUser = () => {
   const dispatch = useAppDispatch();
 
   const { setPrivateUser, setAllUsers, setUser } = userSlice.actions;
+  const { setSizeOfUsersContainer } = sizeOfElementsSlice.actions;
 
   const { myself } = useAppSelector((state) => state.userReducer);
   const { userForPrivateMessage } = useAppSelector(
@@ -73,8 +75,8 @@ export const useUser = () => {
     }
 
     socket.emit(EMITS.GET_MESSAGES_FOR_PRIVATE_CHAT, {
-      senderName: myself.login,
-      receiverName: userForPrivateMessage.login,
+      senderId: myself.id,
+      receiverId: userForPrivateMessage.id,
     });
 
     // remove notification (marker) when the user was selected
@@ -108,4 +110,25 @@ export const useUser = () => {
       elemOfGroup.classList.remove('group-active');
     }
   }, [userForPrivateMessage]);
+
+  const getWidthOfUsersContainer = () => {
+    let elemOfUsersContainer: HTMLDivElement = refOfUsers.current;
+    const widthOfElemUsersContainer =
+      elemOfUsersContainer.getBoundingClientRect().width;
+    return widthOfElemUsersContainer;
+  };
+
+  useEffect(() => {
+    const resizeListener = () => {
+      dispatch(setSizeOfUsersContainer(getWidthOfUsersContainer()));
+    };
+    dispatch(setSizeOfUsersContainer(getWidthOfUsersContainer()));
+
+    window.addEventListener('resize', resizeListener);
+
+    return () => {
+      // remove resize listener
+      window.removeEventListener('resize', resizeListener);
+    };
+  }, []);
 };

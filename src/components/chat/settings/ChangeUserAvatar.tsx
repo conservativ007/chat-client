@@ -7,6 +7,7 @@ import axios from 'axios';
 
 import './changeUserAvatar.scss';
 import user from '../../../assets/images/avatars/user.png';
+import { CONSTANTS } from '../../../constants/constants';
 
 export const ChangeUserAvatar = () => {
   const [file, setFile] = useState<File>();
@@ -55,7 +56,7 @@ export const ChangeUserAvatar = () => {
     formData.append('file', file);
 
     axios
-      .post(`http://localhost:3001/file-upload/${myself.id}`, formData, {
+      .post(`${CONSTANTS.CHANGE_USER_AVATAR}/${myself.id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -78,7 +79,7 @@ export const ChangeUserAvatar = () => {
     console.log(elem);
     if (elem === null) return;
 
-    console.log('getToPreviousState');
+    // console.log('getToPreviousState');
 
     elem.className = '';
     setFile(undefined);

@@ -71,6 +71,8 @@ export const ChatForm = (): JSX.Element => {
       message: textCorrected,
       senderName: myself.login,
       receiverName: userForPrivateMessage.login,
+      senderId: myself.id,
+      receiverId: userForPrivateMessage.id,
     };
     let url: string;
     let emit: string;

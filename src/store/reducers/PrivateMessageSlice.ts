@@ -54,6 +54,7 @@ export const privateMessageSlice = createSlice({
     setPreMessage(state, action: PayloadAction<IPreMessage>) {
       state.preMessage = action.payload;
     },
+
     deleteMessage(state, action: PayloadAction<string>) {
       const foundIndex = state.privateMessages.findIndex(
         (message) => message.id === action.payload

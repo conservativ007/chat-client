@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { socket } from '../../../../socket';
-import { EMITS } from '../../../../constants/emits';
-import { useAppDispatch } from '../../../../hooks/redux';
-import { privateMessageSlice } from '../../../../store/reducers/PrivateMessageSlice';
+import { socket } from '../../../socket';
+import { EMITS } from '../../../constants/emits';
+import { useAppDispatch } from '../../../hooks/redux';
+import { privateMessageSlice } from '../../../store/reducers/PrivateMessageSlice';
 
 export const useDelete = () => {
   const dispatch = useAppDispatch();

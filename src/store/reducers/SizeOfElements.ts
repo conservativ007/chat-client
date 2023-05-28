@@ -3,11 +3,15 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 interface Size {
   sizeOfInputText: string;
   marginOfMessageContainer: string;
+  sizeOfMessageContainer: number;
+  sizeOfUsersContainer: number;
 }
 
 const initialState: Size = {
   sizeOfInputText: '',
   marginOfMessageContainer: '',
+  sizeOfMessageContainer: 0,
+  sizeOfUsersContainer: 0,
 };
 
 export const sizeOfElementsSlice = createSlice({
@@ -19,6 +23,12 @@ export const sizeOfElementsSlice = createSlice({
     },
     setMarginOfMessageContainer(state, action: PayloadAction<string>) {
       state.marginOfMessageContainer = action.payload;
+    },
+    setSizeOfMessageContainer(state, action: PayloadAction<number>) {
+      state.sizeOfMessageContainer = action.payload;
+    },
+    setSizeOfUsersContainer(state, action: PayloadAction<number>) {
+      state.sizeOfUsersContainer = action.payload;
     },
   },
 });

@@ -45,7 +45,7 @@ export const Like = ({ message }: AppProps) => {
   };
 
   const classNameForLikeButton =
-    myself.login === message.senderName ? 'sender' : 'reciever';
+    myself.id === message.senderId ? 'sender' : 'reciever';
 
   return (
     <>

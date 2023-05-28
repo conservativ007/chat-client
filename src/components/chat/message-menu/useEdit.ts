@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { socket } from '../../../../socket';
-import { EMITS } from '../../../../constants/emits';
-import { useAppDispatch } from '../../../../hooks/redux';
-import { privateMessageSlice } from '../../../../store/reducers/PrivateMessageSlice';
-import { IMessage } from '../../../../models/IMessage';
+import { socket } from '../../../socket';
+import { EMITS } from '../../../constants/emits';
+import { useAppDispatch } from '../../../hooks/redux';
+import { privateMessageSlice } from '../../../store/reducers/PrivateMessageSlice';
+import { IMessage } from '../../../models/IMessage';
 
 export const useEdit = () => {
   const dispatch = useAppDispatch();

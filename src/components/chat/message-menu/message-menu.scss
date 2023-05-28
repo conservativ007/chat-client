@@ -1,0 +1,36 @@
+@import '../../../style/colors.scss';
+
+.message-settings {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: $backfround-color-messages-settings;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  border-radius: 10px;
+
+  z-index: 1;
+  color: #fff;
+  // display: none;
+
+  div {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    padding-left: 15px;
+    cursor: pointer;
+
+    p {
+      margin-left: 10px;
+    }
+  }
+
+  div:hover {
+    background-color: rgba($color: #fff, $alpha: 0.1);
+  }
+}

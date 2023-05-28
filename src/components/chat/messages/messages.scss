@@ -1,5 +1,5 @@
 @import '../../../style/colors.scss';
-@import './time.scss';
+// @import './time.scss';
 
 .chat-messages {
   position: relative;
@@ -61,11 +61,11 @@
       }
 
       &.sender {
-        right: 5px;
+        right: 0;
       }
 
       &.reciever {
-        left: 5px;
+        left: 0;
       }
     }
 
@@ -117,9 +117,9 @@
       visibility: visible;
     }
 
-    .message-settings__container {
-      visibility: visible;
-    }
+    // .message-settings__container {
+    //   visibility: visible;
+    // }
   }
 
   .message.theme {
@@ -137,15 +137,15 @@
     border-bottom-left-radius: 0;
   }
 
-  .messages-container .message.sender::before {
-    @include showTime;
-    @include timeForSender;
-  }
+  // .messages-container .message.sender::before {
+  //   @include showTime;
+  //   @include timeForSender;
+  // }
 
-  .messages-container .message.receiver::before {
-    @include showTime;
-    @include timeForReceiver;
-  }
+  // .messages-container .message.receiver::before {
+  //   @include showTime;
+  //   @include timeForReceiver;
+  // }
 
   .messages-container .message:hover::before {
     opacity: 0.7;
