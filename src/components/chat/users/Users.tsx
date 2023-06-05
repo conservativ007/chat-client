@@ -4,16 +4,20 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { IUser, defaultUser } from '../../../models/IUser';
 import { useUser } from '../../../hooks/user/useUser';
 import { Group } from '../general-chat/Group';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { UserAvatar } from '../userAvatar/UserAvatar';
 import { useSizeOfUsersContainer } from '../../../hooks/user/useSizeOfUsersContainer';
+import { ChatContainerClassesSlice } from '../../../store/reducers/ChatContainerClassesSlice';
 
 export let refOfUsers: any;
 
 export const Users = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { setPrivateUser } = userSlice.actions;
-  const { myself, allUsers } = useAppSelector((state) => state.userReducer);
+  const { myself, allUsers, userForPrivateMessage } = useAppSelector(
+    (state) => state.userReducer
+  );
+  const { setClassForChatContainer } = ChatContainerClassesSlice.actions;
 
   refOfUsers = useRef<HTMLDivElement>(null);
 
@@ -23,6 +27,7 @@ export const Users = (): JSX.Element => {
   const handleClickUser = (user: IUser) => {
     if (user.login.length === 0) return;
     dispatch(setPrivateUser(user));
+    dispatch(setClassForChatContainer('mobile-hide-users'));
   };
 
   const handleUserName = (name: string) => {

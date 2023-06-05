@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { useSizeOfUsersContainer } from '../../../hooks/user/useSizeOfUsersContainer';
 import { defaultUser } from '../../../models/IUser';
 import { userSlice } from '../../../store/reducers/UserSlice';
+import { ChatContainerClassesSlice } from '../../../store/reducers/ChatContainerClassesSlice';
 
 import './group.scss';
 export let groupRef: any;
@@ -12,6 +13,7 @@ export const Group = () => {
 
   const dispatch = useAppDispatch();
   const { setPrivateUser } = userSlice.actions;
+  const { setClassForChatContainer } = ChatContainerClassesSlice.actions;
 
   const getSizeOfUsersContainer = useSizeOfUsersContainer();
 
@@ -22,24 +24,21 @@ export const Group = () => {
       (user) => user.online === true && myself.login !== user.login
     ).length;
 
+  const handleCliclUser = () => {
+    dispatch(setPrivateUser(defaultUser));
+    dispatch(setClassForChatContainer('mobile-hide-users'));
+  };
+
   if (getSizeOfUsersContainer === 90) {
     return (
-      <div
-        onClick={() => dispatch(setPrivateUser(defaultUser))}
-        className="group"
-        ref={groupRef}
-      >
+      <div onClick={handleCliclUser} className="group" ref={groupRef}>
         <div className="group-count">{countOfUsers()}</div>
       </div>
     );
   }
 
   return (
-    <div
-      onClick={() => dispatch(setPrivateUser(defaultUser))}
-      className="group"
-      ref={groupRef}
-    >
+    <div onClick={handleCliclUser} className="group" ref={groupRef}>
       <div className="group-description">general chat</div>
       {allUsers
         .filter((user) => user.online === true && myself.login !== user.login)

@@ -3,9 +3,10 @@ import { useEffect, useRef } from 'react';
 import './messages.scss';
 import { ShowMessages } from './ShowMessages';
 import { useMessage } from '../../../hooks/useMessage';
-import { useAppDispatch } from '../../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { sizeOfElementsSlice } from '../../../store/reducers/SizeOfElements';
 import React from 'react';
+import { ChatForm } from '../chat-form/ChatForm';
 
 export let containerRef: any;
 
@@ -14,6 +15,10 @@ export const Messages = (): JSX.Element => {
 
   let chatMessagesContainerRef = React.useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
+
+  const { userForPrivateMessage } = useAppSelector(
+    (state) => state.userReducer
+  );
 
   const { setSizeInputText, setSizeOfMessageContainer } =
     sizeOfElementsSlice.actions;
@@ -48,7 +53,9 @@ export const Messages = (): JSX.Element => {
     const elem = containerRef.current;
     let widthOfMessagesContainer = elem.getBoundingClientRect().width;
     dispatch(setSizeInputText(widthOfMessagesContainer));
-  }, []);
+
+    // console.log(elemPosition.width);
+  }, [chatMessagesContainerRef, containerRef, userForPrivateMessage]);
 
   useMessage();
 

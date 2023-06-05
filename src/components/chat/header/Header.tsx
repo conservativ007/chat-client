@@ -1,11 +1,14 @@
 import './header.scss';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { useNavigate } from 'react-router-dom';
+import arrowBack from './arrow-back.svg';
 
 import settings from '../../../assets/images/settings/settings.png';
 import { socket } from '../../../socket';
 import { userSlice } from '../../../store/reducers/UserSlice';
-import { defaultUser } from '../../../models/IUser';
+import { privateMessageSlice } from '../../../store/reducers/PrivateMessageSlice';
+import { ChatContainerClassesSlice } from '../../../store/reducers/ChatContainerClassesSlice';
+import { defaultUser, userAfterLogin } from '../../../models/IUser';
 
 export const Header = (): JSX.Element => {
   const { myself } = useAppSelector((state) => state.userReducer);
@@ -14,6 +17,8 @@ export const Header = (): JSX.Element => {
   );
 
   const { setToken, setUser, setAllUsers, setPrivateUser } = userSlice.actions;
+  const { setPrivateMessages } = privateMessageSlice.actions;
+  const { setClassForChatContainer } = ChatContainerClassesSlice.actions;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -27,21 +32,46 @@ export const Header = (): JSX.Element => {
     socket.disconnect();
   };
 
+  const handleArrowBack = () => {
+    dispatch(setPrivateUser(userAfterLogin));
+    dispatch(setPrivateMessages([]));
+    dispatch(setClassForChatContainer('mobile-show-users'));
+  };
+
+  const showUserAvatar = () => {
+    const userLogin = userForPrivateMessage.login;
+    if (userLogin !== '' && userLogin !== 'all') {
+      return <img src={userForPrivateMessage.avatar} alt="" />;
+    }
+  };
+
   return (
     <header className="header">
-      <div className="header__user-info">
-        <div className="header__user-avatar">
-          <img src={myself.avatar} alt="user-avatar" />
-          <h3>{myself.login}</h3>
-        </div>
-        <h3>{userForPrivateMessage.login && userForPrivateMessage.login}</h3>
+      <div className="header-navigation">
+        {userForPrivateMessage.login === '' ? (
+          ''
+        ) : (
+          <div
+            onClick={handleArrowBack}
+            className="header-navigation__arrow-back"
+          >
+            <img src={arrowBack} alt="" />
+          </div>
+        )}
       </div>
-      <nav>
+
+      <div className="header-user">
+        <div className="user-avatar">{showUserAvatar()}</div>
+        <div className="user-details">
+          {userForPrivateMessage.login && userForPrivateMessage.login}
+        </div>
+      </div>
+      <div className="header-settings">
         <p onClick={socketDisconnect}>exit</p>
-        <div className="header-settings" onClick={() => navigate('/settings')}>
+        <div onClick={() => navigate('/settings')}>
           <img src={settings} alt="" />
         </div>
-      </nav>
+      </div>
     </header>
   );
 };

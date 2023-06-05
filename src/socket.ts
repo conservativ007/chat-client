@@ -1,5 +1,7 @@
 import { io } from 'socket.io-client';
-const URL = 'http://localhost:4000';
+import { IP, PORT } from './constants/constants';
+
+const URL = `http://${IP}:${PORT}`;
 
 export const socket = io(URL, {
   autoConnect: false,

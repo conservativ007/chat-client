@@ -1,5 +1,4 @@
 @import '../../../style/colors.scss';
-// @import './time.scss';
 
 .chat-messages {
   position: relative;
@@ -11,8 +10,8 @@
     position: relative;
     overflow-x: hidden;
     width: 100%;
+    height: calc(100% - 65px);
     max-width: 700px;
-    height: calc(100% - 60px);
     padding: 0 10px;
     overflow-y: auto;
 
@@ -23,6 +22,7 @@
   .messages-container .message {
     position: relative;
     display: flex;
+    align-items: center;
     margin: 10px 0;
     padding: 10px;
     border-radius: 10px;
@@ -116,10 +116,6 @@
     .message-like__button {
       visibility: visible;
     }
-
-    // .message-settings__container {
-    //   visibility: visible;
-    // }
   }
 
   .message.theme {
@@ -136,16 +132,6 @@
   .messages-container .message.receiver {
     border-bottom-left-radius: 0;
   }
-
-  // .messages-container .message.sender::before {
-  //   @include showTime;
-  //   @include timeForSender;
-  // }
-
-  // .messages-container .message.receiver::before {
-  //   @include showTime;
-  //   @include timeForReceiver;
-  // }
 
   .messages-container .message:hover::before {
     opacity: 0.7;
@@ -181,4 +167,14 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+@media (max-width: 600px) {
+  .chat-container.mobile-show-users .chat-body .chat-messages {
+    height: 0;
+    width: 0;
+  }
+  .chat-container.mobile-hide-users .chat-body .chat-messages {
+    width: 100%;
+  }
 }

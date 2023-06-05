@@ -1,9 +1,6 @@
 @import '../../../style/colors.scss';
 
 .chat-body .users {
-  min-width: 220px;
-  height: 100%;
-
   background-color: #212121;
   border-top: 1px solid black;
 }
@@ -65,7 +62,7 @@
   position: absolute;
   content: 'on';
   right: 7px;
-  top: 0;
+  top: 5px;
   font-size: 14px;
   color: #badc58;
   font-style: italic;
@@ -75,7 +72,7 @@
   position: absolute;
   content: 'off';
   right: 7px;
-  top: 0;
+  top: 5px;
   font-size: 14px;
   color: #eb4d4b;
   font-style: italic;
@@ -91,15 +88,28 @@
   border-radius: 50%;
 }
 
-@media (max-width: 900px) {
+@media (min-width: 901px) {
+  .chat-body .users {
+    min-width: 220px;
+    height: 100%;
+
+    background-color: #212121;
+    border-top: 1px solid black;
+  }
+}
+
+@media (max-width: 900px) and (min-width: 601px) {
   .chat-body .users {
     min-width: 180px;
   }
 }
 
-@media (max-width: 600px) {
-  .chat-body .users {
-    min-width: 90px;
+@media (max-width: 600px) and (min-width: 100px) {
+  .chat-container.mobile-show-users .chat-body .users {
+    width: 100%;
+  }
+  .chat-container.mobile-hide-users .chat-body .users {
+    width: 0%;
   }
 
   .user {

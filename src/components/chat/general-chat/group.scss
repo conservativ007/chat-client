@@ -5,7 +5,7 @@
   height: 70px;
   display: flex;
   align-items: center;
-  margin-top: 10px;
+  // margin-top: 10px;
   font-size: 20px;
   background-color: $user-background-color;
   padding: 5px 5px;
@@ -41,7 +41,6 @@
   .group-count {
     position: absolute;
     right: 10px;
-    top: calc(50% - 20px);
     font-size: 30px;
     font-weight: 700;
   }
@@ -53,14 +52,4 @@
 
 .group.group-active {
   background-color: rgba(106, 176, 76, 0.2);
-}
-
-@media (max-width: 600px) {
-  .group {
-    justify-content: center;
-
-    .group-count {
-      position: static;
-    }
-  }
 }

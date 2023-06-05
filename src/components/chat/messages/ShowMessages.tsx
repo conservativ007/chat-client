@@ -124,7 +124,7 @@ export const ShowMessages = (): JSX.Element => {
           </div>
         );
       })}
-      <ChatForm />
+      {userForPrivateMessage.login === '' ? '' : <ChatForm />}
     </>
   );
 };

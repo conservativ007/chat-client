@@ -86,14 +86,14 @@ export const useMessage = () => {
 
       let x = Number(widthOfInputText) - 5;
 
-      dispatch(setSizeInputText(String(x)));
+      dispatch(setSizeInputText(x));
 
       dispatch(setMarginOfMessageContainer(marginOfMessageContainer));
     };
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [containerRef]);
 
   useEffect(() => {
     // containerRef.current?.lastElementChild?.scrollIntoView();

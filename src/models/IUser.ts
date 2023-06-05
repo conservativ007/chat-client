@@ -29,3 +29,19 @@ export const defaultUser: IUser = {
   lastMessage: '',
   avatar: 'cat',
 };
+
+export const userAfterLogin: IUser = {
+  id: '',
+  login: '',
+  online: false,
+  socketID: '',
+  createdAt: '',
+  hashedRt: '',
+  password: null,
+  targetForMessage: 'all',
+  updatedAt: '',
+  version: 0,
+  messageForWho: [],
+  lastMessage: '',
+  avatar: 'cat',
+};

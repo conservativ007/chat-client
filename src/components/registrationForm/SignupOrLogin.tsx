@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { CONSTANTS } from '../../constants/constants';
 import { useToast } from '../../hooks/useToast';
 import { Signup } from './Signup';
+import { ChatContainerClassesSlice } from '../../store/reducers/ChatContainerClassesSlice';
 
 export const SignupOrLogin = () => {
   const { setUser, setToken, setRtToken, setSocketIdToUserStore } =
@@ -22,6 +23,7 @@ export const SignupOrLogin = () => {
   const navigate = useNavigate();
 
   const getToast = useToast;
+  const { setClassForChatContainer } = ChatContainerClassesSlice.actions;
 
   useEffect(() => {
     const onConnect = () => {
@@ -66,6 +68,8 @@ export const SignupOrLogin = () => {
 
   const signup = () => {
     const URL = action === 'signup' ? CONSTANTS.SIGNUP : CONSTANTS.LOGIN;
+    console.log(URL);
+
     axios
       .post(URL, { login, password })
       .then((response) => {
@@ -73,10 +77,13 @@ export const SignupOrLogin = () => {
 
         saveUserToLocal(data);
         socketConnect();
+        // dispatch(setClassForChatContainer('mobile-show-users'));
       })
       .catch((err) => {
         console.log(err);
+
         socket.disconnect();
+
         const { response } = err;
         getToast(false, response.data.message);
       });

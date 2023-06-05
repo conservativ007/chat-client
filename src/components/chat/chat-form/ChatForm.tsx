@@ -31,9 +31,12 @@ export const ChatForm = (): JSX.Element => {
     (state) => state.privateMessageReducer
   );
 
-  const { sizeOfInputText, marginOfMessageContainer } = useAppSelector(
-    (state) => state.changeSizeOfElementsReducer
-  );
+  const {
+    sizeOfInputText,
+    marginOfMessageContainer,
+    sizeOfChatBody,
+    sizeOfMessageContainer,
+  } = useAppSelector((state) => state.changeSizeOfElementsReducer);
 
   const { setPrivateMessage } = privateMessageSlice.actions;
 
@@ -122,8 +125,9 @@ export const ChatForm = (): JSX.Element => {
     <div
       className="chat-form"
       style={{
-        left: `${marginOfMessageContainer}px`,
-        width: `${inputWidth}px`,
+        // left: `${marginOfMessageContainer}px`,
+        // width: `${inputWidth}px`,
+        width: `${Number(sizeOfMessageContainer - 10)}px`,
       }}
     >
       <ShowEmoji setPickerVisible={setPickerVisible} />

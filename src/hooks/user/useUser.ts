@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../redux';
 import { userSlice } from '../../store/reducers/UserSlice';
 import { sizeOfElementsSlice } from '../../store/reducers/SizeOfElements';
-import { IUser, defaultUser } from '../../models/IUser';
+import { IUser, defaultUser, userAfterLogin } from '../../models/IUser';
 import { socket } from '../../socket';
 import { refOfUsers } from '../../components/chat/users/Users';
 import { useNavigate } from 'react-router-dom';
@@ -30,8 +30,12 @@ export const useUser = () => {
 
   // write start values to target messages
   useEffect(() => {
-    dispatch(setPrivateUser(defaultUser));
+    dispatch(setPrivateUser(userAfterLogin));
   }, []);
+  // // write start values to target messages
+  // useEffect(() => {
+  //   dispatch(setPrivateUser(defaultUser));
+  // }, []);
 
   // select user for message
   useEffect(() => {

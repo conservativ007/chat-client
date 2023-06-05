@@ -1,27 +1,29 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface Size {
-  sizeOfInputText: string;
-  marginOfMessageContainer: string;
+  sizeOfInputText: number;
+  marginOfMessageContainer: number;
   sizeOfMessageContainer: number;
   sizeOfUsersContainer: number;
+  sizeOfChatBody: number;
 }
 
 const initialState: Size = {
-  sizeOfInputText: '',
-  marginOfMessageContainer: '',
+  sizeOfInputText: 0,
+  marginOfMessageContainer: 0,
   sizeOfMessageContainer: 0,
   sizeOfUsersContainer: 0,
+  sizeOfChatBody: 0,
 };
 
 export const sizeOfElementsSlice = createSlice({
   name: 'sizeOfElements',
   initialState,
   reducers: {
-    setSizeInputText(state, action: PayloadAction<string>) {
+    setSizeInputText(state, action: PayloadAction<number>) {
       state.sizeOfInputText = action.payload;
     },
-    setMarginOfMessageContainer(state, action: PayloadAction<string>) {
+    setMarginOfMessageContainer(state, action: PayloadAction<number>) {
       state.marginOfMessageContainer = action.payload;
     },
     setSizeOfMessageContainer(state, action: PayloadAction<number>) {
@@ -29,6 +31,9 @@ export const sizeOfElementsSlice = createSlice({
     },
     setSizeOfUsersContainer(state, action: PayloadAction<number>) {
       state.sizeOfUsersContainer = action.payload;
+    },
+    setSizeOfChatBody(state, action: PayloadAction<number>) {
+      state.sizeOfChatBody = action.payload;
     },
   },
 });
