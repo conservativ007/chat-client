@@ -1,44 +1,5 @@
 @import '../../../style/colors.scss';
 
-.chat-container {
-  position: relative;
-  width: 100%;
-  max-width: 1600px;
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-}
-
-.chat-body {
-  position: relative;
-  height: calc(100% - (50px));
-  display: flex;
-  justify-content: space-between;
-  background-color: white;
-}
-
-.chat-body .divider {
-  position: absolute;
-  height: 100%;
-  width: 1px;
-  background-color: black;
-  left: 218px;
-}
-
-.chat-body .messages {
-  width: 280px;
-  border: 1px solid silver;
-  height: 100%;
-
-  padding: 10px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-}
-
 .chat-form {
   min-height: 50px;
   position: absolute;
@@ -186,11 +147,4 @@
       background-color: $backfround-color-edit-divider;
     }
   }
-}
-
-.chat-container.mobile-show-users .chat-body .chat-messages .chat-form {
-  display: none;
-}
-.chat-container.mobile-hide-users .chat-body .chat-messages .chat-form {
-  display: flex;
 }

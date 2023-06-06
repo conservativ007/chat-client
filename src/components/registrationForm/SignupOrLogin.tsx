@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 import { CONSTANTS } from '../../constants/constants';
 import { useToast } from '../../hooks/useToast';
 import { Signup } from './Signup';
-import { ChatContainerClassesSlice } from '../../store/reducers/ChatContainerClassesSlice';
 
 export const SignupOrLogin = () => {
   const { setUser, setToken, setRtToken, setSocketIdToUserStore } =
@@ -23,7 +22,6 @@ export const SignupOrLogin = () => {
   const navigate = useNavigate();
 
   const getToast = useToast;
-  const { setClassForChatContainer } = ChatContainerClassesSlice.actions;
 
   useEffect(() => {
     const onConnect = () => {
@@ -42,9 +40,7 @@ export const SignupOrLogin = () => {
       .post(CONSTANTS.ATTACH_SOKETID, { socketId, userId: myself.id })
       .then((response) => {
         const { data } = response;
-        // console.log('');
 
-        // console.log(data);
         dispatch(setSocketIdToUserStore(data));
         navigate('/chat');
       })
@@ -55,8 +51,6 @@ export const SignupOrLogin = () => {
   };
 
   const saveUserToLocal = (data: any) => {
-    // console.log(data[0]);
-
     dispatch(setUser(data[0]));
     dispatch(setToken(data[1].accessToken));
     dispatch(setRtToken(data[1].refreshToken));
@@ -77,7 +71,6 @@ export const SignupOrLogin = () => {
 
         saveUserToLocal(data);
         socketConnect();
-        // dispatch(setClassForChatContainer('mobile-show-users'));
       })
       .catch((err) => {
         console.log(err);

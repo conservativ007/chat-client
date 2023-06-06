@@ -6,7 +6,7 @@ import { SendButton } from './send-button/SendButton';
 import { ShowEmoji } from '../emoji/ShowEmoji';
 import { Emoji } from '../emoji/Emoji';
 
-import './chat.scss';
+import './chat-form.scss';
 import { Edit } from './edit-button/Edit';
 import { useEditMessage } from '../../../hooks/useEditMessage';
 import { EMITS } from '../../../constants/emits';
@@ -125,8 +125,6 @@ export const ChatForm = (): JSX.Element => {
     <div
       className="chat-form"
       style={{
-        // left: `${marginOfMessageContainer}px`,
-        // width: `${inputWidth}px`,
         width: `${Number(sizeOfMessageContainer - 10)}px`,
       }}
     >

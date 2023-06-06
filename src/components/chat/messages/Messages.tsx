@@ -6,7 +6,6 @@ import { useMessage } from '../../../hooks/useMessage';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { sizeOfElementsSlice } from '../../../store/reducers/SizeOfElements';
 import React from 'react';
-import { ChatForm } from '../chat-form/ChatForm';
 
 export let containerRef: any;
 
@@ -22,8 +21,6 @@ export const Messages = (): JSX.Element => {
 
   const { setSizeInputText, setSizeOfMessageContainer } =
     sizeOfElementsSlice.actions;
-
-  // const chatContainer = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const resizeListener = () => {

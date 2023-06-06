@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { useSizeOfUsersContainer } from '../../../hooks/user/useSizeOfUsersContainer';
 import { defaultUser } from '../../../models/IUser';
 import { userSlice } from '../../../store/reducers/UserSlice';
-import { ChatContainerClassesSlice } from '../../../store/reducers/ChatContainerClassesSlice';
+import { showMessgaesOrUsersSlice } from '../../../store/reducers/ShowMessgaesOrUsersSlice';
 
 import './group.scss';
 export let groupRef: any;
@@ -13,7 +13,7 @@ export const Group = () => {
 
   const dispatch = useAppDispatch();
   const { setPrivateUser } = userSlice.actions;
-  const { setClassForChatContainer } = ChatContainerClassesSlice.actions;
+  const { setShowMessages } = showMessgaesOrUsersSlice.actions;
 
   const getSizeOfUsersContainer = useSizeOfUsersContainer();
 
@@ -26,7 +26,7 @@ export const Group = () => {
 
   const handleCliclUser = () => {
     dispatch(setPrivateUser(defaultUser));
-    dispatch(setClassForChatContainer('mobile-hide-users'));
+    dispatch(setShowMessages(true));
   };
 
   if (getSizeOfUsersContainer === 90) {

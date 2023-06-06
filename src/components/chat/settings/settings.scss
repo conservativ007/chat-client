@@ -101,12 +101,11 @@
   .user-avatar__avatar {
     @include flexJustifyCenter;
 
-    // width: 300px;
-
     img {
       cursor: pointer;
       width: 70px;
       height: 70px;
+      object-fit: cover;
     }
   }
 
@@ -145,7 +144,6 @@
     border-radius: 5px;
     box-shadow: none;
     outline: none;
-    // background: transparent;
     padding: 5px;
     font-size: 18px;
     font-weight: 500;
@@ -162,10 +160,3 @@
     border: none;
   }
 }
-
-// @media (max-width: 600px) {
-//   .settings {
-//     overflow-y: auto;
-//     // overflow-x: hidden;
-//   }
-// }

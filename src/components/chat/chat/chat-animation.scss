@@ -1,0 +1,66 @@
+@media (max-width: 600px) and (min-width: 100px) {
+  .chat-container .chat-body .chat-body__container {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: calc(var(--size-chat-body) * 2);
+  }
+
+  .users {
+    width: var(--size-chat-body);
+
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  .chat-messages {
+    width: var(--size-chat-body);
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: var(--size-chat-body);
+  }
+
+  .chat-messages .messages-container {
+    position: fixed;
+    width: var(--size-chat-body);
+    height: calc(100% - 115px);
+  }
+
+  // animations
+  @keyframes show-messages {
+    from {
+      top: 0;
+      left: 0;
+    }
+    to {
+      top: 0;
+      left: calc(0px - var(--size-chat-body));
+    }
+  }
+
+  @keyframes show-users {
+    from {
+      top: 0;
+      left: calc(0px - var(--size-chat-body));
+    }
+    to {
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .animation-show-messages {
+    animation-name: show-messages;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+  }
+
+  .animation-show-users {
+    animation-name: show-users;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+  }
+}

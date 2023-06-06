@@ -1,0 +1,55 @@
+@import '../../../style/colors.scss';
+
+.chat-container {
+  position: relative;
+  width: 100%;
+  max-width: 1600px;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+
+  .chat-body {
+    // position: relative;
+    height: calc(100% - (50px));
+    overflow: hidden;
+
+    .chat-body__container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      background-color: white;
+
+      .divider {
+        position: absolute;
+        height: 100%;
+        width: 1px;
+        background-color: black;
+        left: 218px;
+      }
+
+      .messages {
+        width: 280px;
+        border: 1px solid silver;
+        height: 100%;
+
+        padding: 10px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+      }
+
+      .chat-messages .chat-form {
+        display: none;
+      }
+
+      .chat-messages .chat-form {
+        display: flex;
+      }
+    }
+  }
+}

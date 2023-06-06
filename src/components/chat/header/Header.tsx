@@ -7,18 +7,18 @@ import settings from '../../../assets/images/settings/settings.png';
 import { socket } from '../../../socket';
 import { userSlice } from '../../../store/reducers/UserSlice';
 import { privateMessageSlice } from '../../../store/reducers/PrivateMessageSlice';
-import { ChatContainerClassesSlice } from '../../../store/reducers/ChatContainerClassesSlice';
+import { showMessgaesOrUsersSlice } from '../../../store/reducers/ShowMessgaesOrUsersSlice';
 import { defaultUser, userAfterLogin } from '../../../models/IUser';
 
 export const Header = (): JSX.Element => {
-  const { myself } = useAppSelector((state) => state.userReducer);
   const { userForPrivateMessage } = useAppSelector(
     (state) => state.userReducer
   );
 
   const { setToken, setUser, setAllUsers, setPrivateUser } = userSlice.actions;
   const { setPrivateMessages } = privateMessageSlice.actions;
-  const { setClassForChatContainer } = ChatContainerClassesSlice.actions;
+  const { setShowMessages, setShowMessagesToNull } =
+    showMessgaesOrUsersSlice.actions;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -28,6 +28,7 @@ export const Header = (): JSX.Element => {
     dispatch(setUser(defaultUser));
     dispatch(setPrivateUser(defaultUser));
     dispatch(setAllUsers([]));
+    dispatch(setShowMessagesToNull(null));
 
     socket.disconnect();
   };
@@ -35,7 +36,7 @@ export const Header = (): JSX.Element => {
   const handleArrowBack = () => {
     dispatch(setPrivateUser(userAfterLogin));
     dispatch(setPrivateMessages([]));
-    dispatch(setClassForChatContainer('mobile-show-users'));
+    dispatch(setShowMessages(false));
   };
 
   const showUserAvatar = () => {

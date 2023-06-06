@@ -168,13 +168,3 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
-
-@media (max-width: 600px) {
-  .chat-container.mobile-show-users .chat-body .chat-messages {
-    height: 0;
-    width: 0;
-  }
-  .chat-container.mobile-hide-users .chat-body .chat-messages {
-    width: 100%;
-  }
-}
