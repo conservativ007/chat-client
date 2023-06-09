@@ -1,3 +1,5 @@
+import defaultGeneralChatIcon from '../components/chat/general-chat/images/chat.svg';
+
 export interface IUser {
   id: string;
   login: string;
@@ -27,7 +29,7 @@ export const defaultUser: IUser = {
   version: 0,
   messageForWho: [],
   lastMessage: '',
-  avatar: 'cat',
+  avatar: `${defaultGeneralChatIcon}`,
 };
 
 export const userAfterLogin: IUser = {

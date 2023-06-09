@@ -29,38 +29,53 @@
     height: calc(100% - 115px);
   }
 
-  // animations
-  @keyframes show-messages {
-    from {
-      top: 0;
-      left: 0;
+  //
+  .messages-container {
+    .message {
+      transition: all 0.5s;
     }
-    to {
-      top: 0;
-      left: calc(0px - var(--size-chat-body));
-    }
-  }
 
-  @keyframes show-users {
-    from {
-      top: 0;
-      left: calc(0px - var(--size-chat-body));
+    .message-visibility-visible {
+      opacity: 1;
     }
-    to {
-      top: 0;
-      left: 0;
+
+    .message-visibility-hidden {
+      opacity: 0;
     }
   }
+}
 
-  .animation-show-messages {
-    animation-name: show-messages;
-    animation-duration: 0.5s;
-    animation-fill-mode: forwards;
+// animations for show users and messages
+@keyframes show-messages {
+  from {
+    top: 0;
+    left: 0;
   }
+  to {
+    top: 0;
+    left: calc(0px - var(--size-chat-body));
+  }
+}
 
-  .animation-show-users {
-    animation-name: show-users;
-    animation-duration: 0.5s;
-    animation-fill-mode: forwards;
+@keyframes show-users {
+  from {
+    top: 0;
+    left: calc(0px - var(--size-chat-body));
   }
+  to {
+    top: 0;
+    left: 0;
+  }
+}
+
+.animation-show-messages {
+  animation-name: show-messages;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.animation-show-users {
+  animation-name: show-users;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
 }

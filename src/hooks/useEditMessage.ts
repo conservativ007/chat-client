@@ -31,8 +31,6 @@ export const useEditMessage = () => {
 
     if (editedMessage.receiverName !== 'all') {
       // for myself and reciever
-      console.log('update for private');
-
       editMessForMySelf(editedMessage, editMessageRef, messageInputRef);
       return;
     }

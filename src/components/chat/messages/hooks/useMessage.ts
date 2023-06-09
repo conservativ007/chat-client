@@ -1,26 +1,36 @@
 import { useEffect } from 'react';
-import { privateMessageSlice } from '../store/reducers/PrivateMessageSlice';
-import { useAppDispatch, useAppSelector } from './redux';
-import { socket } from '../socket';
-import { IMessage } from '../models/IMessage';
-import { containerRef } from '../components/chat/messages/Messages';
-import { sizeOfElementsSlice } from '../store/reducers/SizeOfElements';
-import { EMITS } from '../constants/emits';
+import { privateMessageSlice } from '../../../../store/reducers/PrivateMessageSlice';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+import { socket } from '../../../../socket';
+import { IMessage } from '../../../../models/IMessage';
+import { containerRef } from '../Messages';
+import { sizeOfElementsSlice } from '../../../../store/reducers/SizeOfElements';
+import { EMITS } from '../../../../constants/emits';
+import { messageMenuSlice } from '../../../../store/reducers/MessaggeMenu';
 
 export const useMessage = () => {
-  const { setPrivateMessages, setPrivateMessage } = privateMessageSlice.actions;
   const dispatch = useAppDispatch();
+
+  const { setPrivateMessages, setPrivateMessage } = privateMessageSlice.actions;
+  const { setMessagesShowingSlowly } = privateMessageSlice.actions;
 
   const { userForPrivateMessage } = useAppSelector(
     (state) => state.userReducer
   );
 
-  const { privateMessages } = useAppSelector(
+  const { privateMessages, isMessagesShowingSlowly } = useAppSelector(
     (state) => state.privateMessageReducer
   );
 
   const { setSizeInputText, setMarginOfMessageContainer } =
     sizeOfElementsSlice.actions;
+
+  const { setShowMessageMenu, setHeightOfEditableElem } =
+    messageMenuSlice.actions;
+
+  const { sizeOfChatBody } = useAppSelector(
+    (state) => state.changeSizeOfElementsReducer
+  );
 
   useEffect(() => {
     const handlePrivateMessagesForClients = (data: IMessage[]) => {
@@ -104,4 +114,37 @@ export const useMessage = () => {
 
     currentChildNode?.scrollIntoView();
   }, [privateMessages]);
+
+  // set option which show the messages slowly
+  // in the mobile layout
+  useEffect(() => {
+    if (sizeOfChatBody <= 600) {
+      dispatch(setMessagesShowingSlowly(true));
+    }
+
+    if (sizeOfChatBody > 600) {
+      dispatch(setMessagesShowingSlowly(false));
+    }
+  }, [sizeOfChatBody]);
+
+  useEffect(() => {
+    let elemOfMessagesContainer: HTMLDivElement = containerRef.current;
+    if (isMessagesShowingSlowly === false) {
+      elemOfMessagesContainer.classList.remove('messages-show-slowly');
+    }
+
+    if (userForPrivateMessage.login.length !== 0) {
+      dispatch(setMessagesShowingSlowly(false));
+    }
+  }, [userForPrivateMessage, isMessagesShowingSlowly]);
+
+  // close message menu if user click on menu or outside of menu
+  useEffect(() => {
+    const handleClickWindow = () => {
+      dispatch(setShowMessageMenu(false));
+    };
+
+    window.addEventListener('click', handleClickWindow);
+    return () => window.removeEventListener('click', handleClickWindow);
+  }, []);
 };

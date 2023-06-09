@@ -2,14 +2,18 @@ import * as React from 'react';
 import { IMessage } from '../../../../models/IMessage';
 
 export interface IAppProps {
-  index: number;
-  getDate: (date: string | undefined) => string | undefined;
   message: IMessage;
 }
 
-export const Time = ({ index, getDate, message }: IAppProps) => {
+export const Time = ({ message }: IAppProps) => {
+  const getDate = (date: string | undefined) => {
+    if (date === undefined) return;
+    let time = date.slice(-5);
+    return time;
+  };
+
   return (
-    <span key={index} className="message-time">
+    <span key={message.id} className="message-time">
       {getDate(message.createdAt)}
     </span>
   );

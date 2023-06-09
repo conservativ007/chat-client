@@ -1,7 +1,8 @@
 import './header.scss';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { useNavigate } from 'react-router-dom';
-import arrowBack from './arrow-back.svg';
+import arrowBack from './arrow-back2.svg';
+import generalChatIcon from '../general-chat/images/chat.svg';
 
 import settings from '../../../assets/images/settings/settings.png';
 import { socket } from '../../../socket';
@@ -14,9 +15,13 @@ export const Header = (): JSX.Element => {
   const { userForPrivateMessage } = useAppSelector(
     (state) => state.userReducer
   );
+  const { sizeOfChatBody } = useAppSelector(
+    (state) => state.changeSizeOfElementsReducer
+  );
 
   const { setToken, setUser, setAllUsers, setPrivateUser } = userSlice.actions;
-  const { setPrivateMessages } = privateMessageSlice.actions;
+  const { setPrivateMessages, setMessagesShowingSlowly } =
+    privateMessageSlice.actions;
   const { setShowMessages, setShowMessagesToNull } =
     showMessgaesOrUsersSlice.actions;
   const navigate = useNavigate();
@@ -37,34 +42,47 @@ export const Header = (): JSX.Element => {
     dispatch(setPrivateUser(userAfterLogin));
     dispatch(setPrivateMessages([]));
     dispatch(setShowMessages(false));
+    dispatch(setMessagesShowingSlowly(true));
   };
 
   const showUserAvatar = () => {
-    const userLogin = userForPrivateMessage.login;
-    if (userLogin !== '' && userLogin !== 'all') {
+    if (userForPrivateMessage.login !== '') {
       return <img src={userForPrivateMessage.avatar} alt="" />;
     }
   };
 
-  return (
-    <header className="header">
-      <div className="header-navigation">
-        {userForPrivateMessage.login === '' ? (
-          ''
-        ) : (
+  const showUserName = () => {
+    if (userForPrivateMessage.login === 'all') {
+      return '';
+    }
+    if (userForPrivateMessage.login !== '') {
+      return userForPrivateMessage.login;
+    }
+  };
+
+  const showArrowBack = () => {
+    if (userForPrivateMessage.login !== '' && sizeOfChatBody < 601) {
+      return (
+        <div className="navigation">
           <div
             onClick={handleArrowBack}
             className="header-navigation__arrow-back"
           >
             <img src={arrowBack} alt="" />
           </div>
-        )}
-      </div>
+        </div>
+      );
+    }
+    return '';
+  };
 
+  return (
+    <header className="header">
       <div className="header-user">
-        <div className="user-avatar">{showUserAvatar()}</div>
+        {showArrowBack()}
         <div className="user-details">
-          {userForPrivateMessage.login && userForPrivateMessage.login}
+          <div className="user-avatar">{showUserAvatar()}</div>
+          <div className="user-login">{showUserName()}</div>
         </div>
       </div>
       <div className="header-settings">

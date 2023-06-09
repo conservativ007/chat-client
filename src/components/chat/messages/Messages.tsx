@@ -1,11 +1,13 @@
 import { useEffect, useRef } from 'react';
 
-import './messages.scss';
 import { ShowMessages } from './ShowMessages';
-import { useMessage } from '../../../hooks/useMessage';
+import { useMessage } from './hooks/useMessage';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { sizeOfElementsSlice } from '../../../store/reducers/SizeOfElements';
 import React from 'react';
+
+import './messages.scss';
+import './messages-mobile.scss';
 
 export let containerRef: any;
 
@@ -19,6 +21,10 @@ export const Messages = (): JSX.Element => {
     (state) => state.userReducer
   );
 
+  const { isMessagesShowingSlowly } = useAppSelector(
+    (state) => state.privateMessageReducer
+  );
+
   const { setSizeInputText, setSizeOfMessageContainer } =
     sizeOfElementsSlice.actions;
 
@@ -29,13 +35,11 @@ export const Messages = (): JSX.Element => {
 
       if (elemPosition === undefined) return;
       dispatch(setSizeOfMessageContainer(elemPosition.width));
-      // console.log(elemPosition);
     };
 
     window.addEventListener('resize', resizeListener);
 
     return () => {
-      // remove resize listener
       window.removeEventListener('resize', resizeListener);
     };
   }, []);
@@ -50,16 +54,19 @@ export const Messages = (): JSX.Element => {
     const elem = containerRef.current;
     let widthOfMessagesContainer = elem.getBoundingClientRect().width;
     dispatch(setSizeInputText(widthOfMessagesContainer));
-
-    // console.log(elemPosition.width);
   }, [chatMessagesContainerRef, containerRef, userForPrivateMessage]);
 
   useMessage();
 
   return (
-    <div className="chat-messages" ref={chatMessagesContainerRef}>
+    <div className={`chat-messages`} ref={chatMessagesContainerRef}>
       <div className="bg"></div>
-      <div className="messages-container" ref={containerRef}>
+      <div
+        className={`messages-container ${
+          isMessagesShowingSlowly === true ? 'messages-show-slowly' : ''
+        }`}
+        ref={containerRef}
+      >
         <ShowMessages />
       </div>
     </div>

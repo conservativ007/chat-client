@@ -21,24 +21,20 @@ export let divInputRef: any;
 export const ChatForm = (): JSX.Element => {
   const [message, setMessage] = useState<string | null>('');
   const [inputWidth, setInputWidth] = useState<number>(500);
-  const [isPickerVisible, setPickerVisible] = useState<boolean>(false);
 
   const { myself, userForPrivateMessage, token } = useAppSelector(
     (state) => state.userReducer
   );
 
-  const { isMessageEdit } = useAppSelector(
+  const { isMessageEdit, isEmojiShow } = useAppSelector(
     (state) => state.privateMessageReducer
   );
 
-  const {
-    sizeOfInputText,
-    marginOfMessageContainer,
-    sizeOfChatBody,
-    sizeOfMessageContainer,
-  } = useAppSelector((state) => state.changeSizeOfElementsReducer);
+  const { sizeOfInputText, sizeOfMessageContainer } = useAppSelector(
+    (state) => state.changeSizeOfElementsReducer
+  );
 
-  const { setPrivateMessage } = privateMessageSlice.actions;
+  const { setPrivateMessage, setIsEmojiShow } = privateMessageSlice.actions;
 
   const getUseEditMess = useEditMessage();
 
@@ -64,13 +60,15 @@ export const ChatForm = (): JSX.Element => {
       getUseEditMess();
       return;
     }
+
+    if (message === null || message.length === 0) return;
     let textCorrected = setCorrectMessage();
     let inputMessage = divInputRef.current;
 
     if (textCorrected === undefined) return;
     if (inputMessage === null) return;
 
-    let message: IPreMessage = {
+    let newMessage: IPreMessage = {
       message: textCorrected,
       senderName: myself.login,
       receiverName: userForPrivateMessage.login,
@@ -89,7 +87,7 @@ export const ChatForm = (): JSX.Element => {
     }
 
     axios
-      .post(url, message, {
+      .post(url, newMessage, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -106,6 +104,7 @@ export const ChatForm = (): JSX.Element => {
 
     setMessage('');
     inputMessage.innerHTML = '';
+    dispatch(setIsEmojiShow(false));
   };
 
   // change resize of inputText
@@ -121,6 +120,10 @@ export const ChatForm = (): JSX.Element => {
     }
   };
 
+  if (userForPrivateMessage.login === '') {
+    return <div></div>;
+  }
+
   return (
     <div
       className="chat-form"
@@ -128,7 +131,7 @@ export const ChatForm = (): JSX.Element => {
         width: `${Number(sizeOfMessageContainer - 10)}px`,
       }}
     >
-      <ShowEmoji setPickerVisible={setPickerVisible} />
+      <ShowEmoji />
       <Edit inputWidth={inputWidth} />
       <div
         ref={divInputRef}
@@ -138,7 +141,7 @@ export const ChatForm = (): JSX.Element => {
         onInput={(e) => setMessage(e.currentTarget.textContent)}
       ></div>
       <SendButton sendMessage={sendMessage} />
-      {isPickerVisible && <Emoji setMessage={setMessage} />}
+      {isEmojiShow && <Emoji setMessage={setMessage} />}
     </div>
   );
 };

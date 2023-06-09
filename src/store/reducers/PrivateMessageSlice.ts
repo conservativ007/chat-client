@@ -7,6 +7,8 @@ interface PrivateMessageState {
   editMessage: IMessage;
   preMessage: IPreMessage;
   isMessageEdit: boolean;
+  isMessagesShowingSlowly: boolean;
+  isEmojiShow: boolean;
 }
 
 const initialState: PrivateMessageState = {
@@ -14,6 +16,8 @@ const initialState: PrivateMessageState = {
   isMessageEdit: false,
   editMessage: defaultMessage,
   preMessage: defaultPreMessage,
+  isMessagesShowingSlowly: false,
+  isEmojiShow: false,
 };
 
 export const privateMessageSlice = createSlice({
@@ -66,6 +70,12 @@ export const privateMessageSlice = createSlice({
       }
 
       state.privateMessages.splice(foundIndex, 1);
+    },
+    setMessagesShowingSlowly(state, action: PayloadAction<boolean>) {
+      state.isMessagesShowingSlowly = action.payload;
+    },
+    setIsEmojiShow(state, action: PayloadAction<boolean>) {
+      state.isEmojiShow = action.payload;
     },
   },
 });

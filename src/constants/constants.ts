@@ -1,6 +1,6 @@
 export const PORT = 4000;
-export const IP = 'localhost';
-// export const IP = '85.209.148.189';
+// export const IP = 'localhost';
+export const IP = '85.209.148.189';
 
 interface IConstants {
   SIGNUP: string;

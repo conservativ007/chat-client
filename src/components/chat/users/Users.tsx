@@ -14,8 +14,10 @@ export let refOfUsers: any;
 export const Users = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { setPrivateUser } = userSlice.actions;
-  const { myself, allUsers, userForPrivateMessage } = useAppSelector(
-    (state) => state.userReducer
+  const { myself, allUsers } = useAppSelector((state) => state.userReducer);
+
+  const { sizeOfChatBody } = useAppSelector(
+    (state) => state.changeSizeOfElementsReducer
   );
 
   const { setShowMessages } = showMessgaesOrUsersSlice.actions;
@@ -27,8 +29,15 @@ export const Users = (): JSX.Element => {
 
   const handleClickUser = (user: IUser) => {
     if (user.login.length === 0) return;
-    dispatch(setPrivateUser(user));
+
     dispatch(setShowMessages(true));
+    if (sizeOfChatBody < 601) {
+      setTimeout(() => dispatch(setPrivateUser(user)), 400);
+    }
+
+    if (sizeOfChatBody > 600) {
+      dispatch(setPrivateUser(user));
+    }
   };
 
   const handleUserName = (name: string) => {

@@ -10,6 +10,9 @@ export let groupRef: any;
 
 export const Group = () => {
   const { allUsers, myself } = useAppSelector((state) => state.userReducer);
+  const { sizeOfChatBody } = useAppSelector(
+    (state) => state.changeSizeOfElementsReducer
+  );
 
   const dispatch = useAppDispatch();
   const { setPrivateUser } = userSlice.actions;
@@ -25,8 +28,16 @@ export const Group = () => {
     ).length;
 
   const handleCliclUser = () => {
-    dispatch(setPrivateUser(defaultUser));
+    // dispatch(setPrivateUser(defaultUser));
     dispatch(setShowMessages(true));
+
+    if (sizeOfChatBody < 601) {
+      setTimeout(() => dispatch(setPrivateUser(defaultUser)), 400);
+    }
+
+    if (sizeOfChatBody > 600) {
+      dispatch(setPrivateUser(defaultUser));
+    }
   };
 
   if (getSizeOfUsersContainer === 90) {
@@ -48,7 +59,7 @@ export const Group = () => {
           return (
             <div
               key={user.id}
-              style={{ left: `${index * 25 + 5}px` }}
+              style={{ left: `${index * 25 + 7}px` }}
               className="group-avatar"
             >
               {user.login.slice(0, 1)}

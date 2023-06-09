@@ -6,6 +6,7 @@ interface Size {
   sizeOfMessageContainer: number;
   sizeOfUsersContainer: number;
   sizeOfChatBody: number;
+  sizeHeightOfChatBody: number;
 }
 
 const initialState: Size = {
@@ -14,6 +15,7 @@ const initialState: Size = {
   sizeOfMessageContainer: 0,
   sizeOfUsersContainer: 0,
   sizeOfChatBody: 0,
+  sizeHeightOfChatBody: 0,
 };
 
 export const sizeOfElementsSlice = createSlice({
@@ -34,6 +36,9 @@ export const sizeOfElementsSlice = createSlice({
     },
     setSizeOfChatBody(state, action: PayloadAction<number>) {
       state.sizeOfChatBody = action.payload;
+    },
+    setSizeHeightOfChatBody(state, action: PayloadAction<number>) {
+      state.sizeHeightOfChatBody = action.payload;
     },
   },
 });

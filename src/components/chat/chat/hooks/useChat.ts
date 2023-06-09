@@ -1,6 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { sizeOfElementsSlice } from '../../../../store/reducers/SizeOfElements';
+import { showMessgaesOrUsersSlice } from '../../../../store/reducers/ShowMessgaesOrUsersSlice';
+import { privateMessageSlice } from '../../../../store/reducers/PrivateMessageSlice';
+import { userSlice } from '../../../../store/reducers/UserSlice';
+import { userAfterLogin } from '../../../../models/IUser';
 
 export const useChat = (ref: any) => {
   const rootDocumentRef = useRef<HTMLElement>(document.documentElement);
@@ -14,7 +18,11 @@ export const useChat = (ref: any) => {
   );
 
   const dispatch = useAppDispatch();
-  const { setSizeOfChatBody } = sizeOfElementsSlice.actions;
+  const { setSizeOfChatBody, setSizeHeightOfChatBody } =
+    sizeOfElementsSlice.actions;
+  const { setShowMessages } = showMessgaesOrUsersSlice.actions;
+  const { setPrivateMessages } = privateMessageSlice.actions;
+  const { setPrivateUser } = userSlice.actions;
 
   // here we setting global variable for scss
   useEffect(() => {
@@ -23,15 +31,29 @@ export const useChat = (ref: any) => {
       '--size-chat-body',
       `${sizeOfChatBody}px`
     );
+    rootElementOfDocument?.style.setProperty(
+      '--user-select',
+      `${sizeOfChatBody <= 600 ? 'none' : 'auto'}`
+    );
+  }, [sizeOfChatBody]);
+
+  useEffect(() => {
+    if (sizeOfChatBody <= 600) {
+      dispatch(setShowMessages(false));
+      dispatch(setPrivateUser(userAfterLogin));
+      dispatch(setPrivateMessages([]));
+    }
   }, [sizeOfChatBody]);
 
   useEffect(() => {
     const handleResize = () => {
-      let elemOfDivRef = ref.current;
+      let elemOfDivRef: HTMLElement = ref.current;
       let withOfElem = elemOfDivRef?.getBoundingClientRect().width;
+      let heightOfElem = elemOfDivRef?.getBoundingClientRect().height;
 
       if (withOfElem === undefined) return;
       dispatch(setSizeOfChatBody(withOfElem));
+      dispatch(setSizeHeightOfChatBody(heightOfElem));
     };
 
     handleResize();
@@ -41,6 +63,9 @@ export const useChat = (ref: any) => {
   }, []);
 
   useEffect(() => {
+    // if not mobile return
+    if (sizeOfChatBody > 600) return;
+
     const classShowUsers = 'animation-show-users';
     const classShowMessages = 'animation-show-messages';
 
@@ -54,7 +79,6 @@ export const useChat = (ref: any) => {
     if (showMessages === true) {
       elemOfChatBodyContainer?.classList.remove(classShowUsers);
       elemOfChatBodyContainer?.classList.add(classShowMessages);
-      console.log(elemOfChatBodyContainer);
     }
 
     if (showMessages === false) {

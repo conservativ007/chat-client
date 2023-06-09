@@ -1,0 +1,14 @@
+@media (max-width: 600px) and (min-width: 100px) {
+  .messages-container {
+    transition: all 0.3s;
+    opacity: 1;
+
+    .message {
+      user-select: var(--user-select);
+    }
+  }
+
+  .messages-container.messages-show-slowly {
+    opacity: 0;
+  }
+}

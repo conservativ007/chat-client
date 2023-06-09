@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import sditSvgForEditContainer from './editTwo.svg';
-// import { divEditRef } from './ChatForm';
+import { useAppSelector } from '../../../../hooks/redux';
 
 type AppProps = {
   inputWidth: number;
@@ -11,10 +11,15 @@ export let divEditRef: any;
 export const Edit = ({ inputWidth }: AppProps) => {
   divEditRef = useRef<HTMLDivElement | null>(null);
 
+  const { heightOfEditableElem } = useAppSelector(
+    (state) => state.messaggeMenuReducer
+  );
+
   return (
     <div
       style={{
         width: `${inputWidth - 70}px`,
+        top: `-${heightOfEditableElem}px`,
       }}
       className="chat-form__edit-container"
       ref={divEditRef}

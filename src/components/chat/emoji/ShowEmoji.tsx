@@ -1,14 +1,18 @@
 import { useState } from 'react';
+import { privateMessageSlice } from '../../../store/reducers/PrivateMessageSlice';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 
-type AppProps = {
-  setPickerVisible: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-export const ShowEmoji = ({ setPickerVisible }: AppProps) => {
+export const ShowEmoji = () => {
   const [fill, setFill] = useState('#95afc0');
 
+  const { setIsEmojiShow } = privateMessageSlice.actions;
+  const { isEmojiShow } = useAppSelector(
+    (state) => state.privateMessageReducer
+  );
+  const dispatch = useAppDispatch();
+
   const changeEmojiVisible = () => {
-    setPickerVisible((prev: any) => !prev);
+    dispatch(setIsEmojiShow(isEmojiShow === true ? false : true));
   };
 
   return (
