@@ -8,10 +8,8 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: end;
 
   .chat-body {
-    // position: relative;
     height: calc(100% - (50px));
     overflow: hidden;
 
@@ -29,18 +27,6 @@
         width: 1px;
         background-color: black;
         left: 218px;
-      }
-
-      .messages {
-        width: 280px;
-        border: 1px solid silver;
-        height: 100%;
-
-        padding: 10px;
-
-        display: flex;
-        flex-direction: column;
-        align-items: start;
       }
 
       .chat-messages .chat-form {
