@@ -113,12 +113,12 @@ export const ChatForm = (): JSX.Element => {
     setInputWidth(num);
   }, [sizeOfInputText]);
 
-  const handleOnKeyUp = (event: KeyboardEvent<HTMLDivElement>) => {
-    let key = event.key;
-    if (key === 'Enter') {
-      sendMessage();
-    }
-  };
+  // const handleOnKeyUp = (event: KeyboardEvent<HTMLDivElement>) => {
+  //   let key = event.key;
+  //   if (key === 'Enter') {
+  //     sendMessage();
+  //   }
+  // };
 
   if (userForPrivateMessage.login === '') {
     return <div></div>;
@@ -136,7 +136,7 @@ export const ChatForm = (): JSX.Element => {
       <div
         ref={divInputRef}
         className="chat-form__text-input"
-        onKeyUp={handleOnKeyUp}
+        // onKeyUp={handleOnKeyUp}
         contentEditable={true}
         onInput={(e) => setMessage(e.currentTarget.textContent)}
       ></div>
