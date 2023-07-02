@@ -24,6 +24,34 @@ export const useChat = (ref: any) => {
   const { setPrivateMessages } = privateMessageSlice.actions;
   const { setPrivateUser } = userSlice.actions;
 
+  const changeClassToChatBodyContainer = (reset: boolean) => {
+    let elemOfChatContainerRef: HTMLDivElement = ref.current;
+    if (elemOfChatContainerRef === null) return;
+
+    let elemOfChatBodyContainer = elemOfChatContainerRef.querySelector(
+      '.chat-body__container'
+    );
+
+    if (reset === false) {
+      const classShowUsers = 'animation-show-users';
+      const classShowMessages = 'animation-show-messages';
+
+      if (showMessages === true) {
+        elemOfChatBodyContainer?.classList.remove(classShowUsers);
+        elemOfChatBodyContainer?.classList.add(classShowMessages);
+      }
+
+      if (showMessages === false) {
+        elemOfChatBodyContainer?.classList.add(classShowUsers);
+        elemOfChatBodyContainer?.classList.remove(classShowMessages);
+      }
+      return;
+    }
+
+    if (elemOfChatBodyContainer === null) return;
+    elemOfChatBodyContainer.className = 'chat-body__container';
+  };
+
   // here we setting global variable for scss
   useEffect(() => {
     const rootElementOfDocument = rootDocumentRef.current;
@@ -64,26 +92,12 @@ export const useChat = (ref: any) => {
 
   useEffect(() => {
     // if not mobile return
-    if (sizeOfChatBody > 600) return;
-
-    const classShowUsers = 'animation-show-users';
-    const classShowMessages = 'animation-show-messages';
-
-    let elemOfChatContainerRef = ref.current;
-    if (elemOfChatContainerRef === null) return;
-
-    let elemOfChatBodyContainer = elemOfChatContainerRef.querySelector(
-      '.chat-body__container'
-    );
-
-    if (showMessages === true) {
-      elemOfChatBodyContainer?.classList.remove(classShowUsers);
-      elemOfChatBodyContainer?.classList.add(classShowMessages);
+    if (sizeOfChatBody <= 600) {
+      changeClassToChatBodyContainer(false);
     }
 
-    if (showMessages === false) {
-      elemOfChatBodyContainer?.classList.add(classShowUsers);
-      elemOfChatBodyContainer?.classList.remove(classShowMessages);
+    if (sizeOfChatBody > 600) {
+      changeClassToChatBodyContainer(true);
     }
-  }, [showMessages]);
+  }, [showMessages, sizeOfChatBody]);
 };
