@@ -41,8 +41,6 @@ export const useHandleContextMenu = () => {
 
     if (message.senderId !== myself.id) return;
 
-    // console.log(message);
-
     dispatch(setMessageWichEdit(message));
     dispatch(setHeightOfEditableElem(heightOfElemm < 65 ? 65 : heightOfElemm));
 
@@ -50,12 +48,12 @@ export const useHandleContextMenu = () => {
     dispatch(setShowMessageMenu(true));
 
     dispatch(setTop(correctTop + heightOfElemm));
-    if (widthOfElem > 100) {
-      dispatch(setLeft(sizeOfChatBody + leftOfElem));
-    }
 
-    if (widthOfElem < 100) {
-      dispatch(setLeft(sizeOfChatBody + leftOfElem - widthOfElem));
+    if (sizeOfChatBody <= 600) {
+      dispatch(setLeft(sizeOfChatBody + (leftOfElem - widthOfElem / 2)));
+    }
+    if (sizeOfChatBody > 600) {
+      dispatch(setLeft(leftOfElem - widthOfElem / 2));
     }
   };
 
