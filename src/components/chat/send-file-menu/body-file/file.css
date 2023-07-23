@@ -1,0 +1,53 @@
+.page {
+  background: #8774e1;
+  width: 60px;
+  height: 60px;
+
+  border-radius: 7px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 10px;
+}
+
+.page p {
+  color: white;
+  font-size: 19px;
+}
+
+.foldt2 {
+  position: relative;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+}
+.foldt2 {
+  box-shadow: none;
+}
+.foldt2:before,
+.foldt2:after {
+  content: '';
+  position: absolute;
+  width: 0px;
+  height: 0px;
+}
+
+.foldt2:before {
+  top: 0%;
+  right: 0%;
+  border-bottom: 20px solid #eee;
+  border-right: 20px solid transparent;
+  box-shadow: -7px 7px 7px rgba(0, 0, 0, 0.3);
+
+  border-bottom-left-radius: 7px;
+}
+
+.foldt2:after {
+  content: '';
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  width: 0px;
+  height: 0px;
+  border-top: 20px solid #212121;
+  border-left: 20px solid transparent;
+}

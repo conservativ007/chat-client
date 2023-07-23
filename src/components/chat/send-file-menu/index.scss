@@ -59,6 +59,12 @@
     }
   }
 
+  .body {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
   .send-file-button {
     min-width: 65px;
     padding: 12px 15px;

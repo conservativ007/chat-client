@@ -19,6 +19,7 @@ interface IConstants {
   CREATE_PRIVATE_MESSAGE: string;
   CHANGE_USER_AVATAR: string;
   SEND_IMAGE: string;
+  SEND_FILE: string;
 }
 
 export const CONSTANTS: IConstants = {
@@ -38,4 +39,5 @@ export const CONSTANTS: IConstants = {
   CREATE_PRIVATE_MESSAGE: `http://${IP}:${PORT}/message/create-private-message`,
   CHANGE_USER_AVATAR: `http://${IP}:${PORT}/file-upload/avatar`,
   SEND_IMAGE: `http://${IP}:${PORT}/file-upload/image`,
+  SEND_FILE: `http://${IP}:${PORT}/file-upload/file`,
 };

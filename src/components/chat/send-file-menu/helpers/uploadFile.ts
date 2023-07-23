@@ -1,14 +1,20 @@
 import axios from 'axios';
 import { CONSTANTS } from '../../../../constants';
+import { getFileExtention } from './getFileExtention';
 
-export const uploadFile = (file: File | null, token: string) => {
-  if (file === null) return;
+export const uploadFile = (file: File, token: string) => {
+  let data = getFileExtention(file);
+  if (data === undefined) return;
+
+  const fileName = data.type === 'file' ? 'any-file' : 'image';
 
   const formData = new FormData();
-  formData.append('image', file);
+  formData.append(fileName, file);
 
-  const data = axios
-    .post(CONSTANTS.SEND_IMAGE, formData, {
+  const URL = data.type === 'file' ? CONSTANTS.SEND_FILE : CONSTANTS.SEND_IMAGE;
+
+  return axios
+    .post(URL, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -18,6 +24,4 @@ export const uploadFile = (file: File | null, token: string) => {
       return response;
     })
     .catch((err) => console.error(err));
-
-  return data;
 };
