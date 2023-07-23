@@ -8,6 +8,7 @@ import { useChat } from './hooks/useChat';
 
 import './chat.scss';
 import './chat-animation.scss';
+import { SendFileMenu } from '../send-file-menu/SendFileMenu';
 
 export const Chat = (): JSX.Element => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -22,6 +23,7 @@ export const Chat = (): JSX.Element => {
           <Users />
           <Messages />
           <MessageMenu />
+          <SendFileMenu />
         </div>
       </div>
     </div>

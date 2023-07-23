@@ -9,7 +9,7 @@ import { privateMessageSlice } from '../../../store/reducers/PrivateMessageSlice
 import { CONSTANTS, EMITS } from '../../../constants/index';
 import { socket } from '../../../socket';
 import { IMessage } from '../../../models/IMessage';
-import { divInputRef } from '../chat-form/ChatForm';
+import { divInputRef } from '../chat-form/chat-form/ChatForm';
 import { divEditRef } from '../chat-form/edit-button/Edit';
 import { useToast } from '../../../hooks/useToast';
 

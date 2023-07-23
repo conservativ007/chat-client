@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from './redux';
 import { privateMessageSlice } from '../store/reducers/PrivateMessageSlice';
-import { divInputRef } from '../components/chat/chat-form/ChatForm';
+import { divInputRef } from '../components/chat/chat-form/chat-form/ChatForm';
 import { IMessage } from '../models/IMessage';
 import { CONSTANTS } from '../constants/constants';
 import { EMITS } from '../constants/emits';

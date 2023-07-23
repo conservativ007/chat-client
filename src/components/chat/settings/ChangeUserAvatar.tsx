@@ -76,10 +76,7 @@ export const ChangeUserAvatar = () => {
   const getToPreviousState = () => {
     const elem = imgRef.current;
 
-    console.log(elem);
     if (elem === null) return;
-
-    // console.log('getToPreviousState');
 
     elem.className = '';
     setFile(undefined);

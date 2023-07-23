@@ -1,6 +1,6 @@
 export const PORT = 4000;
-// export const IP = 'localhost';
-export const IP = '85.209.148.189';
+export const IP = 'localhost';
+// export const IP = '85.209.148.189';
 
 interface IConstants {
   SIGNUP: string;
@@ -18,6 +18,7 @@ interface IConstants {
   CREATE_MESSAGE_FOR_GENERAL_CHAT: string;
   CREATE_PRIVATE_MESSAGE: string;
   CHANGE_USER_AVATAR: string;
+  SEND_IMAGE: string;
 }
 
 export const CONSTANTS: IConstants = {
@@ -35,5 +36,6 @@ export const CONSTANTS: IConstants = {
   GENERAL_CHAT_MESSAGE_DELETE: `http://${IP}:${PORT}/message/general-chat-message-delete`,
   CREATE_MESSAGE_FOR_GENERAL_CHAT: `http://${IP}:${PORT}/message/create-message-for-general-chat`,
   CREATE_PRIVATE_MESSAGE: `http://${IP}:${PORT}/message/create-private-message`,
-  CHANGE_USER_AVATAR: `http://${IP}:${PORT}/file-upload`,
+  CHANGE_USER_AVATAR: `http://${IP}:${PORT}/file-upload/avatar`,
+  SEND_IMAGE: `http://${IP}:${PORT}/file-upload/image`,
 };

@@ -1,20 +1,18 @@
-import { socket } from '../../../socket';
-import { useEffect, useRef, useState, KeyboardEvent } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { useEffect, useRef, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 
-import { SendButton } from './send-button/SendButton';
-import { ShowEmoji } from '../emoji/ShowEmoji';
-import { Emoji } from '../emoji/Emoji';
+import { SendButton } from '../send-button/SendButton';
+import { ShowEmoji } from '../../emoji/ShowEmoji';
+import { Emoji } from '../../emoji/Emoji';
 
 import './chat-form.scss';
-import { Edit } from './edit-button/Edit';
-import { useEditMessage } from '../../../hooks/useEditMessage';
-import { EMITS } from '../../../constants/emits';
-import axios from 'axios';
-import { CONSTANTS } from '../../../constants/constants';
-import { privateMessageSlice } from '../../../store/reducers/PrivateMessageSlice';
+import { Edit } from '../edit-button/Edit';
+import { useEditMessage } from '../../../../hooks/useEditMessage';
+import { privateMessageSlice } from '../../../../store/reducers/PrivateMessageSlice';
 
-import { IPreMessage } from '../../../models/IPreMessage';
+import { IPreMessage } from '../../../../models/IPreMessage';
+import { AttachFileButton } from '../attach-file-button/AttachFileButton';
+import { sendMessage } from '../../helpers/sendMessage';
 
 export let divInputRef: any;
 
@@ -55,7 +53,7 @@ export const ChatForm = (): JSX.Element => {
       .join(' ');
   };
 
-  const sendMessage = () => {
+  const sendMessageNewMessage = async () => {
     if (isMessageEdit === true) {
       getUseEditMess();
       return;
@@ -74,33 +72,18 @@ export const ChatForm = (): JSX.Element => {
       receiverName: userForPrivateMessage.login,
       senderId: myself.id,
       receiverId: userForPrivateMessage.id,
+      imageSrc: '',
     };
-    let url: string;
-    let emit: string;
 
-    if (userForPrivateMessage.login === 'all') {
-      url = CONSTANTS.CREATE_MESSAGE_FOR_GENERAL_CHAT;
-      emit = EMITS.CREATE_MESSAGE_FOR_GENERAL_CHAT;
-    } else {
-      url = CONSTANTS.CREATE_PRIVATE_MESSAGE;
-      emit = EMITS.CREATE_PRIVATE_MESSAGE;
+    let response = await sendMessage(
+      userForPrivateMessage.login,
+      token,
+      newMessage
+    );
+
+    if (userForPrivateMessage.login !== 'all' && response !== undefined) {
+      dispatch(setPrivateMessage(response.data));
     }
-
-    axios
-      .post(url, newMessage, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        if (response.status !== 201) return;
-        socket.emit(emit, response.data);
-
-        if (userForPrivateMessage.login !== 'all') {
-          // save message for myself
-          dispatch(setPrivateMessage(response.data));
-        }
-      });
 
     setMessage('');
     inputMessage.innerHTML = '';
@@ -112,13 +95,6 @@ export const ChatForm = (): JSX.Element => {
     const num = Number(sizeOfInputText) - 5;
     setInputWidth(num);
   }, [sizeOfInputText]);
-
-  // const handleOnKeyUp = (event: KeyboardEvent<HTMLDivElement>) => {
-  //   let key = event.key;
-  //   if (key === 'Enter') {
-  //     sendMessage();
-  //   }
-  // };
 
   if (userForPrivateMessage.login === '') {
     return <div></div>;
@@ -132,6 +108,7 @@ export const ChatForm = (): JSX.Element => {
       }}
     >
       <ShowEmoji />
+      <AttachFileButton />
       <Edit inputWidth={inputWidth} />
       <div
         ref={divInputRef}
@@ -140,7 +117,7 @@ export const ChatForm = (): JSX.Element => {
         contentEditable={true}
         onInput={(e) => setMessage(e.currentTarget.textContent)}
       ></div>
-      <SendButton sendMessage={sendMessage} />
+      <SendButton sendMessage={sendMessageNewMessage} />
       {isEmojiShow && <Emoji setMessage={setMessage} />}
     </div>
   );

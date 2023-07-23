@@ -1,12 +1,15 @@
 import { useAppSelector } from '../../../hooks/redux';
 import { IMessage } from '../../../models/IMessage';
-import { ChatForm } from '../chat-form/ChatForm';
+import { ChatForm } from '../chat-form/chat-form/ChatForm';
 
 import { Like } from './like-button/Like';
 import { Time } from './show-time-in-message/Time';
 
 import './messages.scss';
 import { useHandleContextMenu } from './hooks/useHandleContextMenu';
+import { checkTargetUser } from './helpers/checkTargetUser';
+import { ShowUserName } from './show-username/ShowUserName';
+import { ShowMessage } from './show-message/ShowMessage';
 
 export const ShowMessages = (): JSX.Element => {
   const getUseHandleContextMenu = useHandleContextMenu();
@@ -18,36 +21,11 @@ export const ShowMessages = (): JSX.Element => {
     (state) => state.privateMessageReducer
   );
 
-  const getUserName = (username: string) => {
-    if (userForPrivateMessage.login === 'all') {
-      return (
-        <span className="message-user" style={{ marginRight: '5px' }}>
-          {username}:
-        </span>
-      );
-    }
-    return '';
-  };
-
-  const checkTargetUser = (message: IMessage) => {
-    // needs to return messages whgen the user
-    // send message to general chat
-    // and other users won't see these messages when they
-    // current target not to general chat
-    if (
-      (message.receiverName === 'all' &&
-        userForPrivateMessage.login !== 'all') ||
-      (message.receiverName !== 'all' && userForPrivateMessage.login === 'all')
-    ) {
-      return false;
-    }
-    return true;
-  };
-
   return (
     <>
       {privateMessages.map((message: IMessage) => {
-        if (checkTargetUser(message) === false) return;
+        if (checkTargetUser(message, userForPrivateMessage.login) === false)
+          return;
 
         return (
           <div
@@ -58,8 +36,8 @@ export const ShowMessages = (): JSX.Element => {
             }`}
             style={{ paddingRight: `${50}px` }}
           >
-            {getUserName(message.senderName)}
-            <span className="message-text">{message.message}</span>
+            <ShowUserName username={message.senderName} />
+            <ShowMessage {...message} />
             <Time message={message} key={message.id} />
             <Like message={message} />
           </div>

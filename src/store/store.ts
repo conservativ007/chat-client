@@ -5,6 +5,7 @@ import changeSizeOfElementsReducer from './reducers/SizeOfElements';
 import signupReducer from './reducers/SignupSlice';
 import messaggeMenuReducer from './reducers/MessaggeMenu';
 import showMessgaesOrUsersReducer from './reducers/ShowMessgaesOrUsersSlice';
+import sendFileReducer from './reducers/SendFileSlice';
 
 const rootReducer = combineReducers({
   userReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   signupReducer,
   messaggeMenuReducer,
   showMessgaesOrUsersReducer,
+  sendFileReducer,
 });
 
 export const setupStore = () => {

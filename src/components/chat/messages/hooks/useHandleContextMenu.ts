@@ -49,11 +49,13 @@ export const useHandleContextMenu = () => {
 
     dispatch(setTop(correctTop + heightOfElemm));
 
+    // if the mobile layout
     if (sizeOfChatBody <= 600) {
-      dispatch(setLeft(sizeOfChatBody + (leftOfElem - widthOfElem / 2)));
+      dispatch(setLeft(sizeOfChatBody + (leftOfElem - 50)));
     }
+    // if the desktop layout
     if (sizeOfChatBody > 600) {
-      dispatch(setLeft(leftOfElem - widthOfElem / 2));
+      dispatch(setLeft(leftOfElem - 50));
     }
   };
 

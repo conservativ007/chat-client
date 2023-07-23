@@ -9,6 +9,7 @@ export interface IMessage {
   likeCount: number;
   whoLiked: string[];
   createdDateForSort: number;
+  imageSrc: string;
 }
 
 export const defaultMessage: IMessage = {
@@ -22,4 +23,5 @@ export const defaultMessage: IMessage = {
   createdDateForSort: 0,
   senderId: '',
   receiverId: '',
+  imageSrc: '',
 };
