@@ -21,6 +21,13 @@ export const ShowMessages = (): JSX.Element => {
     (state) => state.privateMessageReducer
   );
 
+  const stylesForTextMessages = {
+    backgroundImage: `linear-gradient(to bottom, #d4a241, #ef4b42, #8b599e)`,
+  };
+  const stylesForFileMessages = {
+    backgroundColor: `#212121`,
+  };
+
   return (
     <>
       {privateMessages.map((message: IMessage) => {
@@ -34,7 +41,11 @@ export const ShowMessages = (): JSX.Element => {
             className={`message theme ${
               message.senderId === myself.id ? 'sender' : 'receiver'
             }`}
-            style={{ paddingRight: `${50}px` }}
+            style={
+              message.fileId !== 0
+                ? stylesForFileMessages
+                : stylesForTextMessages
+            }
           >
             <ShowUserName username={message.senderName} />
             <ShowMessage {...message} />

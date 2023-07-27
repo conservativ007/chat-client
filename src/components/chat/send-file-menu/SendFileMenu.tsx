@@ -3,17 +3,18 @@ import './index.scss';
 import { sendFileSlice } from '../../../store/reducers/SendFileSlice';
 import { useFileContext } from '../../context/FileContext';
 import { uploadFile } from './helpers/uploadFile';
-import { sendEmptyMessage } from './helpers/sendEmptyMessage';
+import { sendMessageWithFile } from './helpers/sendMessageWithFile';
 import { privateMessageSlice } from '../../../store/reducers/PrivateMessageSlice';
 import { BodyFile } from './body-file/BodyFile';
 import { HeaderFile } from './header-file/Header-file';
+import { createNewMessage } from './helpers/createNewMessage';
+import { getFileExtention } from './helpers/getFileExtention';
+import { uploadImage } from './helpers/uploadImage';
 
 export const SendFileMenu = () => {
   const { selectedFile } = useFileContext();
 
-  const { isFileAttach, fileName } = useAppSelector(
-    (state) => state.sendFileReducer
-  );
+  const { isFileAttach } = useAppSelector((state) => state.sendFileReducer);
 
   const { token, myself, userForPrivateMessage } = useAppSelector(
     (state) => state.userReducer
@@ -32,24 +33,39 @@ export const SendFileMenu = () => {
       console.error('selectedFile is NULL');
       return;
     }
-    const data = await uploadFile(selectedFile, token);
-    console.log(data);
+    let type;
 
-    // let newMessage = {
-    //   receiverId: userForPrivateMessage.id,
-    //   receiverName: userForPrivateMessage.login,
-    //   senderId: myself.id,
-    //   senderName: myself.login,
-    //   imageSrc: String(data?.data),
-    //   message: '',
-    // };
+    let data = getFileExtention(selectedFile);
+    if (data === undefined) {
+      console.error('data === undefined');
+      return;
+    }
 
-    // let response = await sendEmptyMessage(newMessage, token);
+    if (data.type === 'file') type = await uploadFile(selectedFile, token);
+    if (data.type === 'image') type = await uploadImage(selectedFile, token);
 
-    // if (userForPrivateMessage.login !== 'all' && response !== undefined) {
-    //   dispatch(setPrivateMessage(response.data));
-    // }
-    // handleClose();
+    // console.log(type);
+
+    const newMessage = createNewMessage(
+      userForPrivateMessage,
+      myself,
+      type,
+      selectedFile
+    );
+    if (newMessage === undefined) {
+      console.error('newMessage === undefined');
+      return;
+    }
+
+    // console.log(newMessage);
+
+    let response = await sendMessageWithFile(newMessage, token);
+    // console.log(response);
+
+    if (userForPrivateMessage.login !== 'all' && response !== undefined) {
+      dispatch(setPrivateMessage(response.data));
+    }
+    handleClose();
   };
 
   if (isFileAttach !== false) {

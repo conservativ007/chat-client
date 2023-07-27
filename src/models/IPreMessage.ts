@@ -5,6 +5,9 @@ export interface IPreMessage {
   senderId: string;
   receiverId: string;
   imageSrc: string;
+  fileId: number;
+  fileName: string;
+  fileSize: number;
 }
 
 export const defaultPreMessage: IPreMessage = {
@@ -14,4 +17,7 @@ export const defaultPreMessage: IPreMessage = {
   receiverId: '',
   senderId: '',
   imageSrc: '',
+  fileId: 0,
+  fileName: '',
+  fileSize: 0,
 };

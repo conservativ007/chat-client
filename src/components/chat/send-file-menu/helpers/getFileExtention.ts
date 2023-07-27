@@ -1,3 +1,8 @@
+interface IDataExtention {
+  extention: string;
+  type: 'image' | 'file';
+}
+
 export const getFileExtention = (selectedFile: File | null) => {
   if (selectedFile === null) {
     console.error('the file === NULL');
@@ -27,7 +32,7 @@ export const getFileExtention = (selectedFile: File | null) => {
     return 'file';
   };
 
-  const data = {
+  const data: IDataExtention = {
     extention,
     type: getNameString(),
   };

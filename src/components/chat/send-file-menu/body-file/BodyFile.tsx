@@ -29,7 +29,7 @@ export const BodyFile = () => {
 
   return (
     <div className="body">
-      <div className="page foldt2">
+      <div className="file-container corner">
         <p>{data.extention}</p>
       </div>
       <div className="file-info">

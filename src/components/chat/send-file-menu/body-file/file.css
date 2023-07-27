@@ -1,4 +1,4 @@
-.page {
+.file-container {
   background: #8774e1;
   width: 60px;
   height: 60px;
@@ -9,29 +9,31 @@
   justify-content: center;
   align-items: flex-end;
   padding: 10px;
+
+  cursor: pointer;
 }
 
-.page p {
+.file-container p {
   color: white;
   font-size: 19px;
 }
 
-.foldt2 {
+.corner {
   position: relative;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
 }
-.foldt2 {
+.corner {
   box-shadow: none;
 }
-.foldt2:before,
-.foldt2:after {
+.corner:before,
+.corner:after {
   content: '';
   position: absolute;
   width: 0px;
   height: 0px;
 }
 
-.foldt2:before {
+.corner:before {
   top: 0%;
   right: 0%;
   border-bottom: 20px solid #eee;
@@ -41,7 +43,7 @@
   border-bottom-left-radius: 7px;
 }
 
-.foldt2:after {
+.corner:after {
   content: '';
   position: absolute;
   top: 0%;

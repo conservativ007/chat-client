@@ -20,6 +20,7 @@ interface IConstants {
   CHANGE_USER_AVATAR: string;
   SEND_IMAGE: string;
   SEND_FILE: string;
+  GET_FILE: string;
 }
 
 export const CONSTANTS: IConstants = {
@@ -40,4 +41,5 @@ export const CONSTANTS: IConstants = {
   CHANGE_USER_AVATAR: `http://${IP}:${PORT}/file-upload/avatar`,
   SEND_IMAGE: `http://${IP}:${PORT}/file-upload/image`,
   SEND_FILE: `http://${IP}:${PORT}/file-upload/file`,
+  GET_FILE: `http://${IP}:${PORT}/file-upload/file`,
 };

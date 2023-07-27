@@ -25,6 +25,7 @@
     align-items: center;
     margin: 10px 0;
     padding: 10px;
+    padding-right: 50px;
     border-radius: 10px;
 
     max-width: 300px;
@@ -119,7 +120,7 @@
   }
 
   .message.theme {
-    background-image: linear-gradient(to bottom, #d4a241, #ef4b42, #8b599e);
+    // background-image: linear-gradient(to bottom, #d4a241, #ef4b42, #8b599e);
     background-size: 100vw 100vh;
     background-position-y: 100vh;
     background-attachment: fixed;

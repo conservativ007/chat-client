@@ -73,6 +73,9 @@ export const ChatForm = (): JSX.Element => {
       senderId: myself.id,
       receiverId: userForPrivateMessage.id,
       imageSrc: '',
+      fileId: 0,
+      fileName: '',
+      fileSize: 0,
     };
 
     let response = await sendMessage(

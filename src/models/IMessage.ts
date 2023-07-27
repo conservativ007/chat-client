@@ -1,15 +1,11 @@
-export interface IMessage {
+import { IPreMessage } from './IPreMessage';
+
+export interface IMessage extends IPreMessage {
   id: string;
   createdAt: string;
-  senderName: string;
-  receiverName: string;
-  senderId: string;
-  receiverId: string;
-  message: string;
   likeCount: number;
   whoLiked: string[];
   createdDateForSort: number;
-  imageSrc: string;
 }
 
 export const defaultMessage: IMessage = {
@@ -24,4 +20,7 @@ export const defaultMessage: IMessage = {
   senderId: '',
   receiverId: '',
   imageSrc: '',
+  fileId: 0,
+  fileName: '',
+  fileSize: 0,
 };

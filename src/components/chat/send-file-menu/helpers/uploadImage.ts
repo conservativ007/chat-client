@@ -1,26 +1,24 @@
 import axios, { AxiosResponse } from 'axios';
 import { CONSTANTS } from '../../../../constants';
 
-export interface UploadFileResponse {
-  type: 'file';
-  fileId: number;
-  fileName: string;
-  // fileSize: string;
+export interface UploadImageResponse {
+  type: 'image';
+  imageUrl: string;
 }
 
-export const uploadFile = async (
+export const uploadImage = async (
   file: File,
   token: string
-): Promise<UploadFileResponse> => {
-  const fileName = 'any-file';
+): Promise<UploadImageResponse> => {
+  const fileName = 'image';
 
   const formData = new FormData();
   formData.append(fileName, file);
 
-  const URL = CONSTANTS.SEND_FILE;
+  const URL = CONSTANTS.SEND_IMAGE;
 
   try {
-    const response: AxiosResponse<UploadFileResponse> = await axios.post(
+    const response: AxiosResponse<UploadImageResponse> = await axios.post(
       URL,
       formData,
       {
