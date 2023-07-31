@@ -10,7 +10,9 @@ export const getFileExtention = (selectedFile: File | null) => {
   }
 
   const getExtention = (file: File) => {
-    const extention = file.name.split('.')[1];
+    const data = file.name.split('.');
+    let extention = data.reverse()[0];
+
     return extention;
   };
 

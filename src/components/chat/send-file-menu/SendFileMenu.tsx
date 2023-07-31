@@ -44,8 +44,6 @@ export const SendFileMenu = () => {
     if (data.type === 'file') type = await uploadFile(selectedFile, token);
     if (data.type === 'image') type = await uploadImage(selectedFile, token);
 
-    // console.log(type);
-
     const newMessage = createNewMessage(
       userForPrivateMessage,
       myself,
@@ -57,10 +55,7 @@ export const SendFileMenu = () => {
       return;
     }
 
-    // console.log(newMessage);
-
     let response = await sendMessageWithFile(newMessage, token);
-    // console.log(response);
 
     if (userForPrivateMessage.login !== 'all' && response !== undefined) {
       dispatch(setPrivateMessage(response.data));
