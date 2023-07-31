@@ -51,6 +51,9 @@ export const useEditMessage = () => {
       })
       .then((response) => {
         // update message for reciever
+
+        // console.log(response.data);
+
         const data = response.data;
         socket.emit(EMITS.UPDATE_PRIVATE_MESSAGE, data);
 

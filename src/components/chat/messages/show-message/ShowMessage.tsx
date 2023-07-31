@@ -5,8 +5,6 @@ import { downloadFile } from '../helpers/downloadFile';
 import './index.scss';
 
 export const ShowMessage = (message: IMessage) => {
-  // console.log(message);
-
   const { token } = useAppSelector((state) => state.userReducer);
 
   const handleClick = () => {

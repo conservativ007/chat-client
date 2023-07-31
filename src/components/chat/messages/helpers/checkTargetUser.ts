@@ -10,7 +10,8 @@ export const checkTargetUser = (
   // current target not to general chat
   if (
     (message.receiverName === 'all' && userForPrivateMessage !== 'all') ||
-    (message.receiverName !== 'all' && userForPrivateMessage === 'all')
+    (message.receiverName !== 'all' && userForPrivateMessage === 'all') ||
+    userForPrivateMessage === ''
   ) {
     return false;
   }
