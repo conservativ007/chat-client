@@ -62,7 +62,7 @@ export const ChangeUserAvatar = () => {
         },
       })
       .then((response) => {
-        changeUserAvatar(response.data);
+        changeUserAvatar(response.data.imageUrl);
       })
       .catch((err) => console.error(err));
 
@@ -109,8 +109,7 @@ export const ChangeUserAvatar = () => {
       />
       <label className="field__file-wrapper" htmlFor="field__file-2">
         <div className="field__file-fake">select avatar</div>
-
-        <div className="field__file-button">upload</div>
+        <div className="field__file-button">select</div>
       </label>
     </div>
   );

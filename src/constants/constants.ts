@@ -1,6 +1,6 @@
 export const PORT = 4000;
-export const IP = 'localhost';
-// export const IP = '85.209.148.189';
+// export const IP = 'http://localhost';
+export const IP = 'http://85.209.148.189';
 
 interface IConstants {
   SIGNUP: string;
@@ -24,22 +24,22 @@ interface IConstants {
 }
 
 export const CONSTANTS: IConstants = {
-  SIGNUP: `http://${IP}:${PORT}/auth/signup`,
-  LOGIN: `http://${IP}:${PORT}/auth/login`,
-  ATTACH_SOKETID: `http://${IP}:${PORT}/auth/attachsocket`,
-  LOGOUT_USER: `http://${IP}:${PORT}/auth/logout`,
-  URL_CHANGE_USERNAME: `http://${IP}:${PORT}/users/change-username`,
-  URL_CHANGE_USERPASSWORD: `http://${IP}:${PORT}/users/change-userpassword`,
-  DELETE: `http://${IP}:${PORT}/auth/delete`,
-  LIKE_MESSAGE: `http://${IP}:${PORT}/message/message-like`,
-  PRIVATE_MESSAGE_EDIT: `http://${IP}:${PORT}/message/private-message-edit`,
-  GENERAL_CHAT_MESSAGE_EDIT: `http://${IP}:${PORT}/message/general-chat-message-edit`,
-  PRIVATE_MESSAGE_DELETE: `http://${IP}:${PORT}/message/private-message-delete`,
-  GENERAL_CHAT_MESSAGE_DELETE: `http://${IP}:${PORT}/message/general-chat-message-delete`,
-  CREATE_MESSAGE_FOR_GENERAL_CHAT: `http://${IP}:${PORT}/message/create-message-for-general-chat`,
-  CREATE_PRIVATE_MESSAGE: `http://${IP}:${PORT}/message/create-private-message`,
-  CHANGE_USER_AVATAR: `http://${IP}:${PORT}/file-upload/avatar`,
-  SEND_IMAGE: `http://${IP}:${PORT}/file-upload/image`,
-  SEND_FILE: `http://${IP}:${PORT}/file-upload/file`,
-  GET_FILE: `http://${IP}:${PORT}/file-upload/file`,
+  SIGNUP: `${IP}:${PORT}/auth/signup`,
+  LOGIN: `${IP}:${PORT}/auth/login`,
+  ATTACH_SOKETID: `${IP}:${PORT}/auth/attachsocket`,
+  LOGOUT_USER: `${IP}:${PORT}/auth/logout`,
+  URL_CHANGE_USERNAME: `${IP}:${PORT}/users/change-username`,
+  URL_CHANGE_USERPASSWORD: `${IP}:${PORT}/users/change-userpassword`,
+  DELETE: `${IP}:${PORT}/auth/delete`,
+  LIKE_MESSAGE: `${IP}:${PORT}/message/message-like`,
+  PRIVATE_MESSAGE_EDIT: `${IP}:${PORT}/message/private-message-edit`,
+  GENERAL_CHAT_MESSAGE_EDIT: `${IP}:${PORT}/message/general-chat-message-edit`,
+  PRIVATE_MESSAGE_DELETE: `${IP}:${PORT}/message/private-message-delete`,
+  GENERAL_CHAT_MESSAGE_DELETE: `${IP}:${PORT}/message/general-chat-message-delete`,
+  CREATE_MESSAGE_FOR_GENERAL_CHAT: `${IP}:${PORT}/message/create-message-for-general-chat`,
+  CREATE_PRIVATE_MESSAGE: `${IP}:${PORT}/message/create-private-message`,
+  CHANGE_USER_AVATAR: `${IP}:${PORT}/file-upload/avatar`,
+  SEND_IMAGE: `${IP}:${PORT}/file-upload/image`,
+  SEND_FILE: `${IP}:${PORT}/file-upload/file`,
+  GET_FILE: `${IP}:${PORT}/file-upload/file`,
 };
